@@ -1,0 +1,291 @@
+/* Write Entry Page Styles */
+
+/* Feelings Section */
+.feelings-section {
+    margin-bottom: 2.5rem;
+}
+
+.feelings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
+.feeling-card {
+    background-color: var(--card-background);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.feeling-card:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: var(--box-shadow-hover);
+}
+
+.feeling-card.selected {
+    border-color: var(--primary-color);
+    background-color: var(--success-bg);
+}
+
+.feeling-emoji {
+    font-size: 2.5rem;
+    line-height: 1;
+}
+
+.feeling-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+/* Tags Section */
+.tags-section {
+    margin-bottom: 2.5rem;
+}
+
+.tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.tag-btn {
+    background-color: var(--card-background);
+    border: 2px solid var(--border-color);
+    border-radius: 25px;
+    padding: 0.75rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+.tag-btn:hover {
+    border-color: var(--primary-color);
+    background-color: var(--background-accent);
+}
+
+.tag-btn.selected {
+    border-color: var(--primary-color);
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.tag-btn.add-tag {
+    border-style: dashed;
+    color: var(--text-muted);
+}
+
+.tag-btn.add-tag:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.tag-btn i {
+    font-size: 16px;
+}
+
+/* Journal Input Section */
+.journal-input-section {
+    margin-bottom: 2.5rem;
+}
+
+.journal-container {
+    background-color: var(--card-background);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+}
+
+.journal-header {
+    background-color: var(--background-soft);
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.character-counter {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+}
+
+.voice-input-btn {
+    background-color: var(--info-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.voice-input-btn:hover {
+    background-color: #6b9dbf;
+    transform: translateY(-1px);
+}
+
+.voice-input-btn i {
+    font-size: 14px;
+}
+
+.journal-textarea {
+    width: 100%;
+    min-height: 300px;
+    padding: 1.5rem;
+    border: none;
+    resize: vertical;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-dark);
+    background-color: transparent;
+    outline: none;
+}
+
+.journal-textarea::placeholder {
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+/* Action Buttons Section */
+.action-buttons-section {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+}
+
+.btn-save-entry {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 0.75rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-save-entry:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--box-shadow-hover);
+}
+
+.btn-cancel {
+    background-color: var(--background-soft);
+    color: var(--text-secondary);
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    padding: 0.75rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-cancel:hover {
+    background-color: var(--background-accent);
+    border-color: var(--text-muted);
+    transform: translateY(-2px);
+}
+
+.btn-save-entry i,
+.btn-cancel i {
+    font-size: 18px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .feelings-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+    }
+    
+    .feeling-card {
+        padding: 1rem;
+    }
+    
+    .feeling-emoji {
+        font-size: 2rem;
+    }
+    
+    .tags-container {
+        gap: 0.5rem;
+    }
+    
+    .tag-btn {
+        padding: 0.5rem 1rem;
+        font-size: 13px;
+    }
+    
+    .journal-textarea {
+        min-height: 250px;
+        padding: 1rem;
+        font-size: 15px;
+    }
+    
+    .action-buttons-section {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    .btn-save-entry,
+    .btn-cancel {
+        width: 100%;
+        justify-content: center;
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-content {
+        padding: 1rem 0.5rem;
+    }
+    
+    .feelings-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .journal-textarea {
+        min-height: 200px;
+        font-size: 14px;
+    }
+    
+    .journal-header {
+        padding: 0.75rem 1rem;
+    }
+    
+    .voice-input-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 11px;
+    }
+}

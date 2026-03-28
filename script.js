@@ -112,6 +112,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const buttonTitle = this.querySelector('.btn-title').textContent;
             console.log('Clicked:', buttonTitle);
             
+            if (buttonTitle === 'Write Entry') {
+                // Navigate to write entry page
+                window.location.href = 'write-entry.html';
+            } else if (buttonTitle === 'Voice Entry') {
+                // Placeholder for voice entry functionality
+                console.log('Voice entry functionality to be implemented');
+                alert('Voice entry feature coming soon!');
+            }
+            
             // Add ripple effect
             const ripple = document.createElement('span');
             ripple.classList.add('ripple');
