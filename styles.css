@@ -1,16 +1,41 @@
 /* DiariCore Dashboard Styles */
 
 :root {
-    --primary-color: #4a9d7a; /* Muted green/teal */
-    --primary-hover: #3d8568;
-    --background-color: #f8f9fa; /* Very light gray/off-white */
-    --card-background: #ffffff;
-    --text-dark: #2c3e50; /* Dark gray for main headings */
-    --text-light: #6c757d; /* Lighter gray for subheadings */
-    --text-muted: #adb5bd; /* Muted text for inactive items */
-    --border-color: #e9ecef;
+    /* Primary Sage Greens */
+    --primary-color: #6F8F7F; /* Primary sage green */
+    --primary-hover: #5F7F6F; /* Hover state */
+    --primary-light: #8FAF9F; /* Lighter variant */
+    --accent-green: #AFC5B8; /* Subtle accent green */
+    
+    /* Backgrounds */
+    --background-color: #F5F7F6; /* Off-white background */
+    --background-soft: #EEF2F0; /* Light gray-green background */
+    --background-accent: #E6EFEA; /* Soft background accent */
+    --card-background: #FFFFFF; /* Clean white cards */
+    
+    /* Text Colors */
+    --text-dark: #2F3E36; /* Primary dark gray-green text */
+    --text-secondary: #6B7C74; /* Secondary text */
+    --text-muted: #9AA9A1; /* Muted text */
+    
+    /* Status Colors */
+    --success-color: #7FBF9F; /* Success green */
+    --success-bg: #E8F5EF; /* Success background tint */
+    --warning-color: #F4A261; /* Warning orange */
+    --warning-bg: #FFF4E6; /* Warning background tint */
+    --info-color: #7FA7BF; /* Informational blue */
+    --info-bg: #EAF3F8; /* Informational background tint */
+    
+    /* Borders and Dividers */
+    --border-color: #E0E6E3; /* Subtle borders */
+    --divider-color: #D5DDDA; /* Dividers */
+    
+    /* Shadows */
+    --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    --box-shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.08);
+    
+    /* Layout */
     --sidebar-width: 280px;
-    --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
 }
 
 * {
@@ -81,7 +106,7 @@ body {
     display: flex;
     align-items: center;
     padding: 0.75rem 2rem;
-    color: var(--text-light);
+    color: var(--text-secondary);
     text-decoration: none;
     transition: all 0.3s ease;
     border-left: 3px solid transparent;
@@ -89,7 +114,7 @@ body {
 
 .nav-link:hover {
     color: var(--text-dark);
-    background-color: rgba(74, 157, 122, 0.1);
+    background-color: var(--background-accent);
 }
 
 .nav-link i {
@@ -100,7 +125,7 @@ body {
 
 .nav-item.active .nav-link {
     color: var(--primary-color);
-    background-color: rgba(74, 157, 122, 0.15);
+    background-color: var(--success-bg);
     border-left-color: var(--primary-color);
     font-weight: 500;
 }
@@ -190,7 +215,7 @@ body {
 
 .subtitle {
     font-size: 1.125rem;
-    color: var(--text-light);
+    color: var(--text-secondary);
     margin: 0;
 }
 
@@ -247,7 +272,7 @@ body {
 
 .stat-description {
     font-size: 0.875rem;
-    color: var(--text-light);
+    color: var(--text-secondary);
     margin: 0;
 }
 
@@ -295,7 +320,7 @@ body {
 .action-btn:hover {
     background-color: var(--primary-hover);
     transform: translateY(-2px);
-    box-shadow: 0 4px 20px rgba(74, 157, 122, 0.3);
+    box-shadow: var(--box-shadow-hover);
 }
 
 .action-btn i {
@@ -370,15 +395,15 @@ body {
 }
 
 .insight-card.pattern {
-    border-left-color: #4a9d7a;
+    border-left-color: var(--primary-color);
 }
 
 .insight-card.trigger {
-    border-left-color: #ff6b35;
+    border-left-color: var(--warning-color);
 }
 
 .insight-card.behavior {
-    border-left-color: #6366f1;
+    border-left-color: var(--info-color);
 }
 
 .insight-header {
@@ -401,15 +426,15 @@ body {
 }
 
 .insight-card.pattern .insight-icon {
-    background: linear-gradient(135deg, #4a9d7a, #3d8568);
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
 }
 
 .insight-card.trigger .insight-icon {
-    background: linear-gradient(135deg, #ff6b35, #f7931e);
+    background: linear-gradient(135deg, var(--warning-color), #e67e22);
 }
 
 .insight-card.behavior .insight-icon {
-    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    background: linear-gradient(135deg, var(--info-color), #5f9ea0);
 }
 
 .insight-title {
@@ -434,18 +459,18 @@ body {
 }
 
 .pattern-tag {
-    background-color: rgba(74, 157, 122, 0.1);
-    color: #4a9d7a;
+    background-color: var(--success-bg);
+    color: var(--primary-color);
 }
 
 .trigger-tag {
-    background-color: rgba(255, 107, 53, 0.1);
-    color: #ff6b35;
+    background-color: var(--warning-bg);
+    color: var(--warning-color);
 }
 
 .behavior-tag {
-    background-color: rgba(99, 102, 241, 0.1);
-    color: #6366f1;
+    background-color: var(--info-bg);
+    color: var(--info-color);
 }
 
 .insight-message {

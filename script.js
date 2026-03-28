@@ -5,8 +5,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const ctx = document.getElementById('weeklyChart').getContext('2d');
     
     const gradient = ctx.createLinearGradient(0, 0, 0, 300);
-    gradient.addColorStop(0, 'rgba(74, 157, 122, 0.3)');
-    gradient.addColorStop(1, 'rgba(74, 157, 122, 0.01)');
+    gradient.addColorStop(0, 'rgba(111, 143, 127, 0.3)');
+    gradient.addColorStop(1, 'rgba(111, 143, 127, 0.01)');
     
     const weeklyChart = new Chart(ctx, {
         type: 'line',
@@ -15,17 +15,17 @@ document.addEventListener('DOMContentLoaded', function() {
             datasets: [{
                 label: 'Mood Score',
                 data: [6.5, 7.2, 8.1, 7.8, 6.9, 7.4, 7.8],
-                borderColor: '#4a9d7a',
+                borderColor: '#6F8F7F',
                 backgroundColor: gradient,
                 borderWidth: 3,
                 fill: true,
                 tension: 0.4,
-                pointBackgroundColor: '#4a9d7a',
+                pointBackgroundColor: '#6F8F7F',
                 pointBorderColor: '#ffffff',
                 pointBorderWidth: 2,
                 pointRadius: 6,
                 pointHoverRadius: 8,
-                pointHoverBackgroundColor: '#4a9d7a',
+                pointHoverBackgroundColor: '#6F8F7F',
                 pointHoverBorderColor: '#ffffff',
                 pointHoverBorderWidth: 2
             }]
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         display: false
                     },
                     ticks: {
-                        color: '#6c757d',
+                        color: '#6B7C74',
                         font: {
                             size: 12,
                             weight: '500'
@@ -68,11 +68,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     beginAtZero: true,
                     max: 10,
                     grid: {
-                        color: 'rgba(0, 0, 0, 0.05)',
+                        color: 'rgba(224, 230, 227, 0.3)',
                         borderDash: [5, 5]
                     },
                     ticks: {
-                        color: '#6c757d',
+                        color: '#6B7C74',
                         font: {
                             size: 12,
                             weight: '500'
