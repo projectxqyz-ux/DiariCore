@@ -1,4 +1,4 @@
-/* DiariCore Login Page Styles */
+/* DiariCore Login Page Styles - Sliding Panel Version */
 
 :root {
     --primary-color: #6F8F7F;
@@ -42,136 +42,61 @@ body {
     border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    position: relative;
 }
 
-/* Left Side - Welcome Section */
-.login-left {
+/* Left Panel - Forms */
+.login-left-panel {
     flex: 1;
-    background: linear-gradient(135deg, #6F8F7F 0%, #8FAF9F 100%);
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    padding: 2rem;
-    position: relative;
-    overflow: hidden;
+    padding: 3rem;
+    order: 1;
+    transition: all 0.6s ease-in-out;
 }
 
-.login-left::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="70" cy="70" r="2" fill="rgba(255,255,255,0.1)"/></svg>');
-    opacity: 0.5;
-}
-
-.logo-section {
-    position: relative;
-    z-index: 1;
-    margin-bottom: 3rem;
-}
-
-.login-logo {
-    width: 180px;
-    height: 180px;
-    object-fit: contain;
-    filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.1));
-    animation: float 3s ease-in-out infinite;
-}
-
-@keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-}
-
-.welcome-content {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-    color: white;
-    max-width: 350px;
-}
-
-.welcome-title {
-    font-size: 32px;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.welcome-text {
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 1.6;
-    margin-bottom: 2rem;
-    opacity: 0.95;
-}
-
-.btn-signup {
-    background: transparent;
-    border: 2px solid white;
-    color: white;
-    padding: 12px 40px;
-    border-radius: 25px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.btn-signup:hover {
-    background: white;
-    color: var(--primary-color);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-/* Right Side - Sign In Form */
-.login-right {
-    flex: 1;
-    background-color: var(--card-background);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
-}
-
-.form-container {
+/* Form Sections */
+.form-section {
     width: 100%;
-    max-width: 400px;
-    text-align: center;
+    max-width: 360px;
+    margin: 0 auto;
 }
 
-.form-logo {
-    margin-bottom: 1.5rem;
+.form-section.hidden {
+    display: none;
+}
+
+/* Form Header - Left Aligned */
+.form-header {
+    text-align: left;
+    margin-bottom: 2rem;
 }
 
 .form-logo-img {
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     object-fit: contain;
+    margin-bottom: 1rem;
     filter: drop-shadow(0 2px 8px rgba(111, 143, 127, 0.2));
 }
 
 .form-title {
-    font-size: 28px;
+    font-size: 26px;
     font-weight: 700;
-    color: var(--text-dark);
+    color: var(--primary-color);
     margin-bottom: 0.5rem;
+    text-align: left;
 }
 
 .form-subtitle {
     font-size: 14px;
     font-weight: 400;
     color: var(--text-secondary);
-    margin-bottom: 2rem;
+    text-align: left;
 }
 
+/* Login Form */
 .login-form {
     text-align: left;
 }
@@ -302,7 +227,6 @@ body {
     align-items: center;
     justify-content: center;
     gap: 10px;
-    margin-bottom: 1.5rem;
 }
 
 .btn-google:hover {
@@ -316,12 +240,13 @@ body {
     height: 20px;
 }
 
-/* Sign Up Link */
+/* Signup Link - Mobile Only */
 .signup-link {
     font-size: 14px;
     font-weight: 400;
     color: var(--text-secondary);
-    margin: 0;
+    margin-top: 1.5rem;
+    text-align: center;
 }
 
 .signup-link a {
@@ -336,77 +261,150 @@ body {
     text-decoration: underline;
 }
 
-/* Modal Styles */
-.modal-overlay {
+.mobile-only {
     display: none;
-    position: fixed;
+}
+
+/* Right Panel - Sliding Panel */
+.login-right-panel {
+    flex: 1;
+    background: linear-gradient(135deg, #6F8F7F 0%, #8FAF9F 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 3rem;
+    order: 2;
+    position: relative;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+.login-right-panel::before {
+    content: '';
+    position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
-    backdrop-filter: blur(5px);
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="70" cy="70" r="2" fill="rgba(255,255,255,0.1)"/></svg>');
+    opacity: 0.5;
 }
 
-.modal-overlay.show {
-    display: flex;
+.logo-section {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 2rem;
 }
 
-.modal-content {
-    background-color: var(--card-background);
-    border-radius: 16px;
-    padding: 2rem;
-    width: 90%;
-    max-width: 450px;
-    max-height: 90vh;
-    overflow-y: auto;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-    animation: modalSlideIn 0.3s ease;
+.login-logo {
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.1));
 }
 
-@keyframes modalSlideIn {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-}
-
-.modal-header h3 {
-    font-size: 20px;
-    font-weight: 600;
-    color: var(--text-dark);
-    margin: 0;
-}
-
-.modal-close {
-    background: none;
-    border: none;
-    font-size: 24px;
-    color: var(--text-muted);
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
-
-.modal-close:hover {
-    color: var(--text-dark);
-}
-
-.signup-form {
+/* Welcome Content - Left Aligned */
+.welcome-content {
+    position: relative;
+    z-index: 1;
+    color: white;
     text-align: left;
+    max-width: 300px;
+    transition: all 0.6s ease-in-out;
+}
+
+.welcome-content.hidden {
+    display: none;
+}
+
+.welcome-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.welcome-text {
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    opacity: 0.95;
+    text-align: left;
+}
+
+/* Switch Button */
+.btn-switch {
+    background: transparent;
+    border: 2px solid white;
+    color: white;
+    padding: 12px 40px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    z-index: 1;
+}
+
+.btn-switch:hover {
+    background: white;
+    color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Sliding Animation States */
+.login-container.signup-mode .login-right-panel {
+    order: 1;
+}
+
+.login-container.signup-mode .login-left-panel {
+    order: 2;
+}
+
+.login-container.signup-mode .signin-welcome {
+    display: none;
+}
+
+.login-container.signup-mode .signup-welcome {
+    display: block;
+}
+
+.login-container.signup-mode .signin-section {
+    display: none;
+}
+
+.login-container.signup-mode .signup-section {
+    display: block;
+}
+
+/* Error States */
+.form-input.error {
+    border-color: #e74c3c;
+    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+}
+
+.error-message {
+    color: #e74c3c;
+    font-size: 12px;
+    margin-top: 0.5rem;
+    display: none;
+}
+
+.error-message.show {
+    display: block;
+}
+
+/* Success States */
+.form-input.success {
+    border-color: var(--success-color);
+    box-shadow: 0 0 0 3px rgba(127, 191, 159, 0.1);
 }
 
 /* Responsive Design */
@@ -421,9 +419,18 @@ body {
         min-height: auto;
     }
     
-    .login-left {
+    .login-left-panel,
+    .login-right-panel {
+        padding: 2rem 1.5rem;
+    }
+    
+    .login-right-panel {
+        order: 1;
         min-height: 200px;
-        padding: 2rem;
+    }
+    
+    .login-left-panel {
+        order: 2;
     }
     
     .login-logo {
@@ -439,26 +446,34 @@ body {
         font-size: 14px;
     }
     
-    .btn-signup {
+    .btn-switch {
         padding: 10px 30px;
         font-size: 13px;
     }
     
-    .login-right {
-        padding: 2rem 1.5rem;
-    }
-    
     .form-title {
-        font-size: 24px;
+        font-size: 22px;
     }
     
-    .form-container {
+    .form-section {
         max-width: 100%;
     }
     
-    .modal-content {
-        width: 95%;
-        padding: 1.5rem;
+    .mobile-only {
+        display: block;
+    }
+    
+    .login-right-panel .btn-switch {
+        display: none;
+    }
+    
+    .welcome-content {
+        text-align: center;
+    }
+    
+    .welcome-title,
+    .welcome-text {
+        text-align: center;
     }
 }
 
@@ -472,8 +487,8 @@ body {
         min-height: 100vh;
     }
     
-    .login-left {
-        min-height: 180px;
+    .login-left-panel,
+    .login-right-panel {
         padding: 1.5rem 1rem;
     }
     
@@ -487,7 +502,7 @@ body {
     }
     
     .form-title {
-        font-size: 22px;
+        font-size: 20px;
     }
     
     .form-subtitle {
@@ -504,6 +519,40 @@ body {
         padding: 12px;
         font-size: 13px;
     }
+}
+
+/* Notification Styles */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 500;
+    z-index: 10000;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    max-width: 400px;
+    word-wrap: break-word;
+}
+
+.notification-success {
+    background-color: #7FBF9F;
+    color: white;
+}
+
+.notification-error {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.notification-info {
+    background-color: #7FA7BF;
+    color: white;
 }
 
 /* Error States */

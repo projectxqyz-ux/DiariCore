@@ -10,29 +10,16 @@
     <link href="login.css" rel="stylesheet">
 </head>
 <body>
-    <div class="login-container">
-        <!-- Left Side - Welcome Back -->
-        <div class="login-left">
-            <div class="logo-section">
-                <img src="dclogo.jfif" alt="DiariCore Logo" class="login-logo">
-            </div>
-            <div class="welcome-content">
-                <h1 class="welcome-title">Welcome Back!</h1>
-                <p class="welcome-text">To stay connected with DiariCore, login with your personal info.</p>
-                <button class="btn-signup" id="showSignUpBtn">SIGN UP</button>
-            </div>
-        </div>
-        
-        <!-- Right Side - Sign In Form -->
-        <div class="login-right">
-            <div class="form-container">
-                <!-- Logo Icon -->
-                <div class="form-logo">
-                    <img src="dclogo.jfif" alt="DiariCore" class="form-logo-img">
+    <div class="login-container" id="loginContainer">
+        <!-- Left Side - Forms -->
+        <div class="login-left-panel">
+            <!-- Sign In Form -->
+            <div class="form-section signin-section" id="signinSection">
+                <div class="form-header">
+                    <img src="dclogo.png" alt="DiariCore" class="form-logo-img">
+                    <h2 class="form-title">Sign In to DiariCore</h2>
+                    <p class="form-subtitle">Continue your journaling journey with mindful insights.</p>
                 </div>
-                
-                <h2 class="form-title">Sign In to DiariCore</h2>
-                <p class="form-subtitle">Continue your journaling journey with mindful insights.</p>
                 
                 <form id="loginForm" class="login-form">
                     <div class="form-group">
@@ -77,84 +64,94 @@
                     Continue with Google
                 </button>
                 
-                <p class="signup-link">
-                    Don't have an account? <a href="#" id="switchToSignUp">Sign up</a>
+                <p class="signup-link mobile-only">
+                    Don't have an account? <a href="#" id="mobileSwitchToSignUp">Sign up</a>
+                </p>
+            </div>
+            
+            <!-- Sign Up Form -->
+            <div class="form-section signup-section hidden" id="signupSection">
+                <div class="form-header">
+                    <img src="dclogo.png" alt="DiariCore" class="form-logo-img">
+                    <h2 class="form-title">Create Account</h2>
+                    <p class="form-subtitle">Build your private space for reflection and growth.</p>
+                </div>
+                
+                <form id="signUpForm" class="login-form">
+                    <div class="form-group">
+                        <div class="input-wrapper">
+                            <input 
+                                type="text" 
+                                id="fullName" 
+                                class="form-input" 
+                                placeholder="Name"
+                                required
+                            >
+                            <i class="bi bi-person input-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="input-wrapper">
+                            <input 
+                                type="email" 
+                                id="signUpEmail" 
+                                class="form-input" 
+                                placeholder="Email"
+                                required
+                            >
+                            <i class="bi bi-envelope input-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="input-wrapper">
+                            <input 
+                                type="password" 
+                                id="signUpPassword" 
+                                class="form-input" 
+                                placeholder="Password"
+                                required
+                            >
+                            <i class="bi bi-eye-slash input-icon toggle-password" id="toggleSignUpPassword"></i>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn-signin">SIGN UP</button>
+                </form>
+                
+                <div class="divider">
+                    <span>or continue with</span>
+                </div>
+                
+                <button class="btn-google" id="googleSignUpBtn">
+                    <img src="https://www.google.com/favicon.ico" alt="Google" class="google-icon">
+                    Continue with Google
+                </button>
+                
+                <p class="signup-link mobile-only">
+                    Already have an account? <a href="#" id="mobileSwitchToSignIn">Sign in</a>
                 </p>
             </div>
         </div>
-    </div>
-    
-    <!-- Sign Up Modal -->
-    <div class="modal-overlay" id="signUpModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Create Account</h3>
-                <button class="modal-close" id="closeModal">&times;</button>
-            </div>
-            <form id="signUpForm" class="signup-form">
-                <div class="form-group">
-                    <div class="input-wrapper">
-                        <input 
-                            type="text" 
-                            id="fullName" 
-                            class="form-input" 
-                            placeholder="Full Name"
-                            required
-                        >
-                        <i class="bi bi-person input-icon"></i>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <div class="input-wrapper">
-                        <input 
-                            type="email" 
-                            id="signUpEmail" 
-                            class="form-input" 
-                            placeholder="Email"
-                            required
-                        >
-                        <i class="bi bi-envelope input-icon"></i>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <div class="input-wrapper">
-                        <input 
-                            type="password" 
-                            id="signUpPassword" 
-                            class="form-input" 
-                            placeholder="Password"
-                            required
-                        >
-                        <i class="bi bi-eye-slash input-icon toggle-password" id="toggleSignUpPassword"></i>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <div class="input-wrapper">
-                        <input 
-                            type="password" 
-                            id="confirmPassword" 
-                            class="form-input" 
-                            placeholder="Confirm Password"
-                            required
-                        >
-                        <i class="bi bi-eye-slash input-icon toggle-password" id="toggleConfirmPassword"></i>
-                    </div>
-                </div>
-                
-                <button type="submit" class="btn-signin">CREATE ACCOUNT</button>
-            </form>
-            
-            <div class="divider">
-                <span>or continue with</span>
+        
+        <!-- Right Side - Sliding Panel -->
+        <div class="login-right-panel" id="slidingPanel">
+            <div class="logo-section">
+                <img src="dclogo.png" alt="DiariCore Logo" class="login-logo">
             </div>
             
-            <button class="btn-google" id="googleSignUpBtn">
-                <img src="https://www.google.com/favicon.ico" alt="Google" class="google-icon">
-                Continue with Google
-            </button>
+            <div class="welcome-content signin-welcome" id="signinWelcome">
+                <h1 class="welcome-title">Welcome Back!</h1>
+                <p class="welcome-text">To stay connected with DiariCore, login with your personal info.</p>
+                <button class="btn-switch" id="showSignUpBtn">SIGN UP</button>
+            </div>
+            
+            <div class="welcome-content signup-welcome hidden" id="signupWelcome">
+                <h1 class="welcome-title">Hello, Friend!</h1>
+                <p class="welcome-text">Enter your personal details and start your self-discovery journey.</p>
+                <button class="btn-switch" id="showSignInBtn">SIGN IN</button>
+            </div>
         </div>
     </div>
     
