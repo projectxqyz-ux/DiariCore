@@ -123,6 +123,58 @@ body {
     margin-left: var(--sidebar-width);
     padding: 2rem 3rem;
     max-width: calc(100% - var(--sidebar-width));
+    position: relative;
+}
+
+/* Floating Streak Counter */
+.floating-streak {
+    position: absolute;
+    top: 2rem;
+    right: 3rem;
+    background: linear-gradient(135deg, #ff6b35, #f7931e);
+    border-radius: 50px;
+    padding: 0.75rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    box-shadow: 0 4px 20px rgba(255, 107, 53, 0.3);
+    z-index: 100;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.floating-streak:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(255, 107, 53, 0.4);
+}
+
+.streak-flame {
+    color: #ffffff;
+    font-size: 1.5rem;
+    animation: flame-flicker 2s ease-in-out infinite;
+}
+
+.streak-count {
+    color: #ffffff;
+    font-size: 1.25rem;
+    font-weight: 700;
+    min-width: 20px;
+    text-align: center;
+}
+
+@keyframes flame-flicker {
+    0%, 100% {
+        transform: scale(1) rotate(-2deg);
+    }
+    25% {
+        transform: scale(1.05) rotate(1deg);
+    }
+    50% {
+        transform: scale(1.1) rotate(-1deg);
+    }
+    75% {
+        transform: scale(1.05) rotate(2deg);
+    }
 }
 
 .header-section {
@@ -184,6 +236,13 @@ body {
     font-weight: 700;
     color: var(--text-dark);
     margin-bottom: 0.25rem;
+}
+
+.stat-value.insight-text {
+    font-size: 1.125rem;
+    font-style: italic;
+    line-height: 1.4;
+    color: var(--primary-color);
 }
 
 .stat-description {
@@ -288,6 +347,11 @@ body {
     .action-buttons {
         flex-direction: column;
     }
+    
+    .floating-streak {
+        top: 1rem;
+        right: 2rem;
+    }
 }
 
 @media (max-width: 768px) {
@@ -305,6 +369,21 @@ body {
         margin-left: 0;
         max-width: 100%;
         padding: 1rem;
+        position: relative;
+    }
+    
+    .floating-streak {
+        top: 1rem;
+        right: 1rem;
+        padding: 0.5rem 1rem;
+    }
+    
+    .streak-flame {
+        font-size: 1.25rem;
+    }
+    
+    .streak-count {
+        font-size: 1rem;
     }
     
     .main-title {
@@ -312,6 +391,7 @@ body {
     }
     
     .stats-cards {
+        flex-direction: column;
         gap: 1rem;
     }
     
@@ -321,6 +401,10 @@ body {
     
     .stat-value {
         font-size: 1.5rem;
+    }
+    
+    .stat-value.insight-text {
+        font-size: 1rem;
     }
 }
 
