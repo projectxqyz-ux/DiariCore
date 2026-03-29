@@ -45,7 +45,8 @@ body {
     position: relative;
 }
 
-.login-container::before {
+/* Sliding Overlay Panel */
+.login-container::after {
     content: '';
     position: absolute;
     top: 0;
@@ -53,12 +54,14 @@ body {
     width: 50%;
     height: 100%;
     background: linear-gradient(135deg, #6F8F7F 0%, #8FAF9F 100%);
-    z-index: 1;
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 10;
+    transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    border-radius: 16px 0 0 16px;
 }
 
-.login-container.signup-mode::before {
+.login-container.signup-mode::after {
     transform: translateX(100%);
+    border-radius: 0 16px 16px 0;
 }
 
 /* Left Panel - Forms (White side - starts on RIGHT) */
