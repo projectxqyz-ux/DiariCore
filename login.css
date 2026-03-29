@@ -469,9 +469,11 @@ body {
     }
     
     .login-container {
-        flex-direction: column;
+        flex-direction: row;
         max-width: 100%;
         min-height: auto;
+        height: 100vh;
+        border-radius: 0;
     }
     
     .login-left-panel,
@@ -481,33 +483,40 @@ body {
     
     .login-right-panel {
         order: 1;
-        min-height: 200px;
+        min-height: 100vh;
+        width: 40%;
     }
     
     .login-left-panel {
         order: 2;
+        min-height: 100vh;
+        width: 60%;
     }
     
     .login-logo {
-        width: 100px;
-        height: 100px;
+        width: 80px;
+        height: 80px;
     }
     
     .welcome-title {
-        font-size: 24px;
+        font-size: 20px;
     }
     
     .welcome-text {
-        font-size: 14px;
+        font-size: 12px;
     }
     
     .btn-switch {
-        padding: 10px 30px;
-        font-size: 13px;
+        padding: 8px 24px;
+        font-size: 12px;
     }
     
     .form-title {
-        font-size: 22px;
+        font-size: 20px;
+    }
+    
+    .form-subtitle {
+        font-size: 12px;
     }
     
     .form-section {
@@ -540,39 +549,53 @@ body {
     .login-container {
         border-radius: 0;
         min-height: 100vh;
+        height: 100vh;
     }
     
     .login-left-panel,
     .login-right-panel {
-        padding: 1.5rem 1rem;
+        padding: 1rem;
+    }
+    
+    .login-right-panel {
+        width: 35%;
+    }
+    
+    .login-left-panel {
+        width: 65%;
     }
     
     .login-logo {
-        width: 80px;
-        height: 80px;
+        width: 60px;
+        height: 60px;
     }
     
     .welcome-title {
-        font-size: 20px;
+        font-size: 16px;
     }
     
     .form-title {
-        font-size: 20px;
+        font-size: 18px;
     }
     
     .form-subtitle {
-        font-size: 13px;
+        font-size: 11px;
     }
     
     .form-input {
-        padding: 12px 40px 12px 14px;
-        font-size: 13px;
+        padding: 10px 35px 10px 12px;
+        font-size: 12px;
     }
     
     .btn-signin,
     .btn-google {
-        padding: 12px;
-        font-size: 13px;
+        padding: 10px;
+        font-size: 12px;
+    }
+    
+    .btn-switch {
+        padding: 6px 20px;
+        font-size: 11px;
     }
 }
 
