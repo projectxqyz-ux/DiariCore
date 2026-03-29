@@ -45,14 +45,14 @@ body {
     position: relative;
 }
 
-/* Left Panel - Forms (Default position) */
+/* Left Panel - Forms (White side - starts on RIGHT) */
 .login-left-panel {
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
     padding: 3rem;
-    order: 1;
+    order: 2;
     transition: all 0.6s ease-in-out;
 }
 
@@ -265,7 +265,7 @@ body {
     display: none;
 }
 
-/* Right Panel - Sliding Panel (Green side - starts on RIGHT) */
+/* Right Panel - Sliding Panel (Green side - starts on LEFT) */
 .login-right-panel {
     flex: 1;
     background: linear-gradient(135deg, #6F8F7F 0%, #8FAF9F 100%);
@@ -274,7 +274,7 @@ body {
     justify-content: center;
     align-items: flex-start;
     padding: 3rem;
-    order: 2;
+    order: 1;
     position: relative;
     transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     overflow: hidden;
@@ -361,11 +361,11 @@ body {
 
 /* Sliding Animation States - When signup-mode is active, swap positions */
 .login-container.signup-mode .login-right-panel {
-    order: 1;
+    order: 2;
 }
 
 .login-container.signup-mode .login-left-panel {
-    order: 2;
+    order: 1;
 }
 
 .login-container.signup-mode .signin-welcome {
