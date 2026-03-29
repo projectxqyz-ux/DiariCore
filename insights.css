@@ -128,6 +128,26 @@ body {
     min-height: 100vh;
 }
 
+/* Insights Header Banner */
+.insights-header-banner {
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.insights-main-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+}
+
+.insights-subtitle {
+    font-size: 1.125rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    margin: 0;
+}
+
 /* Weekly Mood Chart Section */
 .weekly-mood-section {
     margin-bottom: 3rem;
@@ -162,6 +182,79 @@ body {
     margin-top: 1rem;
 }
 
+/* Triggers Section */
+.triggers-section {
+    margin-bottom: 3rem;
+}
+
+.triggers-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.trigger-card {
+    padding: 2rem;
+    background-color: var(--card-background);
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    transition: all 0.2s ease;
+}
+
+.trigger-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--box-shadow-hover);
+}
+
+.trigger-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.trigger-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.stress-trigger .trigger-icon {
+    background-color: var(--warning-bg);
+    color: var(--warning-color);
+}
+
+.happiness-trigger .trigger-icon {
+    background-color: var(--success-bg);
+    color: var(--success-color);
+}
+
+.trigger-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin: 0;
+}
+
+.trigger-name {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+}
+
+.trigger-description {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+}
+
 /* Section Headers */
 .section-header {
     margin-bottom: 1.5rem;
@@ -189,9 +282,36 @@ body {
         padding: 1rem;
     }
     
+    .insights-main-title {
+        font-size: 2rem;
+    }
+    
+    .insights-subtitle {
+        font-size: 1rem;
+    }
+    
     .charts-grid {
         grid-template-columns: 1fr;
         gap: 1rem;
+    }
+    
+    .triggers-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .trigger-card {
+        padding: 1.5rem;
+    }
+    
+    .trigger-header {
+        margin-bottom: 1rem;
+    }
+    
+    .trigger-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.25rem;
     }
     
     .section-header {
@@ -206,8 +326,32 @@ body {
         padding: 0.75rem;
     }
     
+    .insights-main-title {
+        font-size: 1.75rem;
+    }
+    
+    .insights-header-banner {
+        margin-bottom: 2rem;
+    }
+    
     .chart-container {
         height: 250px;
+    }
+    
+    .trigger-card {
+        padding: 1rem;
+    }
+    
+    .trigger-title {
+        font-size: 1rem;
+    }
+    
+    .trigger-name {
+        font-size: 1.125rem;
+    }
+    
+    .trigger-description {
+        font-size: 0.8rem;
     }
 }
 
