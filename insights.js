@@ -107,16 +107,17 @@ function initializeActivityImpactChart() {
             label: 'Mood Impact',
             data: [85, 78, 45, 72, 68, 82],
             backgroundColor: [
-                'rgba(111, 143, 127, 0.8)',
-                'rgba(111, 143, 127, 0.7)',
-                'rgba(111, 143, 127, 0.4)',
-                'rgba(111, 143, 127, 0.6)',
+                'rgba(111, 143, 127, 0.9)',
+                'rgba(111, 143, 127, 0.85)',
                 'rgba(111, 143, 127, 0.5)',
-                'rgba(111, 143, 127, 0.75)'
+                'rgba(111, 143, 127, 0.7)',
+                'rgba(111, 143, 127, 0.6)',
+                'rgba(111, 143, 127, 0.8)'
             ],
             borderColor: '#6F8F7F',
             borderWidth: 2,
-            borderRadius: 8
+            borderRadius: 6,
+            barThickness: 40
         }]
     };
     
