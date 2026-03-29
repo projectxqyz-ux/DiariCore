@@ -66,165 +66,94 @@
         
         <!-- Main Content Area -->
         <div class="main-content">
-            <!-- Header -->
-            <header class="insights-header">
-                <div class="header-container">
-                    <h1 class="header-title">Insights</h1>
-                </div>
-            </header>
-
             <!-- Main Content -->
             <main class="insights-content">
-                <!-- Stats Overview -->
-                <section class="stats-overview">
-                    <div class="stats-grid">
-                        <div class="stat-item">
-                            <div class="stat-number">28</div>
-                            <div class="stat-label">Total Entries</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">15</div>
-                            <div class="stat-label">Current Streak</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">85%</div>
-                            <div class="stat-label">Positive Mood</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">92%</div>
-                            <div class="stat-label">Growth Score</div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Mood Chart -->
-                <section class="mood-chart-section">
+                <!-- Weekly Mood Chart -->
+                <section class="weekly-mood-section">
                     <div class="section-header">
-                        <h2 class="section-title">Mood Trends</h2>
-                        <button class="view-all">View All</button>
+                        <h2 class="section-title">Weekly Mood Chart</h2>
                     </div>
                     <div class="chart-container">
-                        <canvas id="moodChart"></canvas>
+                        <canvas id="weeklyMoodChart"></canvas>
                     </div>
                 </section>
 
-                <!-- Insights Section -->
-                <section class="insights-section">
+                <!-- Emotion Breakdown -->
+                <section class="emotion-breakdown-section">
                     <div class="section-header">
-                        <h2 class="section-title">Key Insights</h2>
-                        <button class="view-all">View All</button>
+                        <h2 class="section-title">Emotion Breakdown</h2>
                     </div>
-                    <div class="insights-list">
-                        <div class="insight-item">
-                            <div class="insight-icon">
-                                <i class="bi bi-lightbulb"></i>
-                            </div>
-                            <div class="insight-content">
-                                <h3 class="insight-title">You're most productive in the morning</h3>
-                                <p class="insight-description">Your journal entries show higher energy and creativity levels between 6AM-10AM. Consider scheduling important tasks during this time.</p>
-                                <div class="insight-meta">
-                                    <span class="insight-date">Today</span>
-                                    <button class="insight-action">Learn More</button>
+                    <div class="emotion-grid">
+                        <div class="emotion-item">
+                            <div class="emotion-icon">😊</div>
+                            <div class="emotion-info">
+                                <h4 class="emotion-name">Happy</h4>
+                                <div class="emotion-stats">
+                                    <span class="emotion-count">45%</span>
+                                    <div class="emotion-bar">
+                                        <div class="emotion-progress" style="width: 45%"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        
-                        <div class="insight-item">
-                            <div class="insight-icon">
-                                <i class="bi bi-emoji-smile"></i>
-                            </div>
-                            <div class="insight-content">
-                                <h3 class="insight-title">Positive correlation between exercise and mood</h3>
-                                <p class="insight-description">Days you mention physical activity show 23% higher mood scores. Keep up the great work!</p>
-                                <div class="insight-meta">
-                                    <span class="insight-date">2 days ago</span>
-                                    <button class="insight-action">Learn More</button>
+                        <div class="emotion-item">
+                            <div class="emotion-icon">😔</div>
+                            <div class="emotion-info">
+                                <h4 class="emotion-name">Sad</h4>
+                                <div class="emotion-stats">
+                                    <span class="emotion-count">20%</span>
+                                    <div class="emotion-bar">
+                                        <div class="emotion-progress" style="width: 20%"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        
-                        <div class="insight-item">
-                            <div class="insight-icon">
-                                <i class="bi bi-moon"></i>
+                        <div class="emotion-item">
+                            <div class="emotion-icon">😡</div>
+                            <div class="emotion-info">
+                                <h4 class="emotion-name">Angry</h4>
+                                <div class="emotion-stats">
+                                    <span class="emotion-count">10%</span>
+                                    <div class="emotion-bar">
+                                        <div class="emotion-progress" style="width: 10%"></div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="insight-content">
-                                <h3 class="insight-title">Sleep quality affects your next day</h3>
-                                <p class="insight-description">Poor sleep nights consistently lead to lower mood scores the following day. Prioritize 7-8 hours of sleep.</p>
-                                <div class="insight-meta">
-                                    <span class="insight-date">5 days ago</span>
-                                    <button class="insight-action">Learn More</button>
+                        </div>
+                        <div class="emotion-item">
+                            <div class="emotion-icon">😰</div>
+                            <div class="emotion-info">
+                                <h4 class="emotion-name">Anxious</h4>
+                                <div class="emotion-stats">
+                                    <span class="emotion-count">15%</span>
+                                    <div class="emotion-bar">
+                                        <div class="emotion-progress" style="width: 15%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="emotion-item">
+                            <div class="emotion-icon">😌</div>
+                            <div class="emotion-info">
+                                <h4 class="emotion-name">Calm</h4>
+                                <div class="emotion-stats">
+                                    <span class="emotion-count">10%</span>
+                                    <div class="emotion-bar">
+                                        <div class="emotion-progress" style="width: 10%"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <!-- Topics Section -->
-                <section class="topics-section">
+                <!-- Activity Impact on Mood -->
+                <section class="activity-impact-section">
                     <div class="section-header">
-                        <h2 class="section-title">Top Topics</h2>
-                        <button class="view-all">View All</button>
+                        <h2 class="section-title">Activity Impact on Mood</h2>
                     </div>
-                    <div class="topics-list">
-                        <div class="topic-item">
-                            <div class="topic-icon">
-                                <i class="bi bi-briefcase"></i>
-                            </div>
-                            <div class="topic-info">
-                                <h4 class="topic-name">Work</h4>
-                                <div class="topic-stats">
-                                    <span class="topic-count">12 entries</span>
-                                    <div class="topic-progress">
-                                        <div class="progress-bar" style="width: 75%"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="topic-item">
-                            <div class="topic-icon">
-                                <i class="bi bi-heart"></i>
-                            </div>
-                            <div class="topic-info">
-                                <h4 class="topic-name">Relationships</h4>
-                                <div class="topic-stats">
-                                    <span class="topic-count">8 entries</span>
-                                    <div class="topic-progress">
-                                        <div class="progress-bar" style="width: 50%"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="topic-item">
-                            <div class="topic-icon">
-                                <i class="bi bi-person"></i>
-                            </div>
-                            <div class="topic-info">
-                                <h4 class="topic-name">Personal Growth</h4>
-                                <div class="topic-stats">
-                                    <span class="topic-count">6 entries</span>
-                                    <div class="topic-progress">
-                                        <div class="progress-bar" style="width: 38%"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="topic-item">
-                            <div class="topic-icon">
-                                <i class="bi bi-book"></i>
-                            </div>
-                            <div class="topic-info">
-                                <h4 class="topic-name">Learning</h4>
-                                <div class="topic-stats">
-                                    <span class="topic-count">4 entries</span>
-                                    <div class="topic-progress">
-                                        <div class="progress-bar" style="width: 25%"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="chart-container">
+                        <canvas id="activityImpactChart"></canvas>
                     </div>
                 </section>
             </main>

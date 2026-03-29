@@ -156,90 +156,8 @@ body {
     min-height: 100vh;
 }
 
-/* Header */
-.insights-header {
-    margin-bottom: 2rem;
-}
-
-.header-container {
-    max-width: 100%;
-}
-
-.header-title {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--text-dark);
-    margin-bottom: 0.5rem;
-}
-
-/* Stats Overview */
-.stats-overview {
-    margin-bottom: 3rem;
-}
-
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
-}
-
-.stat-item {
-    text-align: center;
-    padding: 2rem 1.5rem;
-    background-color: var(--card-background);
-    border-radius: 16px;
-    border: 1px solid var(--border-color);
-    transition: all 0.2s ease;
-}
-
-.stat-item:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--box-shadow-hover);
-}
-
-.stat-number {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--text-dark);
-    margin-bottom: 0.5rem;
-}
-
-.stat-label {
-    font-size: 0.875rem;
-    color: var(--text-secondary);
-    font-weight: 500;
-}
-
-/* Section Headers */
-.section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-}
-
-.section-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--text-dark);
-}
-
-.view-all {
-    background: none;
-    border: none;
-    color: var(--primary-color);
-    font-size: 0.875rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: opacity 0.2s ease;
-}
-
-.view-all:hover {
-    opacity: 0.7;
-}
-
-/* Mood Chart */
-.mood-chart-section {
+/* Weekly Mood Chart Section */
+.weekly-mood-section {
     margin-bottom: 3rem;
     padding: 2rem;
     background-color: var(--card-background);
@@ -247,170 +165,111 @@ body {
     border: 1px solid var(--border-color);
 }
 
-.chart-container {
-    position: relative;
-    height: 300px;
-}
-
-/* Insights Section */
-.insights-section {
+/* Emotion Breakdown Section */
+.emotion-breakdown-section {
     margin-bottom: 3rem;
+    padding: 2rem;
+    background-color: var(--card-background);
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
 }
 
-.insights-list {
-    display: flex;
-    flex-direction: column;
+.emotion-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1.5rem;
 }
 
-.insight-item {
-    display: flex;
-    gap: 1rem;
-    padding: 1.5rem;
-    background-color: var(--card-background);
-    border-radius: 12px;
-    border: 1px solid var(--border-color);
-    transition: all 0.2s ease;
-}
-
-.insight-item:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--box-shadow-hover);
-}
-
-.insight-icon {
-    width: 40px;
-    height: 40px;
-    background-color: var(--primary-color);
-    color: white;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.1rem;
-    flex-shrink: 0;
-}
-
-.insight-content {
-    flex: 1;
-}
-
-.insight-title {
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: var(--text-dark);
-    margin-bottom: 0.75rem;
-}
-
-.insight-description {
-    font-size: 0.875rem;
-    color: var(--text-secondary);
-    line-height: 1.6;
-    margin-bottom: 1rem;
-}
-
-.insight-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.insight-date {
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    font-weight: 500;
-}
-
-.insight-action {
-    background: none;
-    border: none;
-    color: var(--primary-color);
-    font-size: 0.875rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: opacity 0.2s ease;
-}
-
-.insight-action:hover {
-    opacity: 0.7;
-}
-
-/* Topics Section */
-.topics-section {
-    margin-bottom: 2rem;
-}
-
-.topics-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1rem;
-}
-
-.topic-item {
+.emotion-item {
     display: flex;
     align-items: center;
     gap: 1rem;
     padding: 1rem;
-    background-color: var(--card-background);
+    background-color: var(--background-soft);
     border-radius: 12px;
-    border: 1px solid var(--border-color);
     transition: all 0.2s ease;
 }
 
-.topic-item:hover {
-    transform: translateY(-1px);
+.emotion-item:hover {
+    transform: translateY(-2px);
     box-shadow: var(--box-shadow);
 }
 
-.topic-icon {
-    width: 36px;
-    height: 36px;
-    background-color: var(--primary-color);
-    color: white;
-    border-radius: 8px;
+.emotion-icon {
+    font-size: 2rem;
+    width: 50px;
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1rem;
+    background-color: var(--card-background);
+    border-radius: 12px;
     flex-shrink: 0;
 }
 
-.topic-info {
+.emotion-info {
     flex: 1;
 }
 
-.topic-name {
+.emotion-name {
     font-size: 1rem;
     font-weight: 600;
     color: var(--text-dark);
     margin-bottom: 0.5rem;
 }
 
-.topic-stats {
+.emotion-stats {
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
 }
 
-.topic-count {
-    font-size: 0.75rem;
-    color: var(--text-muted);
+.emotion-count {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
     font-weight: 500;
 }
 
-.topic-progress {
+.emotion-bar {
     width: 100%;
-    height: 4px;
+    height: 6px;
     background-color: var(--border-color);
-    border-radius: 2px;
+    border-radius: 3px;
     overflow: hidden;
 }
 
-.progress-bar {
+.emotion-progress {
     height: 100%;
     background-color: var(--primary-color);
-    border-radius: 2px;
+    border-radius: 3px;
     transition: width 0.3s ease;
+}
+
+/* Activity Impact Section */
+.activity-impact-section {
+    margin-bottom: 3rem;
+    padding: 2rem;
+    background-color: var(--card-background);
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+}
+
+/* Chart Containers */
+.chart-container {
+    position: relative;
+    height: 300px;
+    margin-top: 1rem;
+}
+
+/* Section Headers */
+.section-header {
+    margin-bottom: 1.5rem;
+}
+
+.section-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-dark);
 }
 
 /* Responsive Design */

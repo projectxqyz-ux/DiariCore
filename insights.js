@@ -1,42 +1,40 @@
-// DiariCore Insights Page JavaScript - Dashboard Layout
+// DiariCore Insights Page JavaScript - New Layout
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize Chart
-    initializeMoodChart();
-    
-    // Event Listeners
-    initializeEventListeners();
+    // Initialize Charts
+    initializeWeeklyMoodChart();
+    initializeActivityImpactChart();
     
     // Load Data
     loadInsightsData();
 });
 
-// Initialize Mood Chart
-function initializeMoodChart() {
-    const ctx = document.getElementById('moodChart');
+// Initialize Weekly Mood Chart
+function initializeWeeklyMoodChart() {
+    const ctx = document.getElementById('weeklyMoodChart');
     if (!ctx) return;
     
-    const moodData = {
+    const weeklyData = {
         labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
         datasets: [{
             label: 'Mood Score',
             data: [7, 8, 6, 9, 8, 9, 8],
             borderColor: '#6F8F7F',
             backgroundColor: 'rgba(111, 143, 127, 0.1)',
-            borderWidth: 2,
+            borderWidth: 3,
             fill: true,
             tension: 0.4,
             pointBackgroundColor: '#6F8F7F',
             pointBorderColor: '#ffffff',
             pointBorderWidth: 2,
-            pointRadius: 4,
-            pointHoverRadius: 6
+            pointRadius: 6,
+            pointHoverRadius: 8
         }]
     };
     
     const config = {
         type: 'line',
-        data: moodData,
+        data: weeklyData,
         options: {
             responsive: true,
             maintainAspectRatio: false,
@@ -53,7 +51,7 @@ function initializeMoodChart() {
                     displayColors: false,
                     callbacks: {
                         label: function(context) {
-                            return `Mood: ${context.parsed.y}/10`;
+                            return `Mood Score: ${context.parsed.y}/10`;
                         }
                     }
                 }
@@ -98,86 +96,105 @@ function initializeMoodChart() {
     new Chart(ctx, config);
 }
 
-// Initialize Event Listeners
-function initializeEventListeners() {
-    // View All buttons
-    const viewAllBtns = document.querySelectorAll('.view-all');
-    viewAllBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            showNotification('View all feature coming soon!', 'info');
-        });
-    });
+// Initialize Activity Impact Chart
+function initializeActivityImpactChart() {
+    const ctx = document.getElementById('activityImpactChart');
+    if (!ctx) return;
     
-    // Insight action buttons
-    const insightActions = document.querySelectorAll('.insight-action');
-    insightActions.forEach(btn => {
-        btn.addEventListener('click', function() {
-            const insightItem = this.closest('.insight-item');
-            const title = insightItem.querySelector('.insight-title').textContent;
-            showNotification(`Learn more about: ${title}`, 'info');
-        });
-    });
+    const activityData = {
+        labels: ['Exercise', 'Sleep', 'Work', 'Social', 'Reading', 'Meditation'],
+        datasets: [{
+            label: 'Mood Impact',
+            data: [85, 78, 45, 72, 68, 82],
+            backgroundColor: [
+                'rgba(111, 143, 127, 0.8)',
+                'rgba(111, 143, 127, 0.7)',
+                'rgba(111, 143, 127, 0.4)',
+                'rgba(111, 143, 127, 0.6)',
+                'rgba(111, 143, 127, 0.5)',
+                'rgba(111, 143, 127, 0.75)'
+            ],
+            borderColor: '#6F8F7F',
+            borderWidth: 2,
+            borderRadius: 8
+        }]
+    };
     
-    // Topic items
-    const topicItems = document.querySelectorAll('.topic-item');
-    topicItems.forEach(item => {
-        item.addEventListener('click', function() {
-            const topicName = this.querySelector('.topic-name').textContent;
-            showNotification(`Viewing entries for: ${topicName}`, 'info');
-        });
-    });
+    const config = {
+        type: 'bar',
+        data: activityData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(47, 62, 54, 0.9)',
+                    titleColor: '#ffffff',
+                    bodyColor: '#ffffff',
+                    padding: 12,
+                    cornerRadius: 8,
+                    displayColors: false,
+                    callbacks: {
+                        label: function(context) {
+                            return `Impact: ${context.parsed.y}%`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        color: '#6B7C74',
+                        font: {
+                            size: 12,
+                            weight: '500'
+                        }
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+                    grid: {
+                        color: '#E0E6E3',
+                        borderDash: [5, 5]
+                    },
+                    ticks: {
+                        color: '#6B7C74',
+                        font: {
+                            size: 12,
+                            weight: '500'
+                        },
+                        callback: function(value) {
+                            return value + '%';
+                        }
+                    }
+                }
+            }
+        }
+    };
     
-    // Stat items
-    const statItems = document.querySelectorAll('.stat-item');
-    statItems.forEach(item => {
-        item.addEventListener('click', function() {
-            const statLabel = this.querySelector('.stat-label').textContent;
-            showNotification(`Viewing details for: ${statLabel}`, 'info');
-        });
-    });
+    new Chart(ctx, config);
 }
 
 // Load Insights Data
 function loadInsightsData() {
     // Simulate loading data
     setTimeout(() => {
-        animateStats();
-        animateTopicProgress();
+        animateEmotionBars();
     }, 500);
 }
 
-// Animate Stats
-function animateStats() {
-    const statNumbers = document.querySelectorAll('.stat-number');
+// Animate Emotion Bars
+function animateEmotionBars() {
+    const emotionBars = document.querySelectorAll('.emotion-progress');
     
-    statNumbers.forEach(stat => {
-        const text = stat.textContent;
-        const target = parseInt(text);
-        const suffix = text.replace(/[0-9]/g, '');
-        let current = 0;
-        const increment = target / 50;
-        
-        const timer = setInterval(() => {
-            current += increment;
-            if (current >= target) {
-                current = target;
-                clearInterval(timer);
-            }
-            
-            if (suffix === '%') {
-                stat.textContent = Math.round(current) + '%';
-            } else {
-                stat.textContent = Math.round(current);
-            }
-        }, 30);
-    });
-}
-
-// Animate Topic Progress
-function animateTopicProgress() {
-    const progressBars = document.querySelectorAll('.progress-bar');
-    
-    progressBars.forEach((bar, index) => {
+    emotionBars.forEach((bar, index) => {
         const targetWidth = bar.style.width;
         bar.style.width = '0%';
         
