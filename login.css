@@ -109,9 +109,14 @@ body {
     position: relative;
 }
 
-.form-input {
+/* Floating Label Input Styles */
+.input-wrapper.floating-label {
+    position: relative;
+}
+
+.input-wrapper.floating-label .form-input {
     width: 100%;
-    padding: 14px 45px 14px 16px;
+    padding: 20px 45px 8px 16px;
     border: 2px solid var(--border-color);
     border-radius: 10px;
     font-size: 14px;
@@ -122,17 +127,38 @@ body {
     font-family: 'Inter', sans-serif;
 }
 
-.form-input:focus {
+.input-wrapper.floating-label .input-label {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-muted);
+    pointer-events: none;
+    transition: all 0.2s ease;
+    background-color: transparent;
+    padding: 0 4px;
+}
+
+.input-wrapper.floating-label .form-input:focus,
+.input-wrapper.floating-label .form-input:not(:placeholder-shown) {
     outline: none;
     border-color: var(--primary-color);
     box-shadow: 0 0 0 3px rgba(111, 143, 127, 0.1);
 }
 
-.form-input::placeholder {
-    color: var(--text-muted);
+.input-wrapper.floating-label .form-input:focus ~ .input-label,
+.input-wrapper.floating-label .form-input:not(:placeholder-shown) ~ .input-label {
+    top: 0;
+    transform: translateY(-50%);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--primary-color);
+    background-color: var(--card-background);
 }
 
-.input-icon {
+.input-wrapper.floating-label .input-icon {
     position: absolute;
     right: 16px;
     top: 50%;
@@ -143,7 +169,8 @@ body {
     transition: color 0.3s ease;
 }
 
-.input-icon:hover {
+.input-wrapper.floating-label .form-input:focus ~ .input-icon,
+.input-wrapper.floating-label .form-input:not(:placeholder-shown) ~ .input-icon {
     color: var(--primary-color);
 }
 
