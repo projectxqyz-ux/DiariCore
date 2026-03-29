@@ -105,35 +105,7 @@ body {
     margin-bottom: 0.5rem;
 }
 
-.nav-link {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.75rem 2rem;
-    color: var(--text-secondary);
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 14px;
-    transition: all 0.2s ease;
-    border-left: 3px solid transparent;
-}
-
-.nav-link:hover {
-    color: var(--text-dark);
-    background-color: var(--background-soft);
-}
-
-.nav-link i {
-    font-size: 18px;
-    width: 18px;
-}
-
-.nav-item.active .nav-link {
-    color: var(--primary-color);
-    background-color: var(--primary-light);
-    background-color: rgba(111, 143, 127, 0.1);
-    border-left-color: var(--primary-color);
-}
+/* Remove conflicting sidebar styles - now handled by side-bar.css */
 
 .copyright {
     padding: 1rem 2rem;
