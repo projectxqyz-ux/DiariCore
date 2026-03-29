@@ -1,4 +1,4 @@
-// DiariCore Insights Page JavaScript - Minimalist Design
+// DiariCore Insights Page JavaScript - Dashboard Layout
 
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize Chart
@@ -45,7 +45,7 @@ function initializeMoodChart() {
                     display: false
                 },
                 tooltip: {
-                    backgroundColor: 'rgba(26, 26, 26, 0.9)',
+                    backgroundColor: 'rgba(47, 62, 54, 0.9)',
                     titleColor: '#ffffff',
                     bodyColor: '#ffffff',
                     padding: 12,
@@ -64,7 +64,7 @@ function initializeMoodChart() {
                         display: false
                     },
                     ticks: {
-                        color: '#666666',
+                        color: '#6B7C74',
                         font: {
                             size: 12,
                             weight: '500'
@@ -75,11 +75,11 @@ function initializeMoodChart() {
                     beginAtZero: true,
                     max: 10,
                     grid: {
-                        color: '#e5e5e5',
+                        color: '#E0E6E3',
                         borderDash: [5, 5]
                     },
                     ticks: {
-                        color: '#666666',
+                        color: '#6B7C74',
                         font: {
                             size: 12,
                             weight: '500'
@@ -100,14 +100,6 @@ function initializeMoodChart() {
 
 // Initialize Event Listeners
 function initializeEventListeners() {
-    // Back button
-    const backBtn = document.getElementById('backBtn');
-    if (backBtn) {
-        backBtn.addEventListener('click', function() {
-            window.history.back();
-        });
-    }
-    
     // View All buttons
     const viewAllBtns = document.querySelectorAll('.view-all');
     viewAllBtns.forEach(btn => {
@@ -230,7 +222,7 @@ function showNotification(message, type = 'info') {
         transition: transform 0.3s ease;
         max-width: 400px;
         word-wrap: break-word;
-        background: ${type === 'success' ? '#6F8F7F' : type === 'error' ? '#E74C3C' : '#7FA7BF'};
+        background: ${type === 'success' ? '#7FBF9F' : type === 'error' ? '#E74C3C' : '#7FA7BF'};
         color: white;
         font-family: 'Inter', sans-serif;
     `;
