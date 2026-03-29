@@ -156,6 +156,7 @@ body {
     padding-bottom: 0;
     height: 44px;
     line-height: 32px;
+    text-align: center;
 }
 
 .input-wrapper .floating-label {
