@@ -575,7 +575,7 @@ body {
     }
     
     .login-container.signup-mode .signup-section .form-header::before {
-        content: 'Hello, Friend!';
+        content: 'Create Account';
         display: block;
         font-size: 26px;
         font-weight: 700;
@@ -585,7 +585,7 @@ body {
     }
     
     .login-container.signup-mode .signup-section .form-header::after {
-        content: 'Enter your personal details and start your self-discovery journey.';
+        content: 'Build your private space for reflection and growth.';
         display: block;
         font-size: 14px;
         font-weight: 400;
