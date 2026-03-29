@@ -465,58 +465,74 @@ body {
 /* Responsive Design */
 @media (max-width: 768px) {
     body {
-        padding: 10px;
+        padding: 0;
+        background: linear-gradient(135deg, #6F8F7F 0%, #8FAF9F 100%);
     }
     
     .login-container {
-        flex-direction: row;
+        flex-direction: column;
         max-width: 100%;
-        min-height: auto;
-        height: 100vh;
+        min-height: 100vh;
+        background: transparent;
+        box-shadow: none;
         border-radius: 0;
-    }
-    
-    .login-left-panel,
-    .login-right-panel {
-        padding: 2rem 1.5rem;
     }
     
     .login-right-panel {
         order: 1;
-        min-height: 100vh;
-        width: 40%;
+        min-height: 40vh;
+        background: transparent;
+        padding: 2rem;
     }
     
     .login-left-panel {
         order: 2;
-        min-height: 100vh;
-        width: 60%;
+        min-height: 60vh;
+        background: white;
+        border-radius: 30px 30px 0 0;
+        padding: 2rem;
+        margin: 0 10px 10px 10px;
+        box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
     }
     
     .login-logo {
-        width: 80px;
-        height: 80px;
+        width: 60px;
+        height: 60px;
     }
     
     .welcome-title {
-        font-size: 20px;
+        font-size: 24px;
+        color: white;
     }
     
     .welcome-text {
-        font-size: 12px;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.9);
     }
     
     .btn-switch {
-        padding: 8px 24px;
-        font-size: 12px;
+        padding: 10px 30px;
+        font-size: 13px;
+        background: white;
+        color: var(--primary-color);
+        border: none;
+    }
+    
+    .btn-switch:hover {
+        background: rgba(255, 255, 255, 0.9);
     }
     
     .form-title {
-        font-size: 20px;
+        font-size: 24px;
+        text-align: center;
+        margin-bottom: 1rem;
     }
     
     .form-subtitle {
-        font-size: 12px;
+        font-size: 14px;
+        text-align: center;
+        margin-bottom: 2rem;
+        color: var(--text-secondary);
     }
     
     .form-section {
@@ -528,7 +544,7 @@ body {
     }
     
     .login-right-panel .btn-switch {
-        display: none;
+        display: block;
     }
     
     .welcome-content {
@@ -547,55 +563,51 @@ body {
     }
     
     .login-container {
-        border-radius: 0;
         min-height: 100vh;
-        height: 100vh;
-    }
-    
-    .login-left-panel,
-    .login-right-panel {
-        padding: 1rem;
     }
     
     .login-right-panel {
-        width: 35%;
+        min-height: 35vh;
+        padding: 1.5rem;
     }
     
     .login-left-panel {
-        width: 65%;
+        min-height: 65vh;
+        padding: 1.5rem;
+        margin: 0 5px 5px 5px;
     }
     
     .login-logo {
-        width: 60px;
-        height: 60px;
+        width: 50px;
+        height: 50px;
     }
     
     .welcome-title {
-        font-size: 16px;
+        font-size: 20px;
     }
     
     .form-title {
-        font-size: 18px;
+        font-size: 20px;
     }
     
     .form-subtitle {
-        font-size: 11px;
+        font-size: 13px;
     }
     
     .form-input {
-        padding: 10px 35px 10px 12px;
-        font-size: 12px;
+        padding: 12px 40px 12px 14px;
+        font-size: 14px;
     }
     
     .btn-signin,
     .btn-google {
-        padding: 10px;
-        font-size: 12px;
+        padding: 12px;
+        font-size: 14px;
     }
     
     .btn-switch {
-        padding: 6px 20px;
-        font-size: 11px;
+        padding: 8px 24px;
+        font-size: 12px;
     }
 }
 
