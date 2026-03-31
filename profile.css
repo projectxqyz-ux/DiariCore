@@ -295,6 +295,11 @@ body {
     color: white;
 }
 
+/* Appearance & Notifications Section */
+.appearance-notifications-section {
+    margin-bottom: 3rem;
+}
+
 /* Journal Preferences Section */
 .journal-preferences-section {
     margin-bottom: 3rem;
