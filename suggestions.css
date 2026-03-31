@@ -259,8 +259,8 @@ body {
 
 /* Content List */
 .content-list {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1.5rem;
 }
 
@@ -315,8 +315,8 @@ body {
 
 /* Tips Timeline */
 .tips-timeline {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1.5rem;
 }
 
@@ -448,9 +448,12 @@ body {
         gap: 1rem;
     }
     
-    .activity-grid {
+    .content-list {
         grid-template-columns: 1fr;
-        gap: 1rem;
+    }
+    
+    .tips-timeline {
+        grid-template-columns: 1fr;
     }
     
     .recommendation-item,
