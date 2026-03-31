@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entries - DiariCore</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="side-bar.css" rel="stylesheet">
+    <link href="entries.css" rel="stylesheet">
+</head>
+<body>
+    <div class="entries-container">
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <!-- Main Content -->
+            <main class="entries-content">
+                <!-- Header Section -->
+                <div class="header-section">
+                    <h1 class="main-title">Your Journal Entries</h1>
+                    <p class="subtitle">Reflect on your emotional journey</p>
+                </div>
+
+                <!-- Search and Filter Section -->
+                <section class="search-filter-section">
+                    <div class="search-filter-container">
+                        <div class="search-bar">
+                            <i class="bi bi-search"></i>
+                            <input type="text" placeholder="Search entries..." class="search-input">
+                        </div>
+                        <div class="filter-dropdown">
+                            <button class="filter-btn" id="filterBtn">
+                                <i class="bi bi-funnel"></i>
+                                <span>Filter</span>
+                            </button>
+                            <div class="filter-menu" id="filterMenu">
+                                <div class="filter-section">
+                                    <h4 class="filter-section-title">Emotion</h4>
+                                    <div class="filter-options">
+                                        <label class="filter-option">
+                                            <input type="checkbox" value="happy">
+                                            <span class="checkmark"></span>
+                                            <span class="filter-label">Happy</span>
+                                        </label>
+                                        <label class="filter-option">
+                                            <input type="checkbox" value="sad">
+                                            <span class="checkmark"></span>
+                                            <span class="filter-label">Sad</span>
+                                        </label>
+                                        <label class="filter-option">
+                                            <input type="checkbox" value="angry">
+                                            <span class="checkmark"></span>
+                                            <span class="filter-label">Angry</span>
+                                        </label>
+                                        <label class="filter-option">
+                                            <input type="checkbox" value="anxious">
+                                            <span class="checkmark"></span>
+                                            <span class="filter-label">Anxious</span>
+                                        </label>
+                                        <label class="filter-option">
+                                            <input type="checkbox" value="calm">
+                                            <span class="checkmark"></span>
+                                            <span class="filter-label">Calm</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="filter-section">
+                                    <h4 class="filter-section-title">Tags</h4>
+                                    <div class="filter-options">
+                                        <label class="filter-option">
+                                            <input type="checkbox" value="work">
+                                            <span class="checkmark"></span>
+                                            <span class="filter-label">Work</span>
+                                        </label>
+                                        <label class="filter-option">
+                                            <input type="checkbox" value="personal">
+                                            <span class="checkmark"></span>
+                                            <span class="filter-label">Personal</span>
+                                        </label>
+                                        <label class="filter-option">
+                                            <input type="checkbox" value="health">
+                                            <span class="checkmark"></span>
+                                            <span class="filter-label">Health</span>
+                                        </label>
+                                        <label class="filter-option">
+                                            <input type="checkbox" value="relationships">
+                                            <span class="checkmark"></span>
+                                            <span class="filter-label">Relationships</span>
+                                        </label>
+                                        <label class="filter-option">
+                                            <input type="checkbox" value="goals">
+                                            <span class="checkmark"></span>
+                                            <span class="filter-label">Goals</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="filter-actions">
+                                    <button class="btn-clear" id="clearFilters">Clear</button>
+                                    <button class="btn-apply" id="applyFilters">Apply</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Entries Grid -->
+                <section class="entries-section">
+                    <div class="entries-grid">
+                        <!-- Entry Card 1 -->
+                        <article class="entry-card">
+                            <div class="entry-header">
+                                <div class="entry-date">
+                                    <span class="date-day">15</span>
+                                    <span class="date-month">Mar</span>
+                                </div>
+                                <div class="entry-mood">
+                                    <span class="mood-emoji">😊</span>
+                                    <span class="mood-label">Happy</span>
+                                </div>
+                            </div>
+                            <div class="entry-content">
+                                <h3 class="entry-title">Great Day at Work</h3>
+                                <p class="entry-excerpt">Had an amazing presentation today and my boss loved the ideas. Feeling really accomplished and proud of what I achieved...</p>
+                                <div class="entry-tags">
+                                    <span class="tag">Work</span>
+                                    <span class="tag">Achievement</span>
+                                </div>
+                            </div>
+                            <div class="entry-footer">
+                                <button class="btn-read-more">Read More</button>
+                            </div>
+                        </article>
+
+                        <!-- Entry Card 2 -->
+                        <article class="entry-card">
+                            <div class="entry-header">
+                                <div class="entry-date">
+                                    <span class="date-day">14</span>
+                                    <span class="date-month">Mar</span>
+                                </div>
+                                <div class="entry-mood">
+                                    <span class="mood-emoji">😔</span>
+                                    <span class="mood-label">Sad</span>
+                                </div>
+                            </div>
+                            <div class="entry-content">
+                                <h3 class="entry-title">Missing Home</h3>
+                                <p class="entry-excerpt">Feeling a bit homesick today. Been thinking about family and how much I miss our weekend gatherings. Sometimes living far away is tough...</p>
+                                <div class="entry-tags">
+                                    <span class="tag">Personal</span>
+                                    <span class="tag">Family</span>
+                                </div>
+                            </div>
+                            <div class="entry-footer">
+                                <button class="btn-read-more">Read More</button>
+                            </div>
+                        </article>
+
+                        <!-- Entry Card 3 -->
+                        <article class="entry-card">
+                            <div class="entry-header">
+                                <div class="entry-date">
+                                    <span class="date-day">13</span>
+                                    <span class="date-month">Mar</span>
+                                </div>
+                                <div class="entry-mood">
+                                    <span class="mood-emoji">😌</span>
+                                    <span class="mood-label">Calm</span>
+                                </div>
+                            </div>
+                            <div class="entry-content">
+                                <h3 class="entry-title">Morning Meditation</h3>
+                                <p class="entry-excerpt">Started the day with 20 minutes of meditation. It really helped center my thoughts and set a peaceful tone for the rest of the day...</p>
+                                <div class="entry-tags">
+                                    <span class="tag">Health</span>
+                                    <span class="tag">Mindfulness</span>
+                                </div>
+                            </div>
+                            <div class="entry-footer">
+                                <button class="btn-read-more">Read More</button>
+                            </div>
+                        </article>
+
+                        <!-- Entry Card 4 -->
+                        <article class="entry-card">
+                            <div class="entry-header">
+                                <div class="entry-date">
+                                    <span class="date-day">12</span>
+                                    <span class="date-month">Mar</span>
+                                </div>
+                                <div class="entry-mood">
+                                    <span class="mood-emoji">😡</span>
+                                    <span class="mood-label">Angry</span>
+                                </div>
+                            </div>
+                            <div class="entry-content">
+                                <h3 class="entry-title">Traffic Frustration</h3>
+                                <p class="entry-excerpt">Got stuck in terrible traffic for two hours today. People were cutting lanes and it just made me so frustrated. Need to find better routes...</p>
+                                <div class="entry-tags">
+                                    <span class="tag">Daily</span>
+                                    <span class="tag">Frustration</span>
+                                </div>
+                            </div>
+                            <div class="entry-footer">
+                                <button class="btn-read-more">Read More</button>
+                            </div>
+                        </article>
+
+                        <!-- Entry Card 5 -->
+                        <article class="entry-card">
+                            <div class="entry-header">
+                                <div class="entry-date">
+                                    <span class="date-day">11</span>
+                                    <span class="date-month">Mar</span>
+                                </div>
+                                <div class="entry-mood">
+                                    <span class="mood-emoji">😰</span>
+                                    <span class="mood-label">Anxious</span>
+                                </div>
+                            </div>
+                            <div class="entry-content">
+                                <h3 class="entry-title">Big Presentation Tomorrow</h3>
+                                <p class="entry-excerpt">Feeling nervous about the big presentation tomorrow. Been practicing all day but still worried about forgetting something important...</p>
+                                <div class="entry-tags">
+                                    <span class="tag">Work</span>
+                                    <span class="tag">Anxiety</span>
+                                </div>
+                            </div>
+                            <div class="entry-footer">
+                                <button class="btn-read-more">Read More</button>
+                            </div>
+                        </article>
+
+                        <!-- Entry Card 6 -->
+                        <article class="entry-card">
+                            <div class="entry-header">
+                                <div class="entry-date">
+                                    <span class="date-day">10</span>
+                                    <span class="date-month">Mar</span>
+                                </div>
+                                <div class="entry-mood">
+                                    <span class="mood-emoji">😊</span>
+                                    <span class="mood-label">Happy</span>
+                                </div>
+                            </div>
+                            <div class="entry-content">
+                                <h3 class="entry-title">Weekend Adventure</h3>
+                                <p class="entry-excerpt">Went hiking with friends this weekend. The weather was perfect and the views were breathtaking. Feeling refreshed and grateful for nature...</p>
+                                <div class="entry-tags">
+                                    <span class="tag">Friends</span>
+                                    <span class="tag">Nature</span>
+                                </div>
+                            </div>
+                            <div class="entry-footer">
+                                <button class="btn-read-more">Read More</button>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <!-- Load More -->
+                <section class="load-more-section">
+                    <button class="btn-load-more" id="loadMoreBtn">Load More Entries</button>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="side-bar.js"></script>
+    <script src="entries.js"></script>
+</body>
+</html>
