@@ -132,18 +132,6 @@
     color: white;
 }
 
-.copyright {
-    padding: 1rem 2rem;
-    border-top: 1px solid var(--border-color);
-    text-align: center;
-}
-
-.copyright p {
-    font-size: 11px;
-    color: var(--text-muted);
-    margin: 0;
-}
-
 /* Mobile Menu Toggle */
 .mobile-menu-toggle {
     display: none;
@@ -158,10 +146,6 @@
     border-radius: 8px;
     cursor: pointer;
     font-size: 1.25rem;
-}
-
-.nav-item.active .nav-link i {
-    color: var(--primary-color);
 }
 
 /* User Profile Section */
