@@ -1,0 +1,477 @@
+// DiariCore Suggestions Page JavaScript
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize components
+    initializeSuggestions();
+    initializeQuickActions();
+    initializeInteractiveElements();
+    animateProgressBars();
+});
+
+// Initialize Suggestions
+function initializeSuggestions() {
+    // Add click handlers to suggestion cards
+    const suggestionCards = document.querySelectorAll('.suggestion-card');
+    suggestionCards.forEach(card => {
+        card.addEventListener('click', function(e) {
+            // Don't trigger if clicking on buttons
+            if (!e.target.closest('button')) {
+                const title = this.querySelector('.card-title').textContent;
+                showNotification(`Opening ${title}...`, 'info');
+                console.log('Suggestion card clicked:', title);
+            }
+        });
+    });
+
+    // Add click handlers to action buttons
+    const actionButtons = document.querySelectorAll('.btn-action');
+    actionButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const cardTitle = this.closest('.suggestion-card').querySelector('.card-title').textContent;
+            handleActionClick(cardTitle, this.textContent);
+        });
+    });
+
+    // Add click handlers to recommendation items
+    const recommendationItems = document.querySelectorAll('.recommendation-item, .content-item, .activity-item, .tip-item');
+    recommendationItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const title = this.querySelector('h4').textContent;
+            showNotification(`Opening: ${title}`, 'info');
+            console.log('Recommendation clicked:', title);
+        });
+    });
+}
+
+// Handle Action Button Clicks
+function handleActionClick(cardTitle, actionText) {
+    const actions = {
+        'Emotional Support': {
+            'View All Support Options': () => showSupportOptions()
+        },
+        'Activity Suggestions': {
+            'Explore More Activities': () => showMoreActivities()
+        },
+        'Content Recommendations': {
+            'Browse Library': () => showContentLibrary()
+        },
+        'Daily Wellness Tips': {
+            'View Full Schedule': () => showWellnessSchedule()
+        }
+    };
+
+    if (actions[cardTitle] && actions[cardTitle][actionText]) {
+        actions[cardTitle][actionText]();
+    } else {
+        showNotification(`Action: ${actionText}`, 'info');
+    }
+}
+
+// Show Support Options
+function showSupportOptions() {
+    showNotification('Loading support options...', 'info');
+    // In a real app, this would open a modal or navigate to support page
+    console.log('Opening support options');
+}
+
+// Show More Activities
+function showMoreActivities() {
+    showNotification('Loading more activities...', 'info');
+    // In a real app, this would load more activities
+    console.log('Loading more activities');
+}
+
+// Show Content Library
+function showContentLibrary() {
+    showNotification('Opening content library...', 'info');
+    // In a real app, this would navigate to content library
+    console.log('Opening content library');
+}
+
+// Show Wellness Schedule
+function showWellnessSchedule() {
+    showNotification('Loading wellness schedule...', 'info');
+    // In a real app, this would show detailed schedule
+    console.log('Loading wellness schedule');
+}
+
+// Initialize Quick Actions
+function initializeQuickActions() {
+    const quickActionButtons = document.querySelectorAll('.quick-action-btn');
+    
+    quickActionButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const action = this.textContent.trim();
+            handleQuickAction(action);
+        });
+    });
+}
+
+// Handle Quick Actions
+function handleQuickAction(action) {
+    const actions = {
+        'Emergency Support': () => handleEmergencySupport(),
+        'Breathing Exercise': () => startBreathingExercise(),
+        'Quick Journal': () => openQuickJournal(),
+        'Calm Music': () => playCalmMusic()
+    };
+
+    if (actions[action]) {
+        actions[action]();
+    } else {
+        showNotification(`Action: ${action}`, 'info');
+    }
+}
+
+// Handle Emergency Support
+function handleEmergencySupport() {
+    // Show confirmation dialog
+    const confirmed = confirm('Are you in need of immediate emergency support? This will connect you with crisis resources.');
+    
+    if (confirmed) {
+        showNotification('Connecting to emergency support resources...', 'warning');
+        // In a real app, this would show emergency contacts or crisis hotline
+        setTimeout(() => {
+            showNotification('Emergency resources loaded. Please reach out to: 988 (Crisis Line)', 'error');
+        }, 2000);
+    }
+}
+
+// Start Breathing Exercise
+function startBreathingExercise() {
+    showNotification('Starting breathing exercise...', 'info');
+    createBreathingModal();
+}
+
+// Create Breathing Exercise Modal
+function createBreathingModal() {
+    // Remove existing modal if any
+    const existingModal = document.querySelector('.breathing-modal');
+    if (existingModal) {
+        existingModal.remove();
+    }
+
+    const modal = document.createElement('div');
+    modal.className = 'breathing-modal';
+    modal.innerHTML = `
+        <div class="breathing-overlay">
+            <div class="breathing-content">
+                <div class="breathing-close">
+                    <button class="close-btn">&times;</button>
+                </div>
+                <h3>Breathing Exercise</h3>
+                <div class="breathing-circle">
+                    <div class="breathing-inner"></div>
+                    <div class="breathing-text">Breathe In</div>
+                </div>
+                <div class="breathing-instructions">
+                    <p>Follow the circle's rhythm. Inhale as it expands, exhale as it contracts.</p>
+                    <p>Continue for 1 minute or until you feel calmer.</p>
+                </div>
+                <div class="breathing-timer">
+                    <span class="timer-text">0:00</span>
+                </div>
+            </div>
+        </div>
+    `;
+
+    // Add styles
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    `;
+
+    const overlay = modal.querySelector('.breathing-overlay');
+    overlay.style.cssText = `
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    `;
+
+    const content = modal.querySelector('.breathing-content');
+    content.style.cssText = `
+        background: white;
+        border-radius: 16px;
+        padding: 2rem;
+        max-width: 400px;
+        width: 90%;
+        text-align: center;
+        position: relative;
+    `;
+
+    const breathingCircle = modal.querySelector('.breathing-circle');
+    breathingCircle.style.cssText = `
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #6F8F7F, #8FAF9F);
+        margin: 2rem auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        animation: breathe 4s ease-in-out infinite;
+    `;
+
+    const breathingInner = modal.querySelector('.breathing-inner');
+    breathingInner.style.cssText = `
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    `;
+
+    const breathingText = modal.querySelector('.breathing-text');
+    breathingText.style.cssText = `
+        position: absolute;
+        font-size: 16px;
+        font-weight: 600;
+        color: #6F8F7F;
+    `;
+
+    const instructions = modal.querySelector('.breathing-instructions');
+    instructions.style.cssText = `
+        margin-bottom: 1rem;
+    `;
+
+    const timer = modal.querySelector('.breathing-timer');
+    timer.style.cssText = `
+        font-size: 24px;
+        font-weight: 600;
+        color: #6F8F7F;
+    `;
+
+    // Add CSS animation
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+    `;
+    document.head.appendChild(style);
+
+    // Add close handler
+    const closeBtn = modal.querySelector('.close-btn');
+    closeBtn.style.cssText = `
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        color: #666;
+    `;
+
+    closeBtn.addEventListener('click', () => {
+        modal.remove();
+        style.remove();
+    });
+
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+            modal.remove();
+            style.remove();
+        }
+    });
+
+    document.body.appendChild(modal);
+
+    // Start breathing animation
+    startBreathingAnimation(modal);
+    startBreathingTimer(modal);
+}
+
+// Start Breathing Animation
+function startBreathingAnimation(modal) {
+    const breathingText = modal.querySelector('.breathing-text');
+    let phase = 0;
+    
+    setInterval(() => {
+        phase = (phase + 1) % 4;
+        switch(phase) {
+            case 0:
+                breathingText.textContent = 'Breathe In';
+                break;
+            case 1:
+                breathingText.textContent = 'Hold';
+                break;
+            case 2:
+                breathingText.textContent = 'Breathe Out';
+                break;
+            case 3:
+                breathingText.textContent = 'Hold';
+                break;
+        }
+    }, 1000);
+}
+
+// Start Breathing Timer
+function startBreathingTimer(modal) {
+    const timerText = modal.querySelector('.timer-text');
+    let seconds = 0;
+    
+    const interval = setInterval(() => {
+        seconds++;
+        const minutes = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        timerText.textContent = `${minutes}:${secs.toString().padStart(2, '0')}`;
+        
+        if (seconds >= 60) {
+            clearInterval(interval);
+            setTimeout(() => {
+                showNotification('Breathing exercise completed!', 'success');
+            }, 1000);
+        }
+    }, 1000);
+}
+
+// Open Quick Journal
+function openQuickJournal() {
+    showNotification('Opening quick journal...', 'info');
+    // In a real app, this would open a quick journal modal
+    console.log('Opening quick journal');
+}
+
+// Play Calm Music
+function playCalmMusic() {
+    showNotification('Loading calm music playlist...', 'info');
+    // In a real app, this would play music or open music player
+    console.log('Playing calm music');
+}
+
+// Initialize Interactive Elements
+function initializeInteractiveElements() {
+    // Add hover effects to insight cards
+    const insightCards = document.querySelectorAll('.insight-card');
+    insightCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-4px)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(-2px)';
+        });
+    });
+
+    // Add click handlers to insight cards
+    insightCards.forEach(card => {
+        card.addEventListener('click', function() {
+            const title = this.querySelector('.insight-title').textContent;
+            showNotification(`Viewing details for: ${title}`, 'info');
+            console.log('Insight clicked:', title);
+        });
+    });
+}
+
+// Animate Progress Bars
+function animateProgressBars() {
+    const progressFills = document.querySelectorAll('.progress-fill');
+    
+    // Set initial width to 0
+    progressFills.forEach(fill => {
+        const targetWidth = fill.style.width;
+        fill.style.width = '0%';
+        
+        // Animate to target width after a delay
+        setTimeout(() => {
+            fill.style.width = targetWidth;
+        }, 500);
+    });
+}
+
+// Show Notification
+function showNotification(message, type = 'info') {
+    // Remove existing notification
+    const existingNotification = document.querySelector('.suggestions-notification');
+    if (existingNotification) {
+        existingNotification.remove();
+    }
+
+    // Create notification
+    const notification = document.createElement('div');
+    notification.className = 'suggestions-notification';
+    notification.innerHTML = `
+        <i class="bi bi-${getNotificationIcon(type)}"></i>
+        <span>${message}</span>
+    `;
+
+    // Style the notification
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 1rem 1.5rem;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-weight: 500;
+        z-index: 10000;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        max-width: 400px;
+        word-wrap: break-word;
+        background: ${getNotificationColor(type)};
+        color: white;
+        font-family: 'Inter', sans-serif;
+    `;
+
+    document.body.appendChild(notification);
+
+    // Animate in
+    setTimeout(() => {
+        notification.style.transform = 'translateX(0)';
+    }, 10);
+
+    // Remove after delay
+    setTimeout(() => {
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.remove();
+            }
+        }, 300);
+    }, 3000);
+}
+
+// Get Notification Icon
+function getNotificationIcon(type) {
+    const icons = {
+        'success': 'check-circle',
+        'error': 'x-circle',
+        'warning': 'exclamation-triangle',
+        'info': 'info-circle'
+    };
+    return icons[type] || 'info-circle';
+}
+
+// Get Notification Color
+function getNotificationColor(type) {
+    const colors = {
+        'success': '#7FBF9F',
+        'error': '#E74C3C',
+        'warning': '#F4A261',
+        'info': '#7FA7BF'
+    };
+    return colors[type] || '#7FA7BF';
+}
