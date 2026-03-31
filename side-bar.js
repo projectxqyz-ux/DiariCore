@@ -119,11 +119,11 @@ class SidebarComponent {
         const logoutBtn = this.sidebarElement.querySelector('.logout-btn');
         if (logoutBtn) {
             logoutBtn.addEventListener('click', () => {
+                // Clear authentication data
+                localStorage.removeItem('diariCoreUser');
+                // Redirect to login page
                 window.location.href = 'index.html';
             });
-            console.log('Logout button event listener attached');
-        } else {
-            console.log('Logout button not found');
         }
     }
 
