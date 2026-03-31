@@ -385,66 +385,94 @@ input:checked + .toggle-slider:before {
 }
 
 .setting-card {
-    background-color: var(--card-background);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 1.5rem;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border: 2px solid var(--primary-color);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 8px 32px rgba(99, 102, 241, 0.15);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
     display: flex;
     align-items: center;
-    gap: 1rem;
-    transition: all 0.2s ease;
+    gap: 1.5rem;
+}
+
+.setting-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+    border-radius: 16px 16px 0 0;
 }
 
 .setting-card:hover {
-    box-shadow: var(--box-shadow-hover);
     transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(99, 102, 241, 0.2);
 }
 
 .setting-icon {
-    width: 48px;
-    height: 48px;
+    width: 56px;
+    height: 56px;
     border-radius: 12px;
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(99, 102, 241, 0.05));
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
-    font-size: 1.25rem;
+    color: var(--primary-color);
+    font-size: 1.5rem;
     flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+
+.setting-icon:hover {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(99, 102, 241, 0.1));
+    transform: scale(1.05);
 }
 
 .setting-content {
     flex: 1;
 }
 
-.setting-title {
-    font-size: 16px;
+.setting-content h3 {
+    font-size: 18px;
     font-weight: 600;
     color: var(--text-dark);
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.3px;
 }
 
-.setting-description {
-    font-size: 13px;
+.setting-content p {
+    font-size: 14px;
     color: var(--text-secondary);
     margin: 0;
+    line-height: 1.5;
+}
+
+.setting-action {
+    flex-shrink: 0;
 }
 
 .btn-edit {
-    padding: 0.5rem 1rem;
-    background-color: transparent;
-    border: 1px solid var(--primary-color);
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(99, 102, 241, 0.05));
+    border: 1px solid rgba(99, 102, 241, 0.2);
     color: var(--primary-color);
-    border-radius: 6px;
-    font-size: 13px;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 14px;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
 }
 
 .btn-edit:hover {
-    background-color: var(--primary-color);
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
     color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
 }
 
 /* Appearance & Notifications Section */
@@ -567,27 +595,51 @@ input:checked + .toggle-slider:before {
 }
 
 .danger-zone-card {
-    background-color: var(--danger-bg);
-    border: 1px solid var(--danger-color);
-    border-radius: 12px;
+    background: linear-gradient(135deg, #fff5f5 0%, #fef2f2 100%);
+    border: 2px solid var(--danger-color);
+    border-radius: 16px;
     padding: 2rem;
+    box-shadow: 0 8px 32px rgba(220, 38, 38, 0.15);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.danger-zone-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--danger-color), #ef4444);
+    border-radius: 16px 16px 0 0;
+}
+
+.danger-zone-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(220, 38, 38, 0.2);
 }
 
 .danger-zone-header {
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(220, 38, 38, 0.1);
 }
 
 .danger-zone-title {
-    font-size: 1.25rem;
-    font-weight: 600;
+    font-size: 20px;
+    font-weight: 700;
     color: var(--danger-color);
     margin-bottom: 0.5rem;
+    letter-spacing: -0.5px;
 }
 
 .danger-zone-description {
     font-size: 14px;
     color: var(--text-secondary);
     margin: 0;
+    line-height: 1.5;
 }
 
 .danger-actions {
@@ -603,25 +655,35 @@ input:checked + .toggle-slider:before {
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
 .btn-deactivate {
-    background-color: var(--warning-color);
-    color: white;
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(245, 158, 11, 0.05));
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    color: var(--warning-color);
 }
 
 .btn-deactivate:hover {
-    background-color: #E39340;
+    background: linear-gradient(135deg, var(--warning-color), #E39340);
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
 }
 
 .btn-delete-account {
-    background-color: var(--danger-color);
-    color: white;
+    background: linear-gradient(135deg, rgba(220, 38, 38, 0.1), rgba(220, 38, 38, 0.05));
+    border: 1px solid rgba(220, 38, 38, 0.3);
+    color: var(--danger-color);
 }
 
 .btn-delete-account:hover {
-    background-color: #D62C1C;
+    background: linear-gradient(135deg, var(--danger-color), #D62C1C);
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
 }
 
 /* Responsive Design */
