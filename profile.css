@@ -2,37 +2,39 @@
 
 :root {
     /* Primary Sage Greens */
-    --primary-color: #6F8F7F;
-    --primary-hover: #5F7F6F;
-    --primary-light: #8FAF9F;
+    --primary-color: #6B8E7E;
+    --primary-hover: #5A7A6B;
+    --primary-light: #8FA8A0;
     --accent-green: #AFC5B8;
     
     /* Backgrounds */
-    --background-color: #F5F7F6;
-    --background-soft: #EEF2F0;
-    --background-accent: #E6EFEA;
+    --background-color: #F8F9F7;
+    --background-soft: #F0F3F1;
+    --background-accent: #E8F0ED;
     --card-background: #FFFFFF;
     
     /* Text Colors */
-    --text-dark: #2F3E36;
-    --text-secondary: #6B7C74;
+    --text-dark: #2C3E35;
+    --text-secondary: #6B7D73;
     --text-muted: #9AA9A1;
     
     /* Status Colors */
-    --success-color: #7FBF9F;
-    --success-bg: #E8F5EF;
-    --warning-color: #F4A261;
-    --warning-bg: #FFF4E6;
-    --info-color: #7FA7BF;
-    --info-bg: #EAF3F8;
-    --danger-color: #E74C3C;
-    --danger-bg: #FDEDEC;
+    --success-color: #10B981;
+    --success-bg: #D1FAE5;
+    --warning-color: #F59E0B;
+    --warning-bg: #FEF3C7;
+    --info-color: #3B82F6;
+    --info-bg: #DBEAFE;
+    --danger-color: #EF4444;
+    --danger-bg: #FEE2E2;
     
     /* Borders and Dividers */
-    --border-color: #E0E6E3;
+    --border-color: #D4E0DA;
     --divider-color: #D5DDDA;
     
     /* Shadows */
+    --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    --box-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
     --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     --box-shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.08);
     
@@ -231,7 +233,7 @@ body {
     border: 2px solid var(--primary-color);
     border-radius: 16px;
     padding: 2rem;
-    box-shadow: 0 8px 32px rgba(99, 102, 241, 0.15);
+    box-shadow: 0 8px 32px rgba(107, 142, 126, 0.15);
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
@@ -250,7 +252,7 @@ body {
 
 .appearance-options:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 40px rgba(99, 102, 241, 0.2);
+    box-shadow: 0 12px 40px rgba(107, 142, 126, 0.2);
 }
 
 .appearance-header {
@@ -262,13 +264,13 @@ body {
     align-items: center;
     gap: 1rem;
     padding-bottom: 1rem;
-    border-bottom: 1px solid rgba(99, 102, 241, 0.1);
+    border-bottom: 1px solid rgba(107, 142, 126, 0.1);
 }
 
 .appearance-icon {
     font-size: 1.5rem;
     color: var(--primary-color);
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(99, 102, 241, 0.05));
+    background: linear-gradient(135deg, rgba(107, 142, 126, 0.1), rgba(107, 142, 126, 0.05));
     width: 48px;
     height: 48px;
     border-radius: 12px;
@@ -279,7 +281,7 @@ body {
 }
 
 .appearance-icon:hover {
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(99, 102, 241, 0.1));
+    background: linear-gradient(135deg, rgba(107, 142, 126, 0.2), rgba(107, 142, 126, 0.1));
     transform: scale(1.05);
 }
 
@@ -296,15 +298,15 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 1.5rem;
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(99, 102, 241, 0.02));
+    background: linear-gradient(135deg, rgba(107, 142, 126, 0.05), rgba(107, 142, 126, 0.02));
     border-radius: 12px;
-    border: 1px solid rgba(99, 102, 241, 0.1);
+    border: 1px solid rgba(107, 142, 126, 0.1);
     transition: all 0.3s ease;
 }
 
 .appearance-item:hover {
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(99, 102, 241, 0.04));
-    border-color: rgba(99, 102, 241, 0.2);
+    background: linear-gradient(135deg, rgba(107, 142, 126, 0.08), rgba(107, 142, 126, 0.04));
+    border-color: rgba(107, 142, 126, 0.2);
     transform: translateX(4px);
 }
 
@@ -365,12 +367,12 @@ body {
 
 input:checked + .toggle-slider {
     background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-    box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+    box-shadow: 0 0 20px rgba(107, 142, 126, 0.4);
 }
 
 input:checked + .toggle-slider:before {
     transform: translateX(28px);
-    box-shadow: 0 2px 12px rgba(99, 102, 241, 0.3);
+    box-shadow: 0 2px 12px rgba(107, 142, 126, 0.3);
 }
 
 /* Notifications Section */
@@ -383,7 +385,7 @@ input:checked + .toggle-slider:before {
     border: 2px solid var(--primary-color);
     border-radius: 16px;
     padding: 2rem;
-    box-shadow: 0 8px 32px rgba(99, 102, 241, 0.15);
+    box-shadow: 0 8px 32px rgba(107, 142, 126, 0.15);
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
@@ -402,7 +404,7 @@ input:checked + .toggle-slider:before {
 
 .notifications-options:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 40px rgba(99, 102, 241, 0.2);
+    box-shadow: 0 12px 40px rgba(107, 142, 126, 0.2);
 }
 
 .notifications-header {
@@ -414,13 +416,13 @@ input:checked + .toggle-slider:before {
     align-items: center;
     gap: 1rem;
     padding-bottom: 1rem;
-    border-bottom: 1px solid rgba(99, 102, 241, 0.1);
+    border-bottom: 1px solid rgba(107, 142, 126, 0.1);
 }
 
 .notifications-icon {
     font-size: 1.5rem;
     color: var(--primary-color);
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(99, 102, 241, 0.05));
+    background: linear-gradient(135deg, rgba(107, 142, 126, 0.1), rgba(107, 142, 126, 0.05));
     width: 48px;
     height: 48px;
     border-radius: 12px;
@@ -431,7 +433,7 @@ input:checked + .toggle-slider:before {
 }
 
 .notifications-icon:hover {
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(99, 102, 241, 0.1));
+    background: linear-gradient(135deg, rgba(107, 142, 126, 0.2), rgba(107, 142, 126, 0.1));
     transform: scale(1.05);
 }
 
@@ -448,9 +450,9 @@ input:checked + .toggle-slider:before {
     align-items: center;
     justify-content: space-between;
     padding: 1.5rem;
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(99, 102, 241, 0.02));
+    background: linear-gradient(135deg, rgba(107, 142, 126, 0.05), rgba(107, 142, 126, 0.02));
     border-radius: 12px;
-    border: 1px solid rgba(99, 102, 241, 0.1);
+    border: 1px solid rgba(107, 142, 126, 0.1);
     transition: all 0.3s ease;
     margin-bottom: 1rem;
 }
@@ -460,8 +462,8 @@ input:checked + .toggle-slider:before {
 }
 
 .notifications-item:hover {
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(99, 102, 241, 0.04));
-    border-color: rgba(99, 102, 241, 0.2);
+    background: linear-gradient(135deg, rgba(107, 142, 126, 0.08), rgba(107, 142, 126, 0.04));
+    border-color: rgba(107, 142, 126, 0.2);
     transform: translateX(4px);
 }
 
@@ -492,20 +494,20 @@ input:checked + .toggle-slider:before {
     cursor: pointer;
     min-width: 120px;
     text-align: center;
-    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.1);
+    box-shadow: 0 4px 12px rgba(107, 142, 126, 0.1);
 }
 
 .time-input:hover {
     background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
     color: white;
     transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3);
+    box-shadow: 0 6px 20px rgba(107, 142, 126, 0.3);
 }
 
 .time-input:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+    box-shadow: 0 0 0 4px rgba(107, 142, 126, 0.15);
     background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
     color: white;
 }
@@ -526,7 +528,7 @@ input:checked + .toggle-slider:before {
     border: 2px solid var(--primary-color);
     border-radius: 16px;
     padding: 2rem;
-    box-shadow: 0 8px 32px rgba(99, 102, 241, 0.15);
+    box-shadow: 0 8px 32px rgba(107, 142, 126, 0.15);
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
@@ -548,14 +550,14 @@ input:checked + .toggle-slider:before {
 
 .setting-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 40px rgba(99, 102, 241, 0.2);
+    box-shadow: 0 12px 40px rgba(107, 142, 126, 0.2);
 }
 
 .setting-icon {
     width: 56px;
     height: 56px;
     border-radius: 12px;
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(99, 102, 241, 0.05));
+    background: linear-gradient(135deg, rgba(107, 142, 126, 0.1), rgba(107, 142, 126, 0.05));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -566,7 +568,7 @@ input:checked + .toggle-slider:before {
 }
 
 .setting-icon:hover {
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(99, 102, 241, 0.1));
+    background: linear-gradient(135deg, rgba(107, 142, 126, 0.2), rgba(107, 142, 126, 0.1));
     transform: scale(1.05);
 }
 
@@ -594,8 +596,8 @@ input:checked + .toggle-slider:before {
 }
 
 .btn-edit {
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(99, 102, 241, 0.05));
-    border: 1px solid rgba(99, 102, 241, 0.2);
+    background: linear-gradient(135deg, rgba(107, 142, 126, 0.1), rgba(107, 142, 126, 0.05));
+    border: 1px solid rgba(107, 142, 126, 0.2);
     color: var(--primary-color);
     padding: 0.75rem 1.5rem;
     border-radius: 8px;
@@ -609,7 +611,7 @@ input:checked + .toggle-slider:before {
     background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
     color: white;
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    box-shadow: 0 4px 12px rgba(107, 142, 126, 0.3);
 }
 
 /* Appearance & Notifications Section */
