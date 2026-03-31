@@ -154,6 +154,32 @@
     font-size: 1.25rem;
 }
 
+/* Special Dashboard Highlight */
+.nav-item[data-page="dashboard"] .nav-link {
+    background: linear-gradient(135deg, var(--background-soft), var(--primary-light));
+    border: 1px solid var(--primary-color);
+    border-radius: 8px;
+    color: var(--primary-color);
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(111, 143, 127, 0.1);
+}
+
+.nav-item[data-page="dashboard"] .nav-link::before {
+    content: '';
+    display: none;
+}
+
+.nav-item[data-page="dashboard"] .nav-link:hover {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(111, 143, 127, 0.3);
+}
+
+.nav-item[data-page="dashboard"] .nav-link i {
+    color: var(--primary-color);
+}
+
 /* User Profile Section */
 .user-profile {
     padding: 1.5rem 2rem 2rem;
