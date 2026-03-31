@@ -12,7 +12,6 @@ class SidebarComponent {
     init() {
         this.loadSidebar();
         this.setupMobileToggle();
-        this.setActivePage();
         this.setupEventListeners();
     }
 
@@ -35,6 +34,9 @@ class SidebarComponent {
             
             // Insert sidebar into the page
             this.insertSidebar();
+            
+            // Set active page AFTER sidebar is loaded
+            this.setActivePage();
             
         } catch (error) {
             console.error('Failed to load sidebar:', error);
