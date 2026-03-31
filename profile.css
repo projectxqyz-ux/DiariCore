@@ -480,6 +480,29 @@ input:checked + .toggle-slider:before {
     line-height: 1.5;
 }
 
+.time-input {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(99, 102, 241, 0.02));
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-dark);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.time-input:hover {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(99, 102, 241, 0.04));
+    border-color: rgba(99, 102, 241, 0.3);
+}
+
+.time-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
 /* Account Settings Section */
 .account-settings-section {
     margin-bottom: 3rem;
