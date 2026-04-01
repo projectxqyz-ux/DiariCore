@@ -243,7 +243,7 @@ body {
 }
 
 .stat-value.insight-text {
-    font-size: 18px; /* Changed from 19px to 18px */
+    font-size: 17.5px; /* Changed from 18px to 17.5px */
     font-style: italic;
     line-height: 1.4;
     color: var(--primary-color);
