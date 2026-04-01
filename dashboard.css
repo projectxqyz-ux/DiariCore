@@ -532,12 +532,12 @@ body {
     }
     
     .main-title {
-        font-size: 6px !important; /* As requested - force apply */
+        font-size: 1px !important; /* As requested */
         margin-bottom: 0.1rem;
     }
     
     .subtitle {
-        font-size: 4px !important; /* As requested - force apply */
+        font-size: 7px !important; /* As requested */
     }
     
     .header-section {
