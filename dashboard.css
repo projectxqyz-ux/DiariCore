@@ -719,7 +719,7 @@ body {
         flex-direction: column;
         align-items: flex-start;
         margin-left: 0rem; /* Absolute left */
-        margin-top: 0.8rem; /* Same as plus icon top - directly under */
+        margin-top: 3.2rem; /* 0.8rem (plus icon top) + 36px (plus icon height) = directly below */
         padding-left: 0.8rem; /* Same as plus icon left - aligned */
     }
     
