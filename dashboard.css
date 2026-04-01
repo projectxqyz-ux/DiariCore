@@ -192,7 +192,7 @@ body {
 }
 
 .subtitle {
-    font-size: 14px;
+    font-size: 16px; /* Increased from 14px for better desktop visibility */
     font-weight: 400;
     color: var(--text-secondary);
     margin: 0;
@@ -321,7 +321,7 @@ body {
 
 .btn-description {
     display: block;
-    font-size: 12px;
+    font-size: 14px; /* Increased from 12px for better desktop visibility */
     font-weight: 400;
     opacity: 0.9;
 }
@@ -680,6 +680,10 @@ body {
     
     .btn-description {
         font-size: 11px;
+    }
+    
+    .subtitle {
+        font-size: 12px !important; /* Override desktop size for mobile */
     }
 }
 
