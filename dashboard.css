@@ -661,32 +661,21 @@ body {
     
     .action-btn {
         flex: 1; /* Equal width for side by side */
-        padding: 0.8rem; /* Reduced padding for compact design */
+        padding: 1rem; /* More padding for better spacing */
         flex-direction: column; /* Column layout for better mobile design */
         text-align: center;
-        background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+        background: var(--card-background); /* Clean white background */
         border-radius: 12px;
-        box-shadow: 0 3px 10px rgba(111, 143, 127, 0.3);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .action-btn::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent);
-        pointer-events: none;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        border: 1px solid var(--border-color); /* Subtle border */
+        color: var(--text-dark); /* Dark text color */
     }
     
     .action-btn i {
-        font-size: 1.5rem; /* Larger icon */
+        font-size: 1.8rem; /* Larger icon */
         margin-right: 0;
         margin-bottom: 0.5rem;
+        color: var(--primary-color); /* Sage green icons */
     }
     
     .btn-content {
@@ -698,13 +687,13 @@ body {
     
     .btn-title {
         font-size: 14px; /* Slightly smaller for mobile */
-        margin-bottom: 0.2rem;
+        margin-bottom: 0; /* No margin since no description */
+        font-weight: 600;
+        color: var(--text-dark);
     }
     
     .btn-description {
-        font-size: 10px; /* Smaller for mobile */
-        text-align: center;
-        line-height: 1.2;
+        display: none; /* Hide descriptions to match the image */
     }
     
     .subtitle {
