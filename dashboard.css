@@ -594,7 +594,7 @@ body {
     }
     
     .stat-description {
-        font-size: 9px; /* Very small font */
+        font-size: 1rem; /* Same size as stat-value for proper positioning check */
         color: var(--text-secondary);
         white-space: nowrap;
         overflow: hidden;
