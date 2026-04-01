@@ -784,8 +784,8 @@ body {
     
     /* Apply same positioning to Voice container text */
     .action-btn:last-child .btn-content {
-        margin-left: -4.5rem; /* Same negative margin as Write container */
-        margin-top: 0.8rem; /* Same top position as Write container */
+        margin-left: -3rem; /* Adjust to the right (less negative) */
+        margin-top: 2rem; /* Move further down */
         padding-left: 0rem; /* No padding */
     }
     
