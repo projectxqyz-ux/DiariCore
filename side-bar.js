@@ -60,22 +60,22 @@ class SidebarComponent {
     }
 
     setupMobileToggle() {
-        // Only create mobile toggle and overlay on mobile devices
-        if (window.innerWidth <= 768) {
-            // Create mobile toggle button
-            this.mobileToggle = document.createElement('button');
-            this.mobileToggle.className = 'mobile-menu-toggle';
-            this.mobileToggle.innerHTML = '<i class="bi bi-list"></i>';
-            this.mobileToggle.setAttribute('aria-label', 'Toggle menu');
-            
-            // Create overlay
-            this.overlay = document.createElement('div');
-            this.overlay.className = 'sidebar-overlay';
-            
-            // Insert at the beginning of body
-            document.body.insertBefore(this.mobileToggle, document.body.firstChild);
-            document.body.insertBefore(this.overlay, document.body.firstChild);
-        }
+        // Temporarily disabled hamburger menu
+        // if (window.innerWidth <= 768) {
+        //     // Create mobile toggle button
+        //     this.mobileToggle = document.createElement('button');
+        //     this.mobileToggle.className = 'mobile-menu-toggle';
+        //     this.mobileToggle.innerHTML = '<i class="bi bi-list"></i>';
+        //     this.mobileToggle.setAttribute('aria-label', 'Toggle menu');
+        //     
+        //     // Create overlay
+        //     this.overlay = document.createElement('div');
+        //     this.overlay.className = 'sidebar-overlay';
+        //     
+        //     // Insert at the beginning of body
+        //     document.body.insertBefore(this.mobileToggle, document.body.firstChild);
+        //     document.body.insertBefore(this.overlay, document.body.firstChild);
+        // }
     }
 
     setActivePage() {
