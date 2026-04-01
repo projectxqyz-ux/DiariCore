@@ -704,7 +704,7 @@ body {
         width: 36px;
         height: 36px;
         background: rgba(255, 255, 255, 0.2);
-        border-radius: 10px;
+        border-radius: 13px; /* Updated border radius */
         display: flex;
         align-items: center;
         justify-content: center;
@@ -722,7 +722,7 @@ body {
         width: 36px;
         height: 36px;
         background: rgba(111, 143, 127, 0.1); /* Lighter shade for better contrast */
-        border-radius: 10px;
+        border-radius: 13px; /* Updated border radius */
         display: flex;
         align-items: center;
         justify-content: center;
@@ -738,7 +738,7 @@ body {
         width: 36px;
         height: 36px;
         background: rgba(111, 143, 127, 0.1); /* Lighter shade for better contrast */
-        border-radius: 10px;
+        border-radius: 13px; /* Updated border radius */
         display: flex;
         align-items: center;
         justify-content: center;
@@ -785,7 +785,7 @@ body {
     /* Apply same positioning to Voice container text */
     .action-btn:last-child .btn-content {
         margin-left: -3rem; /* Adjust to the right (less negative) */
-        margin-top: 3.5rem; /* Move further down */
+        margin-top: 3.7rem; /* Move further down */
         padding-left: 0rem; /* No padding */
     }
     
