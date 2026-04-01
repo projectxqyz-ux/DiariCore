@@ -31,8 +31,9 @@ class SidebarComponent {
             tempDiv.innerHTML = html;
             
             this.sidebarElement = tempDiv.querySelector('.sidebar');
+            this.mobileBottomNav = tempDiv.querySelector('.mobile-bottom-nav');
             
-            // Insert sidebar into the page
+            // Insert sidebar and mobile nav into the page
             this.insertSidebar();
             
             // Set active page and setup logout AFTER sidebar is loaded
@@ -56,6 +57,11 @@ class SidebarComponent {
             mainContent.parentNode.insertBefore(this.sidebarElement, mainContent);
         } else {
             document.body.appendChild(this.sidebarElement);
+        }
+        
+        // Also insert mobile bottom navigation if it exists
+        if (this.mobileBottomNav) {
+            document.body.appendChild(this.mobileBottomNav);
         }
     }
 
