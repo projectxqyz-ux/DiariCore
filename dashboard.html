@@ -30,7 +30,7 @@
             
             <!-- Stats Cards -->
             <div class="stats-cards">
-                <div class="stat-card">
+                <div class="stat-card alternating">
                     <div class="stat-content">
                         <h3 class="stat-title">Today's Mood</h3>
                         <p class="stat-value">Peaceful</p>
@@ -41,7 +41,7 @@
                     </div>
                 </div>
                 
-                <div class="stat-card">
+                <div class="stat-card alternating">
                     <div class="stat-content">
                         <h3 class="stat-title">Weekly Average</h3>
                         <p class="stat-value">7.4/10</p>
@@ -154,5 +154,33 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="side-bar.js"></script>
     <script src="dashboard.js"></script>
+    
+    <script>
+        // Mobile-only alternating text behavior
+        function handleAlternatingText() {
+            const alternatingCards = document.querySelectorAll('.stat-card.alternating');
+            
+            if (window.innerWidth <= 768) {
+                // Enable alternating on mobile
+                alternatingCards.forEach(card => {
+                    card.style.setProperty('--animation-play-state', 'running');
+                });
+            } else {
+                // Disable alternating on desktop
+                alternatingCards.forEach(card => {
+                    card.style.setProperty('--animation-play-state', 'paused');
+                    // Reset to show value only on desktop
+                    const value = card.querySelector('.stat-value');
+                    const description = card.querySelector('.stat-description');
+                    if (value) value.style.opacity = '1';
+                    if (description) description.style.opacity = '0';
+                });
+            }
+        }
+        
+        // Run on load and resize
+        handleAlternatingText();
+        window.addEventListener('resize', handleAlternatingText);
+    </script>
 </body>
 </html>
