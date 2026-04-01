@@ -134,7 +134,7 @@
 
 /* Mobile Bottom Navigation */
 .mobile-bottom-nav {
-    display: none;
+    display: none; /* Hidden by default, only shown on mobile */
     position: fixed;
     bottom: 0;
     left: 0;
@@ -144,6 +144,25 @@
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
     z-index: 1000;
     padding: 0.5rem 0;
+}
+
+/* Ensure desktop elements are always visible on desktop */
+@media (min-width: 769px) {
+    .mobile-bottom-nav {
+        display: none !important;
+    }
+    
+    .mobile-menu-toggle {
+        display: none !important;
+    }
+    
+    .sidebar-overlay {
+        display: none !important;
+    }
+    
+    .sidebar {
+        display: flex !important; /* Always show sidebar on desktop */
+    }
 }
 
 .mobile-bottom-nav-items {
