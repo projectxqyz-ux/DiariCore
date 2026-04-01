@@ -303,6 +303,10 @@
         visibility: visible !important;
     }
     
+    .mobile-bottom-nav-link i {
+        font-size: 22px !important; /* Increased icon size */
+    }
+    
     .main-content {
         margin-left: 0 !important;
         padding: 1rem !important;
