@@ -296,11 +296,11 @@
 /* Responsive Design */
 @media (max-width: 768px) {
     .sidebar {
-        display: none; /* Hide sidebar completely on mobile */
+        display: none !important; /* Hide sidebar completely on mobile */
     }
     
     .mobile-bottom-nav {
-        display: block; /* Show bottom navigation */
+        display: block !important; /* Show bottom navigation */
     }
     
     .main-content {
