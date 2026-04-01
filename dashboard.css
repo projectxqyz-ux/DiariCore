@@ -606,16 +606,30 @@ body {
         width: 100%;
         opacity: 0;
         transition: opacity 0.5s ease;
-        z-index: 1; /* Ensure it's positioned above the value */
     }
     
     .stat-value {
         font-size: 1rem; /* Smaller font */
         margin-bottom: 0.05rem;
-        position: relative;
+        position: relative; /* This creates the positioning context */
         height: 1.2em; /* Fixed height to prevent layout shift */
         overflow: hidden;
-        z-index: 0; /* Ensure value is below description when visible */
+    }
+    
+    /* Position description within stat-value */
+    .stat-card.alternating .stat-description {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        z-index: 2;
+    }
+    
+    .stat-card.alternating .stat-value {
+        z-index: 1;
     }
     
     .stat-value.insight-text {
