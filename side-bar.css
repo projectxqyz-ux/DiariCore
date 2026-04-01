@@ -161,13 +161,11 @@
 .profile-left {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    position: relative;
+    gap: 1rem;
 }
 
 .user-avatar {
     margin-bottom: 0;
-    flex-shrink: 0;
 }
 
 .avatar-img {
@@ -182,107 +180,57 @@
 .user-info {
     text-align: left;
     margin-bottom: 0;
-    flex: 1;
-    min-width: 0;
 }
 
 .user-name {
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 600;
     color: var(--text-dark);
     margin-bottom: 0.25rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .user-email {
-    font-size: 12px;
+    font-size: 13px;
     color: var(--text-secondary);
     margin: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
-.profile-menu {
-    position: relative;
-    margin-left: auto;
-}
-
-.menu-toggle {
-    background: none;
-    border: none;
-    color: var(--text-secondary);
-    cursor: pointer;
-    padding: 0.5rem;
-    border-radius: 50%;
-    transition: all 0.2s ease;
+.logout-section {
     display: flex;
-    align-items: center;
     justify-content: center;
 }
 
-.menu-toggle:hover {
-    background: var(--background-soft);
+.logout-btn {
+    background: linear-gradient(135deg, var(--background-soft), #E8F0ED);
+    border: 2px solid var(--primary-color);
     color: var(--text-dark);
-}
-
-.menu-toggle i {
-    font-size: 16px;
-}
-
-.menu-dropdown {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background: white;
-    border: 1px solid var(--border-color);
+    padding: 0.75rem 1.25rem;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    min-width: 150px;
-    z-index: 1000;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-10px);
-    transition: all 0.2s ease;
-    margin-top: 0.5rem;
-}
-
-.menu-dropdown.show {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-
-.logout-btn-dropdown {
-    background: none;
-    border: none;
-    color: var(--text-dark);
-    padding: 0.75rem 1rem;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
     display: flex;
     align-items: center;
     gap: 0.5rem;
     width: 100%;
-    text-align: left;
+    box-shadow: 0 2px 8px rgba(111, 143, 127, 0.15);
 }
 
-.logout-btn-dropdown:hover {
-    background: var(--background-soft);
-    color: var(--primary-color);
+.logout-btn:hover {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(111, 143, 127, 0.3);
 }
 
-.logout-btn-dropdown i {
+.logout-btn i {
     font-size: 16px;
-    color: var(--text-secondary);
+    color: var(--primary-color);
 }
 
-.logout-btn-dropdown:hover i {
-    color: var(--primary-color);
+.logout-btn:hover i {
+    color: white;
 }
 
 /* Responsive Design */
