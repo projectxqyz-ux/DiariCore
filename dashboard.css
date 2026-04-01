@@ -718,8 +718,9 @@ body {
         display: flex;
         flex-direction: column;
         align-items: flex-start; /* Left aligned */
-        margin-left: 0.2rem; /* Very small margin - leftmost corner */
-        margin-top: 1.5rem; /* Reduced to be closer to plus icon */
+        margin-left: 0rem; /* NO margin - absolute leftmost corner */
+        margin-top: 1.2rem; /* Further reduced to be much closer to plus icon */
+        padding-left: 0.5rem; /* Minimal padding from left border */
     }
     
     .btn-title {
