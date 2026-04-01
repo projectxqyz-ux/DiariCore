@@ -532,12 +532,19 @@ body {
     }
     
     .main-title {
-        font-size: 1.5rem; /* Reduced from 1.75rem */
-        margin-bottom: 1rem;
+        font-size: 1.1rem; /* Much smaller - from 1.5rem */
+        margin-bottom: 0.5rem;
+        text-align: left; /* Align to left */
     }
     
     .subtitle {
-        font-size: 12px; /* Reduced from 13px */
+        font-size: 10px; /* Much smaller - from 12px */
+        text-align: left; /* Align to left */
+    }
+    
+    .header-section {
+        text-align: left; /* Align entire header to left */
+        margin-bottom: 1rem; /* Reduce bottom margin */
     }
     
     .stats-cards {
