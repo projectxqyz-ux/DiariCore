@@ -581,6 +581,7 @@ body {
         min-width: 0; /* Allow content to shrink */
         display: flex;
         flex-direction: column;
+        position: relative; /* Added for proper absolute positioning of children */
     }
     
     .stat-title {
