@@ -724,14 +724,14 @@ body {
     }
     
     .btn-title {
-        font-size: 14px; /* Slightly smaller for mobile */
+        font-size: 16px; /* Enlarged from 14px for better visibility */
         margin-bottom: 0.2rem; /* Add margin for subtitle */
         font-weight: 600;
         color: inherit; /* Inherit color from parent */
     }
     
     .btn-description {
-        font-size: 11px; /* Smaller for "New Entry" text */
+        font-size: 12px; /* Enlarged from 11px for better visibility */
         font-weight: 400;
         opacity: 0.9;
         margin-bottom: 0; /* No bottom margin */
