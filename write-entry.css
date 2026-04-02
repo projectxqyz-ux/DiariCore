@@ -340,15 +340,17 @@
     }
     
     .feeling-card {
-        padding: 0.25rem; /* Very small padding */
+        padding: 0.5rem; /* Small padding */
         margin: 0;
-        border-radius: 6px; /* Smaller border radius */
+        border-radius: 6px;
+        max-width: 80px; /* Make container narrow */
+        min-height: 60px; /* Make container short */
     }
     
     .feeling-icon {
-        font-size: 1rem; /* Much smaller icon size */
-        width: 30px;
-        height: 30px;
+        font-size: 1.2rem; /* Slightly larger for small containers */
+        width: 25px;
+        height: 25px;
     }
     
     .tags-container {
