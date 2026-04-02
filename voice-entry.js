@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Update UI for recording state
             micIcon.className = 'bi bi-stop-fill';
-            voiceCircle.style.background = '#ef4444';
+            voiceCircle.classList.add('recording');
             recordingState.style.display = 'block';
             statusText.style.display = 'none';
             
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Update UI for stopped recording
         micIcon.className = 'bi bi-mic';
-        voiceCircle.style.background = 'var(--primary-color)';
+        voiceCircle.classList.remove('recording');
         recordingState.style.display = 'none';
         statusText.style.display = 'block';
         statusText.textContent = 'Recording complete';
