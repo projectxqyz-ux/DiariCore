@@ -189,6 +189,16 @@
     margin-bottom: 1rem;
 }
 
+.support-phrase {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-style: italic;
+    text-align: center;
+    margin: 0;
+    padding: 1rem 0;
+}
+
 .tips-container ul {
     list-style: none;
     padding: 0;
