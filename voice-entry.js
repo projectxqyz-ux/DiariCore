@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const transcriptText = document.getElementById('transcriptText');
     const finalTranscript = document.getElementById('finalTranscript');
     const recordingState = document.getElementById('recordingState');
+    const recordingText = document.getElementById('recordingText');
     const postRecordingContainer = document.getElementById('postRecordingContainer');
     const recordingDuration = document.getElementById('recordingDuration');
     const wordCount = document.getElementById('wordCount');
@@ -61,9 +62,10 @@ document.addEventListener('DOMContentLoaded', function() {
             micIcon.className = 'bi bi-stop-fill';
             voiceCircle.style.background = '#ef4444';
             recordingState.style.display = 'block';
+            statusText.style.display = 'none';
             
             // Start timer
-            timerInterval = setInterval(updateTimer, 100);
+            timerInterval = setInterval(updateRecordingTimer, 100);
             
         } catch (error) {
             console.error('Error accessing microphone:', error);
@@ -84,6 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
         micIcon.className = 'bi bi-mic';
         voiceCircle.style.background = 'var(--primary-color)';
         recordingState.style.display = 'none';
+        statusText.style.display = 'block';
         statusText.textContent = 'Recording complete';
         
         // Calculate final duration
@@ -98,11 +101,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 500);
     }
     
-    function updateTimer() {
+    function updateRecordingTimer() {
         const elapsed = Date.now() - startTime;
         const minutes = Math.floor(elapsed / 60000);
         const seconds = Math.floor((elapsed % 60000) / 1000);
-        recordingDuration.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        recordingText.textContent = `Recording... ${minutes}:${seconds.toString().padStart(2, '0')}`;
     }
     
     function processAudio(audioBlob) {
@@ -125,6 +128,7 @@ document.addEventListener('DOMContentLoaded', function() {
         postRecordingContainer.style.display = 'none';
         transcriptText.textContent = 'Your speech will appear here as you speak...';
         finalTranscript.textContent = 'Your speech will appear here as you speak...';
+        statusText.style.display = 'block';
         statusText.textContent = 'Tap to start recording';
         recordingDuration.textContent = '00:00';
         wordCount.textContent = '0';
