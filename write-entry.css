@@ -333,12 +333,12 @@
     }
     
     .feelings-grid {
-        grid-template-columns: 1fr; /* Single column for vertical layout */
-        gap: 0.75rem;
+        grid-template-columns: repeat(4, 1fr); /* 4 columns for horizontal layout */
+        gap: 0.5rem; /* Smaller gap for tight spacing */
     }
     
     .feeling-card {
-        padding: 1rem; /* Normal padding for single column */
+        padding: 0.75rem; /* Smaller padding for 4-column layout */
     }
     
     .feeling-icon {
