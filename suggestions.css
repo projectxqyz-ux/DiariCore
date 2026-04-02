@@ -625,13 +625,14 @@ body {
     }
     
     .emotional-support-phrase {
-        padding: 0.25rem 0.5rem -0.5rem 0.5rem;
+        padding: 0.25rem 0.5rem;
         text-align: left;
     }
     
     .support-text {
         font-size: 1rem;
         line-height: 1.4;
+        margin-bottom: -0.5rem;
     }
     
     .recommendation-grid {
