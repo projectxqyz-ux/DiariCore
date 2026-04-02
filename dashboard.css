@@ -786,10 +786,14 @@ body {
     }
     
     .subtitle {
-        font-size: 12px !important; /* Override desktop size for mobile */
         text-transform: uppercase !important; /* All caps */
         color: var(--primary-color) !important; /* Soft sage green color */
         opacity: 0.7 !important; /* Lower opacity */
+    }
+    
+    /* Remove back button that overlaps floating streak */
+    .back-btn {
+        display: none !important;
     }
     
     /* Remove mood selection - empty content */
