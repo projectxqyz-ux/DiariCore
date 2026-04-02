@@ -536,6 +536,10 @@ body {
         margin-bottom: 0.1rem;
     }
     
+    .subtitle {
+        font-size: 12px !important; /* As requested */
+    }
+    
     .header-section {
         text-align: left;
         margin-bottom: 1rem;
@@ -673,13 +677,25 @@ body {
         border-color: var(--primary-color);
     }
     
+    /* Voice Entry button keeps white background */
     .action-btn:last-child {
-        background: var(--card-background);
+        background: var(--card-background); /* Clean white background */
         color: var(--text-dark);
-        border: 1px solid var(--border-color);
     }
     
-    /* Plus icon in rounded box for Write Entry */
+    .action-btn i {
+        font-size: 1.8rem; /* Larger icon */
+        margin-right: 0;
+        margin-bottom: 0.5rem;
+        color: var(--primary-color); /* Sage green icons */
+    }
+    
+    /* White Voice Entry icon */
+    .action-btn:last-child i {
+        color: var(--primary-color);
+    }
+    
+    /* Plus icon in rounded box for Write Entry - match image exactly */
     .action-btn:first-child::before {
         content: '+';
         position: absolute;
@@ -688,7 +704,7 @@ body {
         width: 36px;
         height: 36px;
         background: rgba(255, 255, 255, 0.2);
-        border-radius: 10px;
+        border-radius: 13px; /* Updated border radius */
         display: flex;
         align-items: center;
         justify-content: center;
@@ -697,9 +713,38 @@ body {
         color: white;
     }
     
-    /* White Voice Entry icon */
+    /* Mic icon in rounded box for Voice Entry */
+    .action-btn:last-child::before {
+        content: '';
+        position: absolute;
+        top: 0.8rem;
+        left: 0.9rem; /* Moved to 0.9rem */
+        width: 36px;
+        height: 36px;
+        background: rgba(111, 143, 127, 0.1); /* Lighter shade for better contrast */
+        border-radius: 13px; /* Updated border radius */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        color: var(--primary-color); /* Soft sage green color */
+    }
+    
+    /* Position mic icon inside the rounded box */
     .action-btn:last-child i {
-        color: var(--primary-color);
+        position: absolute;
+        top: 0.8rem;
+        left: 0.9rem; /* Moved to 0.9rem */
+        width: 36px;
+        height: 36px;
+        background: rgba(111, 143, 127, 0.1); /* Lighter shade for better contrast */
+        border-radius: 13px; /* Updated border radius */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        color: var(--primary-color); /* Soft sage green color */
+        z-index: 1;
     }
     
     .btn-content {
@@ -707,24 +752,127 @@ body {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        margin-left: -0.3rem; /* Negative margin to move text left */
-        margin-top: 3.2rem; /* Position directly under plus icon */
+        margin-left: -4.5rem; /* Extreme negative margin to move text further left */
+        margin-top: 0.8rem; /* Normal top position - don't expand container */
         padding-left: 0rem; /* No padding */
     }
     
     .btn-title {
-        font-size: 14px;
-        margin-bottom: 0.2rem;
+        font-size: 16px; /* Enlarged from 14px for better visibility */
+        margin-bottom: 0.2rem; /* Add margin for subtitle */
         font-weight: 600;
-        color: inherit;
+        color: inherit; /* Inherit color from parent */
     }
     
     .btn-description {
-        font-size: 11px;
+        font-size: 12px; /* Enlarged from 11px for better visibility */
+        font-weight: 400;
+        opacity: 0.9;
+        margin-bottom: 0; /* No bottom margin */
+        color: inherit; /* Inherit color from parent */
+    }
+    
+    /* Hide Voice Entry description - show Record Journal instead */
+    .action-btn:last-child .btn-description {
+        display: block; /* Show Record Journal text */
+        font-size: 12px; /* Same size as New Entry */
         font-weight: 400;
         opacity: 0.9;
         margin-bottom: 0;
         color: inherit;
+    }
+    
+    /* Apply same positioning to Voice container text */
+    .action-btn:last-child .btn-content {
+        margin-left: -2.8rem; /* Moved to the right */
+        margin-top: 3.7rem; /* Move further down */
+        padding-left: 0rem; /* No padding */
+    }
+    
+    .subtitle {
+        font-size: 12px !important; /* Override desktop size for mobile */
+    }
+    
+    /* Hide Smart Insights section on mobile */
+    .smart-insights {
+        display: none !important;
+    }
+    
+    /* Make Weekly Glance chart smaller on mobile */
+    .weekly-glance .chart-container {
+        height: 200px !important; /* Smaller height for mobile */
+        margin: 0.5rem 0 !important; /* Reduced margin */
+        padding: 0.5rem !important; /* Reduced padding */
+    }
+    
+    .weekly-glance canvas {
+        max-height: 180px !important; /* Constrain canvas height */
+    }
+    
+    /* Reduce Weekly Glance section padding on mobile */
+    .weekly-glance {
+        padding: 1rem !important; /* Reduced section padding */
+    }
+    
+    /* Style calendar icon in Weekly Mood title */
+    .weekly-glance .section-title i {
+        margin-right: 0.5rem;
+        color: var(--primary-color);
+        font-size: 1.2rem;
+    }
+    
+    /* Mobile Smart Insights Section */
+    .mobile-smart-insights {
+        background: var(--card-background);
+        border-radius: 16px;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        border: 1px solid var(--border-color);
+    }
+    
+    .insight-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.5rem;
+    }
+    
+    .insight-title {
+        font-size: 14px; /* Smaller font size */
+        font-weight: 600;
+        color: var(--primary-color); /* Soft sage green color */
+        margin: 0;
+    }
+    
+    .insight-shortcut {
+        background: var(--primary-color);
+        border: none;
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .insight-shortcut:hover {
+        background: var(--primary-hover);
+        transform: translateX(2px);
+    }
+    
+    .insight-shortcut i {
+        color: white;
+        font-size: 14px;
+    }
+    
+    .insight-description {
+        font-size: 13px;
+        color: var(--text-muted);
+        margin: 0;
+        line-height: 1.4;
     }
 }
 

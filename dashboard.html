@@ -67,7 +67,7 @@
             <!-- Quick Actions -->
             <div class="quick-actions">
                 <div class="action-buttons">
-                    <button class="action-btn primary" onclick="window.location.href='write-entry.html'">
+                    <button class="action-btn primary">
                         <i class="bi bi-pencil"></i>
                         <div class="btn-content">
                             <span class="btn-title">Write</span>
@@ -78,16 +78,30 @@
                     <button class="action-btn primary">
                         <i class="bi bi-mic"></i>
                         <div class="btn-content">
-                            <span class="btn-title">Voice Entry</span>
-                            <span class="btn-description">Speak what's on your mind</span>
+                            <span class="btn-title">Voice</span>
+                            <span class="btn-description">Record Journal</span>
                         </div>
                     </button>
                 </div>
             </div>
             
+            <!-- Mobile Smart Insights -->
+            <div class="mobile-smart-insights">
+                <div class="insight-header">
+                    <h3 class="insight-title">✨ Smart Insights</h3>
+                    <button class="insight-shortcut" onclick="window.location.href='insights.html'">
+                        <i class="bi bi-arrow-right"></i>
+                    </button>
+                </div>
+                <p class="insight-description">You seem a bit stressed today. Would you like a calming suggestion?</p>
+            </div>
+            
             <!-- Weekly Glance -->
             <div class="weekly-glance">
-                <h2 class="section-title">Your Week at a Glance</h2>
+                <h2 class="section-title">
+                    <i class="bi bi-calendar"></i>
+                    Weekly Mood
+                </h2>
                 <div class="chart-container">
                     <canvas id="weeklyChart"></canvas>
                 </div>
