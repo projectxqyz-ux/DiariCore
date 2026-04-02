@@ -1,3 +1,37 @@
+/* DiariCore CSS Variables */
+:root {
+    /* Layout */
+    --sidebar-width: 280px;
+    
+    /* Primary Sage Greens */
+    --primary-color: #6F8F7F;
+    --primary-hover: #5F7F6F;
+    --primary-light: #8FAF9F;
+    --primary-bg: rgba(111, 143, 127, 0.1);
+    
+    /* Backgrounds */
+    --background-color: #F5F7F6;
+    --background-soft: #EEF2F0;
+    --background-accent: #F0F4F2;
+    --card-background: #FFFFFF;
+    --success-bg: rgba(111, 143, 127, 0.1);
+    
+    /* Text Colors */
+    --text-dark: #2F3E36;
+    --text-secondary: #6B7C74;
+    --text-muted: #9AA9A1;
+    
+    /* Borders and Dividers */
+    --border-color: #E0E6E3;
+    
+    /* Shadows */
+    --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    --box-shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.08);
+    
+    /* Info Color */
+    --info-color: #7BA7E0;
+}
+
 /* Voice Entry Specific Styles */
 .voice-main-content {
     margin-left: 280px;
