@@ -407,6 +407,21 @@
         padding: 0;
     }
     
+    .tag-btn {
+        padding: 0.6rem 0.4rem; /* Smaller padding */
+        font-size: 0.75rem; /* Smaller font */
+        border-radius: 8px; /* Keep same shape */
+        gap: 0.3rem;
+    }
+    
+    .tag-btn i {
+        font-size: 1rem; /* Smaller icon */
+    }
+    
+    .tag-btn span {
+        font-size: 0.7rem; /* Smaller text */
+    }
+    
     .feelings-grid.category-grid {
         grid-template-columns: repeat(4, 1fr); /* 4 columns */
         gap: 0.5rem;
