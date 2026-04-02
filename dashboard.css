@@ -792,51 +792,48 @@ body {
         opacity: 0.7 !important; /* Lower opacity */
     }
     
-    /* Add mood selection after subtitle on mobile only */
-    .subtitle::after {
-        content: '';
-        display: block;
-        margin-top: 1rem;
-    }
-    
-    .header-section::after {
-        content: '';
-        display: flex;
-        justify-content: space-between;
-        margin-top: 1rem;
-        gap: 0.5rem;
-        position: relative;
-    }
-    
-    /* Create mood buttons using CSS */
+    /* Remove mood selection - empty content */
     .header-section::before {
-        content: ": ) Happy : ( Sad : | Neutral : / Anxious : o Surprised";
-        display: flex;
-        justify-content: space-between;
-        margin-top: 1rem;
-        gap: 0.5rem;
-        font-size: 11px;
-        color: var(--text-muted);
-        font-weight: 500;
-        white-space: nowrap;
-        overflow: hidden;
+        content: '';
+        display: none;
     }
     
-    /* Add mobile smart insights after quick actions */
+    /* Fix mobile Smart Insights design */
     .quick-actions::after {
-        content: "✨ Smart Insights You seem a bit stressed today. Would you like a calming suggestion? →";
+        content: "✨ Smart Insights You seem a bit stressed today. Would you like a calming suggestion?";
         display: block;
         background: var(--card-background);
         border-radius: 16px;
         padding: 1rem;
+        padding-right: 3rem; /* Space for arrow button */
         margin-bottom: 1.5rem;
         margin-top: 1rem;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         border: 1px solid var(--border-color);
+        position: relative;
         font-size: 14px;
-        color: var(--primary-color);
+        color: var(--text-dark);
         font-weight: 600;
         line-height: 1.4;
+    }
+    
+    /* Add arrow button for Smart Insights */
+    .quick-actions::before {
+        content: "→";
+        position: absolute;
+        right: 1.5rem;
+        top: 2.5rem;
+        background: var(--primary-color);
+        color: white;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        cursor: pointer;
+        z-index: 10;
     }
     
     /* Hide Smart Insights section on mobile */
