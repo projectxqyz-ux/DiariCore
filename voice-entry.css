@@ -742,8 +742,7 @@
     }
     
     .summary-actions {
-        flex-direction: column;
-        align-items: center;
+        display: none;
     }
     
     .action-btn {
