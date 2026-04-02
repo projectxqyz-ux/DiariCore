@@ -113,7 +113,14 @@
 /* Base feelings grid (for desktop) */
 .feelings-grid:not(.category-grid) {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(4, 1fr); /* 4 columns for desktop */
+    gap: 1rem;
+}
+
+/* Desktop category grids */
+.feelings-grid.category-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 columns for desktop */
     gap: 1rem;
 }
 
