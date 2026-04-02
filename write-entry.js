@@ -47,27 +47,44 @@ document.addEventListener('DOMContentLoaded', function() {
         if (isMobile) return;
         
         const moreBtn = document.getElementById('moreTagsBtn');
-        const secondRowTags = document.querySelectorAll('.second-row');
         let expanded = false;
         
-        // Show more button if there are second row tags
-        if (secondRowTags.length > 0) {
-            moreBtn.style.display = 'flex';
+        // Function to update second row tags
+        function updateSecondRowTags() {
+            const allTags = document.querySelectorAll('.tags-container .tag-btn');
+            const firstRowTags = allTags.slice(0, 7); // First 7 tags
+            const secondRowTags = allTags.slice(7); // All tags after 7
+            
+            // Remove existing second-row classes
+            allTags.forEach(tag => tag.classList.remove('second-row'));
+            
+            // Add second-row class to tags beyond 7th
+            secondRowTags.forEach(tag => {
+                tag.classList.add('second-row');
+            });
+            
+            // Show more button if there are second row tags
+            if (secondRowTags.length > 0) {
+                moreBtn.style.display = 'flex';
+            } else {
+                moreBtn.style.display = 'none';
+            }
+            
+            // Set initial visibility based on expanded state
+            secondRowTags.forEach(tag => {
+                tag.style.display = expanded ? 'flex' : 'none';
+            });
+            
+            return secondRowTags;
         }
         
-        // Remove any existing mobile event listeners
-        moreBtn.removeEventListener('click', arguments.callee);
+        // Initial setup
+        const secondRowTags = updateSecondRowTags();
         
+        // More button click handler
         moreBtn.addEventListener('click', function() {
             expanded = !expanded;
-            
-            secondRowTags.forEach(tag => {
-                if (expanded) {
-                    tag.style.display = 'flex';
-                } else {
-                    tag.style.display = 'none';
-                }
-            });
+            const currentSecondRowTags = updateSecondRowTags();
             
             // Update button state
             if (expanded) {
@@ -78,6 +95,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 moreBtn.querySelector('span').textContent = 'more';
             }
         });
+        
+        // Store update function for external use
+        window.updateDesktopTags = updateSecondRowTags;
     }
     
     // Mobile more tags functionality (show first 4, hide rest)
