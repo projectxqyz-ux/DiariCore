@@ -797,6 +797,16 @@ body {
     .smart-insights {
         display: none !important;
     }
+    
+    /* Make Weekly Glance chart smaller on mobile */
+    .weekly-glance .chart-container {
+        height: 200px !important; /* Smaller height for mobile */
+        margin: 1rem 0 !important;
+    }
+    
+    .weekly-glance canvas {
+        max-height: 180px !important; /* Constrain canvas height */
+    }
 }
 
 @media (max-width: 480px) {
