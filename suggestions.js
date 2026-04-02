@@ -35,12 +35,24 @@ function initializeSuggestions() {
     });
 
     // Add click handlers to recommendation items
-    const recommendationItems = document.querySelectorAll('.recommendation-item, .content-item, .activity-item, .tip-item');
+    const recommendationItems = document.querySelectorAll('.recommendation-item, .content-item, .tip-item');
+    // Exclude mobile carousel activity items to prevent toggling effect
+    const desktopActivityItems = document.querySelectorAll('.activity-grid .activity-item');
+    
     recommendationItems.forEach(item => {
         item.addEventListener('click', function() {
-            const title = this.querySelector('h4').textContent;
+            const title = this.querySelector('h4')?.textContent || this.querySelector('h3')?.textContent;
             showNotification(`Opening: ${title}`, 'info');
             console.log('Recommendation clicked:', title);
+        });
+    });
+    
+    // Add click handlers only to desktop activity items
+    desktopActivityItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const title = this.querySelector('h3').textContent;
+            showNotification(`Opening: ${title}`, 'info');
+            console.log('Activity clicked:', title);
         });
     });
 }
