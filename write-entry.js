@@ -52,27 +52,39 @@ document.addEventListener('DOMContentLoaded', function() {
         // Function to update second row tags
         function updateSecondRowTags() {
             const allTags = document.querySelectorAll('.tags-container .tag-btn');
-            const firstRowTags = allTags.slice(0, 7); // First 7 tags
-            const secondRowTags = allTags.slice(7); // All tags after 7
+            const allTagsArray = Array.from(allTags); // Convert NodeList to array
+            const firstRowTags = allTagsArray.slice(0, 7); // First 7 tags
+            const secondRowTags = allTagsArray.slice(7); // All tags after 7
+            
+            console.log('Desktop - Total tags:', allTagsArray.length, 'First row:', firstRowTags.length, 'Second row:', secondRowTags.length, 'Expanded:', expanded);
             
             // Remove existing second-row classes
-            allTags.forEach(tag => tag.classList.remove('second-row'));
+            allTagsArray.forEach(tag => tag.classList.remove('second-row'));
             
             // Add second-row class to tags beyond 7th
             secondRowTags.forEach(tag => {
                 tag.classList.add('second-row');
+                console.log('Adding second-row class to:', tag.dataset.tag || 'Add Tag');
             });
             
             // Show more button if there are second row tags
             if (secondRowTags.length > 0) {
                 moreBtn.style.display = 'flex';
+                console.log('Showing more button');
             } else {
                 moreBtn.style.display = 'none';
+                console.log('Hiding more button');
             }
             
             // Set initial visibility based on expanded state
             secondRowTags.forEach(tag => {
-                tag.style.display = expanded ? 'flex' : 'none';
+                if (expanded) {
+                    tag.style.display = 'flex';
+                    console.log('Showing second row tag:', tag.dataset.tag || 'Add Tag');
+                } else {
+                    tag.style.display = 'none';
+                    console.log('Hiding second row tag:', tag.dataset.tag || 'Add Tag');
+                }
             });
             
             return secondRowTags;
@@ -89,6 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
         newMoreBtn.addEventListener('click', function(e) {
             e.stopPropagation();
             e.preventDefault();
+            console.log('Desktop more button clicked');
             expanded = !expanded;
             const currentSecondRowTags = updateSecondRowTags();
             
@@ -96,9 +109,11 @@ document.addEventListener('DOMContentLoaded', function() {
             if (expanded) {
                 newMoreBtn.classList.add('expanded');
                 newMoreBtn.querySelector('span').textContent = 'less';
+                console.log('Button state: less');
             } else {
                 newMoreBtn.classList.remove('expanded');
                 newMoreBtn.querySelector('span').textContent = 'more';
+                console.log('Button state: more');
             }
         }, true); // Use capture phase for higher priority
         
