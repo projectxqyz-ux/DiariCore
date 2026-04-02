@@ -49,9 +49,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const moreBtn = document.getElementById('moreTagsBtn');
         let expanded = false;
         
-        // Remove any existing onclick to prevent conflicts
-        moreBtn.onclick = null;
-        
         // Function to update second row tags
         function updateSecondRowTags() {
             const allTags = document.querySelectorAll('.tags-container .tag-btn');
@@ -88,9 +85,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const newMoreBtn = moreBtn.cloneNode(true);
         moreBtn.parentNode.replaceChild(newMoreBtn, moreBtn);
         
-        // Add desktop-specific event listener
+        // Add desktop-specific event listener with higher priority
         newMoreBtn.addEventListener('click', function(e) {
             e.stopPropagation();
+            e.preventDefault();
             expanded = !expanded;
             const currentSecondRowTags = updateSecondRowTags();
             
@@ -102,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 newMoreBtn.classList.remove('expanded');
                 newMoreBtn.querySelector('span').textContent = 'more';
             }
-        });
+        }, true); // Use capture phase for higher priority
         
         // Store update function for external use
         window.updateDesktopTags = updateSecondRowTags;
