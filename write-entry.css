@@ -66,6 +66,14 @@
     margin-bottom: 2.5rem;
 }
 
+.feelings-section .section-title {
+    text-transform: uppercase; /* All caps */
+    margin-left: -0.5rem; /* Move text more to the left */
+    opacity: 0.7; /* Lower opacity */
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
 .feelings-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -86,6 +94,24 @@
     gap: 0.75rem;
 }
 
+.feeling-icon {
+    font-size: 2rem;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background: var(--primary-bg);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.feeling-card:hover .feeling-icon {
+    background: var(--primary-color);
+    color: white;
+}
+
 .feeling-card:hover {
     border-color: var(--primary-color);
     transform: translateY(-2px);
@@ -95,11 +121,6 @@
 .feeling-card.selected {
     border-color: var(--primary-color);
     background-color: var(--success-bg);
-}
-
-.feeling-emoji {
-    font-size: 2.5rem;
-    line-height: 1;
 }
 
 .feeling-label {
@@ -312,10 +333,6 @@
     
     .feeling-card {
         padding: 1rem;
-    }
-    
-    .feeling-emoji {
-        font-size: 2rem;
     }
     
     .tags-container {
