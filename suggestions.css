@@ -931,8 +931,9 @@ body {
     }
     
     .carousel-slide .activity-item:hover {
-        transform: translateY(-2px);
-        box-shadow: var(--box-shadow-hover);
+        /* Remove hover effects for mobile carousel */
+        transform: none;
+        box-shadow: none;
     }
     
     /* Reposition activity item layout for mobile */
