@@ -454,9 +454,14 @@
         font-weight: 500;
     }
     
-    /* Override desktop tag hiding on mobile - show all tags */
+    /* Override desktop tag hiding on mobile - show all tags by default, but allow JS to hide */
     .tags-container .tag-btn {
         display: flex !important;
+    }
+    
+    /* Allow JavaScript to hide tags with inline styles */
+    .tags-container .tag-btn[style*="display: none"] {
+        display: none !important;
     }
     
     /* Mobile tags container - 4 columns */
