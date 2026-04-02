@@ -927,12 +927,46 @@ body {
         border: 1px solid var(--border-color);
         border-radius: 16px;
         padding: 2rem;
-        text-align: center;
         transition: all 0.2s ease;
     }
     
     .carousel-slide .activity-item:hover {
         transform: translateY(-2px);
         box-shadow: var(--box-shadow-hover);
+    }
+    
+    /* Reposition activity item layout for mobile */
+    .carousel-slide .activity-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        text-align: left;
+        padding: 1.5rem;
+    }
+    
+    .carousel-slide .activity-icon {
+        flex-shrink: 0;
+        margin-right: 0;
+    }
+    
+    .carousel-slide .activity-content {
+        flex: 1;
+    }
+    
+    .carousel-slide .activity-title {
+        margin: 0 0 0.5rem 0;
+        font-size: 1.1rem;
+    }
+    
+    .carousel-slide .activity-duration {
+        margin: 0 0 0.5rem 0;
+        font-size: 0.9rem;
+        color: var(--primary-color);
+    }
+    
+    .carousel-slide .activity-description {
+        margin: 0;
+        font-size: 0.9rem;
+        color: var(--text-secondary);
     }
 }
