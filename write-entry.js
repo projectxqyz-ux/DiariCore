@@ -5,6 +5,28 @@ document.addEventListener('DOMContentLoaded', function() {
     let selectedFeeling = null;
     let selectedTags = new Set();
     
+    // Reset selected states on page load
+    function resetSelections() {
+        // Reset feelings selection
+        selectedFeeling = null;
+        const feelingCards = document.querySelectorAll('.feeling-card');
+        feelingCards.forEach(card => {
+            card.classList.remove('selected');
+        });
+        
+        // Reset tags selection
+        selectedTags.clear();
+        const tagButtons = document.querySelectorAll('.tag-btn:not(.add-tag)');
+        tagButtons.forEach(button => {
+            button.classList.remove('selected');
+        });
+        
+        console.log('Selections reset on page load');
+    }
+    
+    // Call reset function immediately
+    resetSelections();
+    
     // Category switching functionality
     const categoryButtons = document.querySelectorAll('.category-btn');
     const categoryGrids = document.querySelectorAll('.category-grid');
