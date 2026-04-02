@@ -609,4 +609,55 @@ body {
         flex-direction: row;
         gap: 0.5rem;
     }
+    
+    .mobile-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        background: var(--card-background);
+        border-bottom: 1px solid var(--border-color);
+        margin: -1rem -1rem 1rem -1rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+    
+    .back-btn {
+        background: var(--primary-bg);
+        border: 1px solid var(--border-color);
+        color: var(--primary-color);
+        font-size: 1rem;
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+    }
+    
+    .back-btn:hover {
+        background-color: var(--primary-color);
+        color: white;
+    }
+    
+    .mobile-title {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: var(--text-dark);
+        margin: 0;
+        margin-left: 2rem;
+    }
+    
+    .header-spacer {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .header-section {
+        display: none;
+    }
 }
