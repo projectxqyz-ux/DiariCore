@@ -976,4 +976,10 @@ body {
     .section-footer {
         display: none;
     }
+    
+    /* Remove hover effects from activity suggestions section on mobile */
+    .activity-suggestions-section:hover {
+        transform: none;
+        box-shadow: none;
+    }
 }
