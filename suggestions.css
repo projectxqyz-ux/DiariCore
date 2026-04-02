@@ -1150,6 +1150,12 @@ body {
         color: var(--text-dark);
     }
     
+    .mobile-wellness-carousel .tip-duration {
+        margin: 0 0 0.5rem 0;
+        font-size: 0.9rem;
+        color: var(--primary-color);
+    }
+    
     .mobile-wellness-carousel .tip-description {
         margin: 0;
         font-size: 0.9rem;
