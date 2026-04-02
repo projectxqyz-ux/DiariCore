@@ -49,6 +49,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const moreBtn = document.getElementById('moreTagsBtn');
         let expanded = false;
         
+        // Remove any existing onclick to prevent conflicts
+        moreBtn.onclick = null;
+        
         // Function to update second row tags
         function updateSecondRowTags() {
             const allTags = document.querySelectorAll('.tags-container .tag-btn');
@@ -81,18 +84,23 @@ document.addEventListener('DOMContentLoaded', function() {
         // Initial setup
         const secondRowTags = updateSecondRowTags();
         
-        // More button click handler
-        moreBtn.addEventListener('click', function() {
+        // Remove all existing event listeners by cloning and replacing
+        const newMoreBtn = moreBtn.cloneNode(true);
+        moreBtn.parentNode.replaceChild(newMoreBtn, moreBtn);
+        
+        // Add desktop-specific event listener
+        newMoreBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
             expanded = !expanded;
             const currentSecondRowTags = updateSecondRowTags();
             
             // Update button state
             if (expanded) {
-                moreBtn.classList.add('expanded');
-                moreBtn.querySelector('span').textContent = 'less';
+                newMoreBtn.classList.add('expanded');
+                newMoreBtn.querySelector('span').textContent = 'less';
             } else {
-                moreBtn.classList.remove('expanded');
-                moreBtn.querySelector('span').textContent = 'more';
+                newMoreBtn.classList.remove('expanded');
+                newMoreBtn.querySelector('span').textContent = 'more';
             }
         });
         
