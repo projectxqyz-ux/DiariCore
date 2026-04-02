@@ -690,11 +690,6 @@
         display: none;
     }
     
-    .voice-transcript {
-        padding: 1.5rem;
-        display: block !important;
-    }
-    
     .recording-state {
         padding: 1.5rem;
         margin: 1.5rem 0;

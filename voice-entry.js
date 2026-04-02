@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const voiceCircle = document.getElementById('voiceCircle');
     const micIcon = document.getElementById('micIcon');
     const statusText = document.getElementById('statusText');
-    const transcriptText = document.getElementById('transcriptText');
     const finalTranscript = document.getElementById('finalTranscript');
     const recordingState = document.getElementById('recordingState');
     const recordingText = document.getElementById('recordingText');
@@ -120,7 +119,6 @@ document.addEventListener('DOMContentLoaded', function() {
         // In a real implementation, you would send this to a speech-to-text API
         setTimeout(() => {
             const simulatedTranscript = "This is a sample transcript of your voice entry. In a real implementation, this would be the actual text converted from your speech using a speech-to-text service like Google Speech-to-Text or Azure Speech Services.";
-            transcriptText.textContent = simulatedTranscript;
             finalTranscript.textContent = simulatedTranscript;
             
             // Update word count
@@ -133,7 +131,6 @@ document.addEventListener('DOMContentLoaded', function() {
     retryBtn.addEventListener('click', function() {
         // Reset UI
         postRecordingContainer.style.display = 'none';
-        transcriptText.textContent = 'Your speech will appear here as you speak...';
         finalTranscript.textContent = 'Your speech will appear here as you speak...';
         statusText.style.display = 'block';
         statusText.textContent = isMobile ? 'Tap to record' : 'Tap to start recording';
@@ -157,7 +154,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function saveEntry() {
-        const transcript = transcriptText.textContent;
+        const transcript = finalTranscript.textContent;
         if (transcript && transcript !== 'Your speech will appear here as you speak...') {
             // Save to localStorage (placeholder)
             let entries = JSON.parse(localStorage.getItem('diariCoreEntries') || '[]');
