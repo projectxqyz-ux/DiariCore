@@ -802,42 +802,30 @@ body {
         display: none;
     }
     
-    /* Fix mobile Smart Insights design */
+    /* Fix mobile Smart Insights design - revert to original look */
     .quick-actions::after {
-        content: "✨ Smart Insights You seem a bit stressed today. Would you like a calming suggestion?";
-        display: block;
+        content: "✨ Smart Insights You seem a bit stressed today. Would you like a calming suggestion? →";
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         background: var(--card-background);
         border-radius: 16px;
         padding: 1rem;
-        padding-right: 3rem; /* Space for arrow button */
         margin-bottom: 1.5rem;
         margin-top: 1rem;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         border: 1px solid var(--border-color);
-        position: relative;
         font-size: 14px;
-        color: var(--text-dark);
+        color: var(--primary-color);
         font-weight: 600;
         line-height: 1.4;
+        cursor: pointer;
+        text-decoration: none;
     }
     
-    /* Add arrow button for Smart Insights */
+    /* Remove conflicting pseudo-elements */
     .quick-actions::before {
-        content: "→";
-        position: absolute;
-        right: 1.5rem;
-        top: 2.5rem;
-        background: var(--primary-color);
-        color: white;
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 14px;
-        cursor: pointer;
-        z-index: 10;
+        display: none;
     }
     
     /* Hide Smart Insights section on mobile */
