@@ -112,13 +112,15 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!isMobile) return;
         
         const moreBtn = document.getElementById('moreTagsBtn');
-        let mobileExpanded = false;
+        let mobileExpanded = false; // Start with collapsed state
         
         // Function to update mobile tag rows
         function updateMobileTagRows() {
             const allTags = document.querySelectorAll('.tags-container .tag-btn');
             const firstRowTags = allTags.slice(0, 4); // First 4 tags
             const otherRowsTags = allTags.slice(4); // All tags after 4
+            
+            console.log('Mobile - Total tags:', allTags.length, 'First row:', firstRowTags.length, 'Other rows:', otherRowsTags.length, 'Expanded:', mobileExpanded);
             
             // Show more button if there are tags beyond first 4
             if (otherRowsTags.length > 0) {
@@ -127,17 +129,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 moreBtn.style.display = 'none';
             }
             
-            // Set visibility based on expanded state
+            // Always show first row
             firstRowTags.forEach(tag => {
                 tag.style.display = 'flex';
+                console.log('Showing first row tag:', tag.dataset.tag || 'Add Tag');
             });
             
+            // Hide/show other rows based on expanded state
             otherRowsTags.forEach(tag => {
-                tag.style.display = mobileExpanded ? 'flex' : 'none';
+                if (mobileExpanded) {
+                    tag.style.display = 'flex';
+                    console.log('Showing other row tag:', tag.dataset.tag || 'Add Tag');
+                } else {
+                    tag.style.display = 'none';
+                    console.log('Hiding other row tag:', tag.dataset.tag || 'Add Tag');
+                }
             });
         }
         
-        // Initial setup
+        // Initial setup - force collapsed state
+        mobileExpanded = false;
         updateMobileTagRows();
         
         // Remove any existing event listeners and set mobile onclick
