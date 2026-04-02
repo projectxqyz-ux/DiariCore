@@ -185,11 +185,11 @@
     align-items: flex-start;
 }
 
-/* Force 7 tags per row on desktop */
+/* Desktop tags - maintain original size, let natural wrapping create rows */
 @media (min-width: 769px) {
     .tags-container .tag-btn {
-        flex: 0 0 calc((100% - (6 * 0.75rem)) / 7); /* 7 tags per row */
-        max-width: calc((100% - (6 * 0.75rem)) / 7);
+        flex: 0 0 auto; /* Original size */
+        min-width: fit-content;
     }
 }
 
