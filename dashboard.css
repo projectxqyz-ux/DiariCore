@@ -839,9 +839,9 @@ body {
     }
     
     .insight-title {
-        font-size: 16px;
+        font-size: 14px; /* Smaller font size */
         font-weight: 600;
-        color: var(--text-dark);
+        color: var(--primary-color); /* Soft sage green color */
         margin: 0;
     }
     
