@@ -1113,9 +1113,6 @@ body {
     
     .mobile-wellness-carousel .tip-time {
         flex-shrink: 0;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
         margin-right: 0;
         margin: 0 !important; /* Override any centering */
         min-width: auto;
@@ -1135,11 +1132,7 @@ body {
     }
     
     .mobile-wellness-carousel .tip-time span {
-        font-size: 1rem;
-        font-weight: 600;
-        color: var(--text-dark);
-        white-space: nowrap;
-        flex-shrink: 0;
+        display: none; /* Hide the time label to match activity suggestions */
     }
     
     .mobile-wellness-carousel .tip-content {
