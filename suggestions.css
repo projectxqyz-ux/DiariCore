@@ -183,6 +183,11 @@ body {
     gap: 1.5rem;
 }
 
+/* Mobile Content Cards - Hidden on Desktop */
+.mobile-content-cards {
+    display: none;
+}
+
 /* Mobile Wellness Carousel - Hidden on Desktop */
 .mobile-wellness-carousel {
     display: none;
