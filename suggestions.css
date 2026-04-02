@@ -124,95 +124,13 @@ body {
 .emotional-support-section,
 .activity-suggestions-section,
 .content-recommendations-section,
-.activity-suggestions-section {
+.daily-wellness-section {
     margin-bottom: 3rem;
     background-color: var(--card-background);
     border: 1px solid var(--border-color);
     border-radius: 16px;
     padding: 2rem;
     transition: all 0.2s ease;
-}
-
-/* Mobile Activity Carousel */
-.mobile-activity-carousel {
-    display: none;
-    position: relative;
-    overflow: hidden;
-}
-
-.carousel-inner {
-    display: flex;
-    transition: transform 0.3s ease;
-}
-
-.carousel-item {
-    min-width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-.carousel-item .activity-item {
-    width: 100%;
-    max-width: 300px;
-    background: var(--card-background);
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
-    padding: 1.5rem;
-    text-align: center;
-    transition: all 0.2s ease;
-    box-shadow: var(--box-shadow);
-}
-
-.carousel-controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 1rem;
-    position: relative;
-}
-
-.carousel-prev,
-.carousel-next {
-    background: var(--primary-bg);
-    border: 1px solid var(--border-color);
-    color: var(--primary-color);
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    z-index: 10;
-}
-
-.carousel-prev:hover,
-.carousel-next:hover {
-    background-color: var(--primary-color);
-    color: white;
-}
-
-.carousel-indicators {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-top: 1rem;
-}
-
-.indicator {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--border-color);
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.indicator.active {
-    background: var(--primary-color);
-    width: 24px;
-    border-radius: 4px;
 }
 
 .emotional-support-section:hover,
@@ -714,7 +632,7 @@ body {
     .support-text {
         font-size: 1rem;
         line-height: 1.4;
-        margin-bottom: -2.5rem;
+        margin-bottom: -3rem;
     }
     
     .recommendation-grid {
@@ -872,10 +790,6 @@ body {
         display: none;
     }
     
-    .emotional-support-section {
-        margin-bottom: -2rem;
-    }
-    
     .emotional-support-header {
         margin-bottom: 1rem;
         gap: 0.5rem;
@@ -889,91 +803,6 @@ body {
     
     .emotional-support-header .section-title {
         font-size: 1.25rem;
-    }
-    
-    /* Activity Suggestions Mobile Styles */
-    .activity-suggestions-section {
-        background: transparent;
-        border: none;
-        padding: 0;
-        box-shadow: none;
-        margin-bottom: -2rem;
-    }
-    
-    .mobile-activity-carousel {
-        display: block;
-    }
-    
-    .activity-grid {
-        display: none;
-    }
-    
-    .activity-suggestions-header {
-        display: flex;
-        margin-bottom: 1rem;
-        gap: 0.5rem;
-    }
-    
-    .activity-suggestions-header .section-icon {
-        width: 40px;
-        height: 40px;
-        font-size: 1.25rem;
-    }
-    
-    .activity-suggestions-header .section-title {
-        font-size: 1.25rem;
-    }
-    
-    .section-description {
-        font-size: 0.9rem;
-        margin-bottom: 1rem;
-    }
-    
-    .carousel-item .activity-item {
-        background: var(--card-background);
-        border: 1px solid var(--border-color);
-        border-radius: 16px;
-        padding: 1.5rem;
-        text-align: center;
-        transition: all 0.2s ease;
-        box-shadow: var(--box-shadow);
-    }
-    
-    .carousel-item .activity-item:hover {
-        transform: translateY(-2px);
-        box-shadow: var(--box-shadow-hover);
-    }
-    
-    .carousel-item .activity-icon {
-        background: linear-gradient(135deg, #3498DB, #2980B9);
-        width: 60px;
-        height: 60px;
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.5rem;
-        color: white;
-        margin: 0 auto 1rem;
-    }
-    
-    .carousel-item .activity-title {
-        font-size: 1.1rem;
-        font-weight: 600;
-        color: var(--text-dark);
-        margin: 0 0 0.5rem;
-    }
-    
-    .carousel-item .activity-duration {
-        font-size: 0.9rem;
-        color: var(--primary-color);
-        margin: 0 0 0.5rem;
-    }
-    
-    .carousel-item .activity-description {
-        font-size: 0.85rem;
-        color: var(--text-secondary);
-        margin: 0;
     }
     
     .activity-suggestions-header {
