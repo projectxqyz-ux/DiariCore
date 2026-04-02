@@ -101,7 +101,7 @@
     color: var(--primary-color);
 }
 
-/* Category Grids */
+/* Category Grids - Hide all by default on both platforms */
 .feelings-grid.category-grid {
     display: none;
 }
@@ -117,9 +117,8 @@
     gap: 1rem;
 }
 
-/* Desktop category grids */
-.feelings-grid.category-grid {
-    display: grid;
+/* Desktop category grids when active */
+.feelings-grid.category-grid.active {
     grid-template-columns: repeat(4, 1fr); /* 4 columns for desktop */
     gap: 1rem;
 }
