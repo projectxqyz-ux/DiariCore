@@ -177,10 +177,18 @@
     margin-bottom: 2.5rem;
 }
 
+/* Tags container - flexbox with wrapping for desktop */
 .tags-container {
     display: flex;
     flex-wrap: wrap;
     gap: 0.75rem;
+    align-items: flex-start;
+}
+
+/* Desktop tag buttons - maintain original size */
+.tags-container .tag-btn {
+    flex: 0 0 auto;
+    min-width: fit-content;
 }
 
 .tag-btn {

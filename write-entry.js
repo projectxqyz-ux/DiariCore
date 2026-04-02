@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     }
     
-    // Dynamic tag hiding functionality (desktop only)
+    // Desktop functionality - show all tags, let them wrap naturally
     function updateTagVisibility() {
         const isMobile = window.innerWidth <= 768;
         if (isMobile) {
@@ -97,50 +97,16 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
+        // Desktop: Show all tags and let them wrap naturally
         const allTags = document.querySelectorAll('.tags-container .tag-btn');
         const moreBtn = document.getElementById('moreTagsBtn');
-        const totalTags = allTags.length;
         
-        // Show first 7 tags, hide rest
-        allTags.forEach((tag, index) => {
-            if (index < 7) {
-                tag.style.display = 'flex';
-            } else {
-                tag.style.display = 'none';
-            }
+        allTags.forEach(tag => {
+            tag.style.display = 'flex';
         });
         
-        // Show/hide more button based on tag count
-        if (totalTags > 7) {
-            moreBtn.style.display = 'flex';
-        } else {
-            moreBtn.style.display = 'none';
-        }
-        
-        // Reset desktop more button handler
-        let tagsExpanded = false;
-        moreBtn.onclick = function() {
-            tagsExpanded = !tagsExpanded;
-            
-            allTags.forEach((tag, index) => {
-                if (index >= 7) {
-                    if (tagsExpanded) {
-                        tag.style.display = 'flex';
-                    } else {
-                        tag.style.display = 'none';
-                    }
-                }
-            });
-            
-            // Update button state
-            if (tagsExpanded) {
-                moreBtn.classList.add('expanded');
-                moreBtn.querySelector('span').textContent = 'less';
-            } else {
-                moreBtn.classList.remove('expanded');
-                moreBtn.querySelector('span').textContent = 'more';
-            }
-        };
+        // Hide more button on desktop since tags wrap naturally
+        moreBtn.style.display = 'none';
     }
     
     // Initialize tag visibility on load
