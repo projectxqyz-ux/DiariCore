@@ -1,11 +1,61 @@
 // DiariCore Suggestions Page JavaScript
 
+// Activity Carousel Variables
+let currentActivitySlide = 0;
+const totalActivitySlides = 3;
+
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize components
     initializeSuggestions();
     initializeQuickActions();
     initializeInteractiveElements();
     animateProgressBars();
+    initializeActivityCarousel();
+});
+
+// Initialize Activity Carousel
+function initializeActivityCarousel() {
+    // Only initialize on mobile
+    if (window.innerWidth <= 768) {
+        updateActivityCarousel();
+    }
+}
+
+// Activity Carousel Functions
+function prevActivitySlide() {
+    currentActivitySlide = (currentActivitySlide - 1 + totalActivitySlides) % totalActivitySlides;
+    updateActivityCarousel();
+}
+
+function nextActivitySlide() {
+    currentActivitySlide = (currentActivitySlide + 1) % totalActivitySlides;
+    updateActivityCarousel();
+}
+
+function goToActivitySlide(slideIndex) {
+    currentActivitySlide = slideIndex;
+    updateActivityCarousel();
+}
+
+function updateActivityCarousel() {
+    const carouselInner = document.querySelector('.carousel-inner');
+    const indicators = document.querySelectorAll('.indicator');
+    
+    if (carouselInner) {
+        carouselInner.style.transform = `translateX(-${currentActivitySlide * 100}%)`;
+    }
+    
+    // Update indicators
+    indicators.forEach((indicator, index) => {
+        indicator.classList.toggle('active', index === currentActivitySlide);
+    });
+}
+
+// Handle window resize
+window.addEventListener('resize', function() {
+    if (window.innerWidth <= 768) {
+        updateActivityCarousel();
+    }
 });
 
 // Initialize Suggestions
