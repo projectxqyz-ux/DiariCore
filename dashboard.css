@@ -679,11 +679,37 @@ body {
         border: 1px solid var(--border-color);
     }
     
+    /* Plus icon in rounded box for Write Entry */
+    .action-btn:first-child::before {
+        content: '+';
+        position: absolute;
+        top: 0.8rem;
+        left: 0.8rem;
+        width: 36px;
+        height: 36px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        font-weight: 300;
+        color: white;
+    }
+    
+    /* White Voice Entry icon */
+    .action-btn:last-child i {
+        color: var(--primary-color);
+    }
+    
     .btn-content {
         flex: 1;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+        margin-left: -0.3rem; /* Negative margin to move text left */
+        margin-top: 3.2rem; /* Position directly under plus icon */
+        padding-left: 0rem; /* No padding */
     }
     
     .btn-title {
