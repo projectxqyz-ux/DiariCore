@@ -163,6 +163,11 @@ document.addEventListener('DOMContentLoaded', function() {
         recordingDuration.textContent = '00:00';
         wordCount.textContent = '0';
         
+        // Keep mobile retry button visible after reset
+        if (isMobile && mobileRetryBtn) {
+            mobileRetryBtn.style.display = 'flex';
+        }
+        
         // Clear any existing recording data
         audioChunks = [];
     }
