@@ -185,11 +185,30 @@
     align-items: flex-start;
 }
 
-/* Desktop tags - maintain original size, let natural wrapping create rows */
+/* Desktop tags - force exactly 7 per row while maintaining appearance */
 @media (min-width: 769px) {
     .tags-container .tag-btn {
-        flex: 0 0 auto; /* Original size */
-        min-width: fit-content;
+        flex: 0 0 calc(14.285% - 0.643rem); /* 100%/7 - gap adjustment */
+        min-width: 0;
+        max-width: calc(14.285% - 0.643rem);
+        box-sizing: border-box;
+        text-align: center;
+        justify-content: center;
+        padding: 0.75rem 0.5rem; /* Slightly adjust padding for fit */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    .tags-container .tag-btn i {
+        font-size: 14px; /* Slightly smaller icon for fit */
+        display: block;
+        margin-bottom: 0.25rem;
+    }
+    
+    .tags-container .tag-btn span {
+        font-size: 11px; /* Smaller text for fit */
+        line-height: 1;
     }
 }
 
