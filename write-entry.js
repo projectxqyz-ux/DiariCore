@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Initial setup
         updateMobileTagRows();
         
-        // Mobile more button click handler
+        // Remove any existing event listeners and set mobile onclick
         moreBtn.onclick = function() {
             mobileExpanded = !mobileExpanded;
             updateMobileTagRows();
@@ -162,6 +162,11 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateTagVisibility() {
         const isMobile = window.innerWidth <= 768;
         if (isMobile) {
+            // Mobile: Clear any desktop interference first
+            const moreBtn = document.getElementById('moreTagsBtn');
+            if (moreBtn) {
+                moreBtn.removeEventListener('click', arguments.callee);
+            }
             setupMobileMoreButton();
         } else {
             setupDesktopMoreButton();
