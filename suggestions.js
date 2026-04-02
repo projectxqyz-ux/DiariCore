@@ -494,9 +494,21 @@ function initializeMobileCarousel() {
     // Only initialize on mobile devices
     if (window.innerWidth > 768) return;
     
-    const carousel = document.querySelector('.mobile-activity-carousel');
-    if (!carousel) return;
+    // Initialize Activity Carousel
+    const activityCarousel = document.querySelector('.mobile-activity-carousel');
+    if (activityCarousel) {
+        initializeCarousel(activityCarousel);
+    }
     
+    // Initialize Wellness Carousel
+    const wellnessCarousel = document.querySelector('.mobile-wellness-carousel');
+    if (wellnessCarousel) {
+        initializeCarousel(wellnessCarousel);
+    }
+}
+
+// Generic Carousel Initializer
+function initializeCarousel(carousel) {
     const slides = carousel.querySelectorAll('.carousel-slide');
     const dots = carousel.querySelectorAll('.dot');
     let currentSlide = 0;

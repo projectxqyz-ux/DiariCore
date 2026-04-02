@@ -183,6 +183,11 @@ body {
     gap: 1.5rem;
 }
 
+/* Mobile Wellness Carousel - Hidden on Desktop */
+.mobile-wellness-carousel {
+    display: none;
+}
+
 .emotional-support-section:hover,
 .activity-suggestions-section:hover,
 .content-recommendations-section:hover,
@@ -1050,5 +1055,86 @@ body {
     /* Hide desktop content list on mobile */
     .content-list {
         display: none;
+    }
+    
+    /* Show Mobile Wellness Carousel */
+    .mobile-wellness-carousel {
+        display: block;
+    }
+    
+    /* Hide Desktop Tips Timeline */
+    .tips-timeline {
+        display: none;
+    }
+    
+    /* Remove container background for mobile */
+    .daily-wellness-section {
+        background-color: transparent;
+        border: none;
+        padding: 0;
+        margin-bottom: 2rem;
+    }
+    
+    /* Remove hover effects from daily wellness section on mobile */
+    .daily-wellness-section:hover {
+        transform: none;
+        box-shadow: none;
+    }
+    
+    /* Style Individual Wellness Tips for Mobile */
+    .mobile-wellness-carousel .tip-item {
+        background-color: var(--card-background);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        text-align: left;
+        transition: all 0.2s ease;
+    }
+    
+    .mobile-wellness-carousel .tip-item:hover {
+        /* Remove hover effects for mobile cards */
+        transform: none;
+        box-shadow: none;
+    }
+    
+    .mobile-wellness-carousel .tip-time {
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        min-width: 60px;
+    }
+    
+    .mobile-wellness-carousel .tip-time i {
+        font-size: 1.5rem;
+        color: var(--primary-color);
+    }
+    
+    .mobile-wellness-carousel .tip-time span {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+    }
+    
+    .mobile-wellness-carousel .tip-content {
+        flex: 1;
+    }
+    
+    .mobile-wellness-carousel .tip-title {
+        margin: 0 0 0.5rem 0;
+        font-size: 1.1rem;
+        color: var(--text-dark);
+    }
+    
+    .mobile-wellness-carousel .tip-description {
+        margin: 0;
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        line-height: 1.4;
     }
 }
