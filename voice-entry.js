@@ -163,6 +163,21 @@ document.addEventListener('DOMContentLoaded', function() {
     if (mobileRetryBtn) {
         mobileRetryBtn.addEventListener('click', function() {
             resetRecording();
+            // Ensure icon stays white after click
+            mobileRetryBtn.style.color = 'white';
+            mobileRetryBtn.style.backgroundColor = 'var(--primary-color)';
+        });
+        
+        // Also ensure icon stays white on mouseup to handle click completion
+        mobileRetryBtn.addEventListener('mouseup', function() {
+            mobileRetryBtn.style.color = 'white';
+            mobileRetryBtn.style.backgroundColor = 'var(--primary-color)';
+        });
+        
+        // Ensure icon stays white on touch end for mobile
+        mobileRetryBtn.addEventListener('touchend', function() {
+            mobileRetryBtn.style.color = 'white';
+            mobileRetryBtn.style.backgroundColor = 'var(--primary-color)';
         });
     }
     

@@ -369,6 +369,12 @@
     color: white;
 }
 
+.mobile-retry-btn:visited,
+.mobile-retry-btn:focus-visible {
+    background-color: var(--primary-color);
+    color: white;
+}
+
 .transcript-preview {
     background-color: var(--background-soft);
     border: 1px solid var(--border-color);
