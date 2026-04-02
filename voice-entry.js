@@ -165,9 +165,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Mobile retry button functionality
     if (mobileRetryBtn) {
         mobileRetryBtn.addEventListener('click', function() {
-            // Add rotation animation for visual feedback
-            mobileRetryBtn.style.transform = 'rotate(360deg)';
-            mobileRetryBtn.style.transition = 'transform 0.3s ease';
+            // Add continuous spinning animation for visual feedback
+            mobileRetryBtn.style.animation = 'spin 0.5s linear';
             
             resetRecording();
             
@@ -175,10 +174,10 @@ document.addEventListener('DOMContentLoaded', function() {
             mobileRetryBtn.style.color = 'white';
             mobileRetryBtn.style.backgroundColor = 'var(--primary-bg)';
             
-            // Reset rotation after animation completes
+            // Remove animation after it completes
             setTimeout(() => {
-                mobileRetryBtn.style.transform = 'rotate(0deg)';
-            }, 300);
+                mobileRetryBtn.style.animation = '';
+            }, 500);
         });
     }
     
