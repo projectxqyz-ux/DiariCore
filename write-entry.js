@@ -41,19 +41,51 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // More tags functionality
-    const moreTagsBtn = document.getElementById('moreTagsBtn');
-    const hiddenTags = document.querySelectorAll('.hidden-tag');
-    let tagsExpanded = false;
-    
-    moreTagsBtn.addEventListener('click', function() {
-        tagsExpanded = !tagsExpanded;
+    // Dynamic tag hiding functionality (desktop only)
+    function updateTagVisibility() {
+        const isMobile = window.innerWidth <= 768;
+        if (isMobile) return; // Skip on mobile
         
-        hiddenTags.forEach(tag => {
-            if (tagsExpanded) {
+        const allTags = document.querySelectorAll('.tags-container .tag-btn');
+        const moreBtn = document.getElementById('moreTagsBtn');
+        const totalTags = allTags.length;
+        
+        // Show first 7 tags, hide rest
+        allTags.forEach((tag, index) => {
+            if (index < 7) {
                 tag.style.display = 'flex';
             } else {
                 tag.style.display = 'none';
+            }
+        });
+        
+        // Show/hide more button based on tag count
+        if (totalTags > 7) {
+            moreBtn.style.display = 'flex';
+        } else {
+            moreBtn.style.display = 'none';
+        }
+    }
+    
+    // More tags functionality (desktop only)
+    const moreTagsBtn = document.getElementById('moreTagsBtn');
+    let tagsExpanded = false;
+    
+    moreTagsBtn.addEventListener('click', function() {
+        const isMobile = window.innerWidth <= 768;
+        if (isMobile) return; // Skip on mobile
+        
+        tagsExpanded = !tagsExpanded;
+        const allTags = document.querySelectorAll('.tags-container .tag-btn');
+        
+        // Show/hide tags beyond first 7
+        allTags.forEach((tag, index) => {
+            if (index >= 7) {
+                if (tagsExpanded) {
+                    tag.style.display = 'flex';
+                } else {
+                    tag.style.display = 'none';
+                }
             }
         });
         
@@ -66,6 +98,12 @@ document.addEventListener('DOMContentLoaded', function() {
             moreTagsBtn.querySelector('span').textContent = 'more';
         }
     });
+    
+    // Initialize tag visibility on load
+    updateTagVisibility();
+    
+    // Update on window resize
+    window.addEventListener('resize', updateTagVisibility);
     
     // Tag selection functionality
     const tagButtons = document.querySelectorAll('.tag-btn:not(.add-tag)');
