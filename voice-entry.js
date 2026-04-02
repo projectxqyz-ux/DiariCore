@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const retryBtn = document.getElementById('retryBtn');
     const saveBtn = document.getElementById('saveBtn');
     const mobileSaveBtn = document.getElementById('saveEntryBtn');
+    const mobileRetryBtn = document.getElementById('mobileRetryBtn');
     
     // Check if mobile and update text accordingly
     const isMobile = window.innerWidth <= 768;
@@ -131,6 +132,17 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Retry button functionality
     retryBtn.addEventListener('click', function() {
+        resetRecording();
+    });
+    
+    // Mobile retry button functionality
+    if (mobileRetryBtn) {
+        mobileRetryBtn.addEventListener('click', function() {
+            resetRecording();
+        });
+    }
+    
+    function resetRecording() {
         // Reset UI
         if (!isMobile) {
             postRecordingContainer.style.display = 'none';
@@ -143,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Clear any existing recording data
         audioChunks = [];
-    });
+    }
     
     // Save button functionality
     saveBtn.addEventListener('click', function() {

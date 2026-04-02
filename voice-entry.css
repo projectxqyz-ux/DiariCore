@@ -340,6 +340,24 @@
     margin: 0;
 }
 
+.mobile-retry-btn {
+    display: none;
+    background: var(--primary-bg);
+    border: 1px solid var(--border-color);
+    color: var(--primary-color);
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    margin-left: auto;
+}
+
+.mobile-retry-btn:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
 .transcript-preview {
     background-color: var(--background-soft);
     border: 1px solid var(--border-color);
@@ -743,6 +761,14 @@
     
     .summary-actions {
         display: none;
+    }
+    
+    .mobile-retry-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
     }
     
     .action-btn {
