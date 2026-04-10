@@ -247,15 +247,18 @@ function loadMoreEntries() {
             }
         });
         
-        // Hide button if no more entries to show
-        const remainingHidden = document.querySelectorAll('.entries-grid > .entry-card:nth-child(n+7)');
+        // Count remaining hidden entries more accurately
+        const allHiddenEntries = document.querySelectorAll('.entries-grid > .entry-card:nth-child(n+7)');
         let remainingCount = 0;
-        remainingHidden.forEach(entry => {
-            if (entry.style.display !== 'block' || entry.style.display === 'none') {
+        
+        allHiddenEntries.forEach(entry => {
+            const computedStyle = window.getComputedStyle(entry);
+            if (computedStyle.display === 'none') {
                 remainingCount++;
             }
         });
         
+        // Hide button only if no more hidden entries
         if (remainingCount === 0) {
             loadMoreBtn.style.display = 'none';
         }
