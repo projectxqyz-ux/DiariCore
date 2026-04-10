@@ -962,6 +962,19 @@ body {
         font-weight: 500 !important;
     }
     
+    /* Also ensure April entry cards have the same bottom padding as March */
+    .april-section .entry-card {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 0.25rem !important;
+        padding: 1rem 1rem 0 1rem !important;
+        background-color: var(--card-background) !important;
+        border: 1px solid var(--border-color) !important;
+        border-radius: 16px !important;
+        transition: all 0.2s ease !important;
+        overflow: visible !important;
+    }
+    
     /* Reduce space between April month header and March entries */
     .april-section {
         margin-top: 0.5rem !important;
