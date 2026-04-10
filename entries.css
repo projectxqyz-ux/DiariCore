@@ -471,6 +471,13 @@ body {
         min-width: 250px;
     }
     
+    /* Mobile search bar styling */
+    .search-bar {
+        width: 100% !important; /* Full width on mobile */
+        border-radius: 25px !important; /* More rounded corners */
+        padding: 0.875rem 1rem !important; /* Slightly larger padding */
+    }
+    
     /* Mobile font size overrides to match dashboard */
     .main-title {
         font-size: 20px !important; /* Match dashboard main-title */
