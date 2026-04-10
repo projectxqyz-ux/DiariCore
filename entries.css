@@ -855,8 +855,9 @@ body {
         overflow: visible !important;
     }
     
-    /* Force April entries to match March exactly - aggressive override */
+    /* Force April entries to use exact same styles as March entries */
     .april-section .entry-card {
+        all: inherit !important;
         display: flex !important;
         flex-direction: column !important;
         gap: 0.25rem !important;
@@ -872,19 +873,12 @@ body {
         box-sizing: border-box !important;
     }
     
-    /* Force all April child elements to inherit March styles */
-    .april-section .entry-header,
-    .april-section .entry-meta,
-    .april-section .entry-date,
-    .april-section .entry-title,
-    .april-section .entry-mood,
-    .april-section .entry-content-wrapper,
-    .april-section .entry-excerpt,
-    .april-section .entry-tags,
-    .april-section .tag {
-        all: unset !important;
+    /* Make all April child elements identical to March */
+    .april-section * {
+        all: inherit !important;
     }
     
+    /* Re-apply mobile-specific styles to April */
     .april-section .entry-header {
         display: flex !important;
         justify-content: space-between !important;
@@ -921,18 +915,16 @@ body {
         content: attr(data-day) !important;
         font-size: 1.1rem !important;
         font-weight: 600 !important;
-        color: var(--text-dark) !important;
-        line-height: 1 !important;
         color: #333 !important;
+        line-height: 1 !important;
     }
     
     .april-section .entry-date::after {
         content: attr(data-month) !important;
         font-size: 0.7rem !important;
-        color: var(--text-secondary) !important;
+        color: #666 !important;
         text-transform: uppercase !important;
         font-weight: 500 !important;
-        color: #666 !important;
         line-height: 1 !important;
     }
     
