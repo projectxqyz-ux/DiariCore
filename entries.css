@@ -663,6 +663,26 @@ body {
         font-size: 0.8rem;
         color: var(--text-secondary);
         font-weight: 500;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.25rem !important;
+    }
+    
+    .entry-date::before {
+        content: attr(data-day) !important;
+        font-size: 1.1rem !important;
+        font-weight: 600 !important;
+        color: var(--text-dark) !important;
+        line-height: 1 !important;
+    }
+    
+    .entry-date::after {
+        content: attr(data-month) !important;
+        font-size: 0.75rem !important;
+        color: var(--text-secondary) !important;
+        text-transform: uppercase !important;
+        font-weight: 500 !important;
     }
     
     .entry-mood {
