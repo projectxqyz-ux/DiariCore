@@ -855,7 +855,7 @@ body {
         overflow: visible !important;
     }
     
-    /* Force April entries to match March exactly - override everything */
+    /* Force April entries to match March exactly - aggressive override */
     .april-section .entry-card {
         display: flex !important;
         flex-direction: column !important;
@@ -867,9 +867,22 @@ body {
         transition: all 0.2s ease !important;
         overflow: visible !important;
         margin-bottom: 0 !important;
-        min-height: 172px !important; /* 4.3cm at 96dpi */
-        height: 172px !important; /* Force exact height to match March */
+        min-height: 172px !important;
+        height: 172px !important;
         box-sizing: border-box !important;
+    }
+    
+    /* Force all April child elements to inherit March styles */
+    .april-section .entry-header,
+    .april-section .entry-meta,
+    .april-section .entry-date,
+    .april-section .entry-title,
+    .april-section .entry-mood,
+    .april-section .entry-content-wrapper,
+    .april-section .entry-excerpt,
+    .april-section .entry-tags,
+    .april-section .tag {
+        all: unset !important;
     }
     
     .april-section .entry-header {
