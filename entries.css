@@ -872,9 +872,9 @@ body {
         box-sizing: border-box !important;
     }
     
-    /* Force April entries to use same styles as March entries */
+    /* Force April entries to use same styles as March entries - higher specificity */
     @media (max-width: 768px) {
-        .april-section .entry-card {
+        .entries-section.april-section .entry-card {
             display: flex !important;
             flex-direction: column !important;
             gap: 0.25rem !important;
@@ -890,7 +890,7 @@ body {
             box-sizing: border-box !important;
         }
         
-        .april-section .entry-header {
+        .entries-section.april-section .entry-header {
             display: flex !important;
             justify-content: space-between !important;
             align-items: flex-start !important;
@@ -898,14 +898,14 @@ body {
             gap: 0.75rem !important;
         }
         
-        .april-section .entry-meta {
+        .entries-section.april-section .entry-meta {
             display: flex !important;
             flex-direction: row !important;
             align-items: center !important;
             gap: 0.75rem !important;
         }
         
-        .april-section .entry-date {
+        .entries-section.april-section .entry-date {
             font-size: 0.8rem !important;
             color: var(--text-secondary) !important;
             font-weight: 500 !important;
@@ -922,7 +922,7 @@ body {
             flex-shrink: 0 !important;
         }
         
-        .april-section .entry-date::before {
+        .entries-section.april-section .entry-date::before {
             content: attr(data-day) !important;
             font-size: 1.1rem !important;
             font-weight: 600 !important;
@@ -930,7 +930,7 @@ body {
             line-height: 1 !important;
         }
         
-        .april-section .entry-date::after {
+        .entries-section.april-section .entry-date::after {
             content: attr(data-month) !important;
             font-size: 0.7rem !important;
             color: #666 !important;
@@ -939,7 +939,7 @@ body {
             line-height: 1 !important;
         }
         
-        .april-section .entry-title {
+        .entries-section.april-section .entry-title {
             font-size: 1rem !important;
             font-weight: 600 !important;
             color: var(--text-dark) !important;
@@ -948,7 +948,7 @@ body {
             align-self: center !important;
         }
         
-        .april-section .entry-mood {
+        .entries-section.april-section .entry-mood {
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
@@ -960,7 +960,7 @@ body {
             right: 0 !important;
         }
         
-        .april-section .entry-content-wrapper {
+        .entries-section.april-section .entry-content-wrapper {
             display: flex !important;
             flex-direction: column !important;
             gap: 0.5rem !important;
@@ -968,7 +968,7 @@ body {
             box-sizing: border-box !important;
         }
         
-        .april-section .entry-excerpt {
+        .entries-section.april-section .entry-excerpt {
             font-size: 0.85rem !important;
             color: var(--text-secondary) !important;
             line-height: 1.4 !important;
@@ -980,7 +980,7 @@ body {
             flex-grow: 1 !important;
         }
         
-        .april-section .entry-tags {
+        .entries-section.april-section .entry-tags {
             display: flex !important;
             flex-wrap: wrap !important;
             gap: 0.5rem !important;
@@ -989,7 +989,7 @@ body {
             padding-bottom: 0 !important;
         }
         
-        .april-section .tag {
+        .entries-section.april-section .tag {
             font-size: 0.75rem !important;
             padding: 0.25rem 0.5rem !important;
             background-color: var(--background-soft) !important;
