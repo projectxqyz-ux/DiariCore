@@ -807,6 +807,11 @@ body {
         display: none !important;
     }
     
+    /* Reduce space between load more button and last entry on mobile */
+    .load-more-section {
+        margin-top: 0.5rem !important;
+    }
+    
     /* Mobile font size overrides to match dashboard */
     .main-title {
         font-size: 20px !important; /* Match dashboard main-title */
