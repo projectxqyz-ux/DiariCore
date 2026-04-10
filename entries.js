@@ -241,8 +241,8 @@ function loadMoreEntries() {
         
         hiddenEntries.forEach(entry => {
             if (shownCount < 2) {
-                // Force display to block to override CSS
-                entry.style.setProperty('display', 'block', 'important');
+                // Force display to flex to override CSS
+                entry.style.setProperty('display', 'flex', 'important');
                 shownCount++;
             }
         });
@@ -270,7 +270,7 @@ function loadMoreEntries() {
                 
                 aprilEntries.forEach(entry => {
                     if (aprilShownCount < 2) {
-                        entry.style.setProperty('display', 'block', 'important');
+                        entry.style.setProperty('display', 'flex', 'important');
                         aprilShownCount++;
                     }
                 });
