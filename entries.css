@@ -474,6 +474,7 @@ body {
     /* Mobile font size overrides to match dashboard */
     .main-title {
         font-size: 20px !important; /* Match dashboard main-title */
+        margin-bottom: 0.1rem; /* Match dashboard spacing */
     }
     
     .subtitle {
