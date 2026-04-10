@@ -996,7 +996,7 @@ body {
     /* Ensure "nothing to show" message is fully visible on mobile */
     .nothing-to-show-mobile {
         padding-bottom: 3rem !important;
-        margin-top: -2rem !important;
+        margin-top: -4rem !important;
     }
     
     /* Mobile font size overrides to match dashboard */
