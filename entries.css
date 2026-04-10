@@ -643,13 +643,12 @@ body {
     .month-header::after {
         content: '' !important;
         position: absolute !important;
-        left: 0 !important;
+        left: -20px !important;
         top: 50% !important;
         transform: translateY(-50%) !important;
-        width: 100vw !important;
+        width: calc(100vw + 40px) !important;
         height: 1px !important;
         background-color: #999 !important;
-        z-index: -1 !important;
     }
     
     .month-header i {
