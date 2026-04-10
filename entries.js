@@ -226,32 +226,51 @@ function initializeLoadMore() {
     }
 }
 
-// Load More Entries (Mock Function)
+// Load More Entries (Mobile-specific functionality)
 function loadMoreEntries() {
     const loadMoreBtn = document.getElementById('loadMoreBtn');
     const entriesGrid = document.querySelector('.entries-grid');
     
-    // Show loading state
-    loadMoreBtn.textContent = 'Loading...';
-    loadMoreBtn.disabled = true;
-
-    // Simulate loading delay
-    setTimeout(() => {
-        // Add mock entries (in real app, this would fetch from server)
-        const newEntries = generateMockEntries(3);
-        newEntries.forEach(entry => {
-            entriesGrid.appendChild(entry);
-        });
-
-        // Reset button
-        loadMoreBtn.textContent = 'Load More Entries';
-        loadMoreBtn.disabled = false;
-
-        showNotification('3 more entries loaded', 'success');
+    // Check if we're on mobile
+    const isMobile = window.innerWidth <= 768;
+    
+    if (isMobile) {
+        // Mobile: Show 2 more hidden entries
+        const hiddenEntries = document.querySelectorAll('.entry-card:nth-child(n+7)');
+        let shownCount = 0;
         
-        // Reinitialize new entry cards
-        initializeEntryCards();
-    }, 1000);
+        hiddenEntries.forEach(entry => {
+            if (shownCount < 2 && entry.style.display === 'none') {
+                entry.style.display = 'block';
+                shownCount++;
+            }
+        });
+        
+        // Hide button if no more entries to show
+        const remainingHidden = document.querySelectorAll('.entry-card:nth-child(n+7)[style="display: none;"]').length;
+        if (remainingHidden === 0) {
+            loadMoreBtn.style.display = 'none';
+        }
+        
+        showNotification(`${shownCount} more entries loaded`, 'success');
+    } else {
+        // Desktop: Original functionality
+        loadMoreBtn.textContent = 'Loading...';
+        loadMoreBtn.disabled = true;
+
+        setTimeout(() => {
+            const newEntries = generateMockEntries(3);
+            newEntries.forEach(entry => {
+                entriesGrid.appendChild(entry);
+            });
+
+            loadMoreBtn.textContent = 'Load More Entries';
+            loadMoreBtn.disabled = false;
+
+            showNotification('3 more entries loaded', 'success');
+            initializeEntryCards();
+        }, 1000);
+    }
 }
 
 // Generate Mock Entries

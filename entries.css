@@ -802,6 +802,11 @@ body {
         font-weight: 500;
     }
     
+    /* Hide extra entries beyond first 5 on mobile */
+    .entry-card:nth-child(n+7) {
+        display: none !important;
+    }
+    
     /* Mobile font size overrides to match dashboard */
     .main-title {
         font-size: 20px !important; /* Match dashboard main-title */
