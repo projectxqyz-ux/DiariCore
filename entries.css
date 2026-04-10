@@ -479,6 +479,12 @@ body {
     .subtitle {
         font-size: 14px !important; /* Match dashboard subtitle */
     }
+    
+    .header-section {
+        text-align: left; /* Match dashboard positioning */
+        margin-bottom: 1rem; /* Match dashboard positioning */
+        padding-top: 0.3rem; /* Match dashboard positioning */
+    }
 }
 
 @media (max-width: 480px) {
