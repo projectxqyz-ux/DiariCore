@@ -258,9 +258,22 @@ function loadMoreEntries() {
             }
         });
         
-        // Hide button only if no more hidden entries
+        // Hide button and show "nothing to show" message if no more entries
         if (remainingCount === 0) {
             loadMoreBtn.style.display = 'none';
+            
+            // Add "nothing to show" message
+            const nothingToShow = document.createElement('div');
+            nothingToShow.className = 'nothing-to-show-mobile';
+            nothingToShow.innerHTML = `
+                <p style="text-align: center; color: var(--text-secondary); font-size: 0.9rem; margin: 1rem 0; font-style: italic;">
+                    Nothing more to show for this month
+                </p>
+            `;
+            
+            // Insert after load more button container
+            const loadMoreContainer = loadMoreBtn.parentElement;
+            loadMoreContainer.parentNode.insertBefore(nothingToShow, loadMoreContainer.nextSibling);
         }
         
         showNotification(`${shownCount} more entries loaded`, 'success');
