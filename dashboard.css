@@ -795,7 +795,7 @@ body {
     }
     
     .subtitle {
-        font-size: 12px !important; /* Override desktop size for mobile */
+        font-size: 14px !important; /* Override desktop size for mobile to match entries page */
     }
     
     /* Hide desktop Smart Insights section on mobile */
