@@ -271,6 +271,57 @@ body {
         height: 200px !important;
         position: relative !important;
     }
+    
+    /* Emotion breakdown mobile styling */
+    .emotion-breakdown-list {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 0.75rem !important;
+        padding: 0.5rem !important;
+    }
+    
+    .emotion-item {
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.75rem !important;
+        padding: 0.5rem 0 !important;
+    }
+    
+    .emotion-dot {
+        width: 12px !important;
+        height: 12px !important;
+        border-radius: 50% !important;
+        flex-shrink: 0 !important;
+    }
+    
+    .emotion-dot.happy {
+        background-color: #7FBF9F !important;
+    }
+    
+    .emotion-dot.neutral {
+        background-color: #F4A261 !important;
+    }
+    
+    .emotion-dot.sad {
+        background-color: #7FA7BF !important;
+    }
+    
+    .emotion-dot.anxious {
+        background-color: #E76F51 !important;
+    }
+    
+    .emotion-name {
+        flex: 1 !important;
+        font-size: 0.9rem !important;
+        color: var(--text-dark) !important;
+        font-weight: 500 !important;
+    }
+    
+    .emotion-percentage {
+        font-size: 0.9rem !important;
+        color: var(--text-secondary) !important;
+        font-weight: 600 !important;
+    }
 }
 
 /* Weekly Mood Chart Section */
