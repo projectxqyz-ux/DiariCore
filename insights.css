@@ -204,36 +204,104 @@ body {
         order: 2 !important;
     }
     
-    /* Make stress and happiness triggers display side by side on mobile with hidden details */
+    /* Mobile trigger cards: side-by-side, reference layout (icon circle → label → value) */
     .triggers-grid {
         display: flex !important;
         flex-direction: row !important;
+        justify-content: space-between !important;
         gap: 0.75rem !important;
         margin-bottom: 2rem !important;
-        padding: 0 0.5rem !important;
+        padding: 0 0.25rem !important;
     }
     
     .stress-trigger,
     .happiness-trigger {
         flex: 1 !important;
         min-width: 0 !important;
-        padding: 0.75rem !important;
-        font-size: 0.85rem !important;
+        padding: 1rem !important;
         cursor: pointer !important;
         position: relative !important;
         display: flex !important;
         flex-direction: column !important;
-        gap: 0.25rem !important;
+        align-items: flex-start !important;
+        gap: 0 !important;
+        background-color: var(--card-background) !important;
+        border-radius: 14px !important;
+        border: 1px solid var(--border-color) !important;
+        box-shadow: 0 2px 14px rgba(0, 0, 0, 0.06) !important;
     }
     
-    /* Hide detailed explanations by default on mobile */
+    /* Icon first (top-left circle) */
+    .stress-trigger .trigger-icon,
+    .happiness-trigger .trigger-icon {
+        order: -1 !important;
+        margin-left: 0 !important;
+        margin-bottom: 0.65rem !important;
+        width: 40px !important;
+        height: 40px !important;
+        min-width: 40px !important;
+        min-height: 40px !important;
+        border-radius: 50% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 1.1rem !important;
+        flex-shrink: 0 !important;
+    }
+    
+    .stress-trigger .trigger-icon {
+        background-color: #FFE8DC !important;
+        color: #D97736 !important;
+    }
+    
+    .happiness-trigger .trigger-icon {
+        background-color: #E3F4EA !important;
+        color: #2D6A4F !important;
+    }
+    
+    .stress-trigger .trigger-content,
+    .happiness-trigger .trigger-content {
+        order: 0 !important;
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.35rem !important;
+    }
+    
+    /* Mobile copy: TOP STRESSOR / TOP JOY + short titles */
+    .stress-trigger .trigger-title-desktop,
+    .happiness-trigger .trigger-title-desktop,
+    .stress-trigger .trigger-name-desktop,
+    .happiness-trigger .trigger-name-desktop {
+        display: none !important;
+    }
+    
+    .stress-trigger .trigger-title-mobile-only,
+    .happiness-trigger .trigger-title-mobile-only,
+    .stress-trigger .trigger-name-mobile-only,
+    .happiness-trigger .trigger-name-mobile-only {
+        display: block !important;
+    }
+    
+    .stress-trigger .trigger-title,
+    .happiness-trigger .trigger-title {
+        font-size: 0.65rem !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.08em !important;
+        text-transform: uppercase !important;
+        color: #7FA7BF !important;
+        margin: 0 !important;
+        line-height: 1.2 !important;
+    }
+    
     .stress-trigger .trigger-name,
     .happiness-trigger .trigger-name {
-        display: block !important;
-        font-size: 0.9rem !important;
-        margin-bottom: 0 !important;
-        line-height: 1.2 !important;
-        color: black !important;
+        font-size: 1.05rem !important;
+        font-weight: 700 !important;
+        color: #2C3E50 !important;
+        margin: 0 !important;
+        line-height: 1.25 !important;
     }
     
     .stress-trigger .trigger-description,
@@ -241,64 +309,24 @@ body {
         display: none !important;
     }
     
-    /* Title with icon - exact design from image */
-    .stress-trigger .trigger-title,
-    .happiness-trigger .trigger-title {
-        font-size: 0.75rem !important;
-        margin-bottom: 0 !important;
-        text-align: left !important;
-        display: flex !important;
-        align-items: center !important;
-        gap: 0.5rem !important;
-        color: #666666 !important; /* Grey color for Top Stressor and Top Happiness */
-        flex-wrap: nowrap !important;
-        white-space: nowrap !important;
-    }
-    
-    .stress-trigger .trigger-icon,
-    .happiness-trigger .trigger-icon {
-        font-size: 0.75rem !important; /* Match text font size */
-        display: inline-flex !important;
-        margin-bottom: 0 !important;
-        margin-right: 0 !important;
-        color: black !important;
-        align-items: center !important;
-        justify-content: center !important;
-        background-color: transparent !important;
-        border-radius: 0 !important;
-        width: auto !important;
-        height: auto !important;
-        flex-shrink: 0 !important;
-    }
-    
-    /* Show details when clicked */
-    .stress-trigger.expanded .trigger-name,
-    .happiness-trigger.expanded .trigger-name {
-        display: block !important;
-        font-size: 0.9rem !important;
-        margin-bottom: 0.5rem !important;
-        line-height: 1.2 !important;
-    }
-    
+    /* Expanded: show description; keep compact header */
     .stress-trigger.expanded .trigger-description,
     .happiness-trigger.expanded .trigger-description {
         display: block !important;
         font-size: 0.75rem !important;
-        line-height: 1.3 !important;
+        line-height: 1.35 !important;
         margin-top: 0.5rem !important;
+        color: var(--text-secondary) !important;
     }
     
     .stress-trigger.expanded .trigger-title,
     .happiness-trigger.expanded .trigger-title {
-        margin-bottom: 0.5rem !important;
-        text-align: left !important;
+        margin-bottom: 0 !important;
     }
     
-    .stress-trigger.expanded .trigger-icon,
-    .happiness-trigger.expanded .trigger-icon {
-        display: inline-block !important;
+    .stress-trigger.expanded .trigger-name,
+    .happiness-trigger.expanded .trigger-name {
         margin-bottom: 0 !important;
-        margin-right: 0.5rem !important;
     }
     
     /* Weekly glance mobile styling */
@@ -739,6 +767,12 @@ body {
     margin: 0 0 1rem 0;
 }
 
+/* Desktop vs mobile label/value copy (mobile styling lives in max-width: 768px block) */
+.trigger-title-mobile-only,
+.trigger-name-mobile-only {
+    display: none;
+}
+
 .trigger-name {
     font-size: 1.25rem;
     font-weight: 600;
@@ -793,16 +827,13 @@ body {
         gap: 1rem;
     }
     
-    .triggers-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-    }
+    /* Insight .triggers-grid uses flex row in the earlier max-width: 768px block; do not force single column here */
     
-    .trigger-card {
+    .trigger-card:not(.stress-trigger):not(.happiness-trigger) {
         padding: 1.5rem;
     }
     
-    .trigger-icon {
+    .trigger-card:not(.stress-trigger):not(.happiness-trigger) .trigger-icon {
         width: 40px;
         height: 40px;
         font-size: 1.25rem;
@@ -837,15 +868,15 @@ body {
         padding: 1rem;
     }
     
-    .trigger-icon {
+    .trigger-card:not(.stress-trigger):not(.happiness-trigger) .trigger-icon {
         margin-left: 0.5rem;
     }
     
-    .trigger-title {
+    .trigger-card:not(.stress-trigger):not(.happiness-trigger) .trigger-title {
         font-size: 1rem;
     }
     
-    .trigger-name {
+    .trigger-card:not(.stress-trigger):not(.happiness-trigger) .trigger-name {
         font-size: 1.125rem;
     }
     
@@ -861,6 +892,23 @@ body {
 
 /* Desktop overrides - restore original emotion breakdown pie chart */
 @media (min-width: 769px) {
+    /* Trigger cards: desktop copy and layout only */
+    .trigger-title-desktop,
+    .trigger-name-desktop {
+        display: inline !important;
+    }
+    
+    .trigger-title-mobile-only,
+    .trigger-name-mobile-only {
+        display: none !important;
+    }
+    
+    .stress-trigger .trigger-icon,
+    .happiness-trigger .trigger-icon {
+        order: 0 !important;
+        margin-bottom: 0 !important;
+    }
+    
     .emotion-breakdown-mobile {
         display: none !important;
     }
