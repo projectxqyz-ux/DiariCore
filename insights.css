@@ -333,6 +333,16 @@ body {
         color: var(--text-secondary) !important;
         font-weight: 600 !important;
     }
+    
+    /* Hide desktop chart on mobile */
+    .chart-card .chart-container {
+        display: none !important;
+    }
+    
+    /* Show mobile bars on mobile */
+    .emotion-breakdown-bars {
+        display: flex !important;
+    }
 }
 
 /* Weekly Mood Chart Section */
@@ -547,4 +557,19 @@ body {
 /* Chart Styles */
 #moodChart {
     max-height: 300px;
+}
+
+/* Desktop overrides - restore original emotion breakdown pie chart */
+@media (min-width: 769px) {
+    .emotion-breakdown-bars {
+        display: none !important;
+    }
+    
+    .chart-card .chart-container {
+        display: block !important;
+    }
+    
+    .chart-card .chart-container canvas {
+        display: block !important;
+    }
 }
