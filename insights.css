@@ -441,12 +441,6 @@ body {
         border: 1px solid var(--border-color) !important;
     }
     
-    .activity-impact-content {
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 1rem !important;
-    }
-    
     .activity-bar-item {
         display: flex !important;
         flex-direction: column !important;
