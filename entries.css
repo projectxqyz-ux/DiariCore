@@ -1151,11 +1151,6 @@ body {
             background-color: #bbb !important;
             margin-left: 0.5rem !important;
         }
-        
-        /* Hide all month sections except March by default on mobile */
-        .entries-section:not(:first-of-type) {
-            display: none !important;
-        }
     }
     
     /* Reduce space between April month header and March entries */
