@@ -266,7 +266,7 @@
         border-top: 1px solid var(--border-color) !important;
         box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1) !important;
         z-index: 1000 !important;
-        padding: 0.5rem 0 !important;
+        padding: 0.5rem 0 calc(0.5rem + env(safe-area-inset-bottom, 0px)) !important;
         width: 100% !important;
         height: auto !important;
         visibility: visible !important;
@@ -340,20 +340,27 @@
     .mobile-bottom-nav-item--write {
         position: relative !important;
         z-index: 1002 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
     }
     
     .mobile-write-fab {
         position: relative;
         display: flex;
         justify-content: center;
-        align-items: flex-end;
+        align-items: center;
         width: 100%;
     }
     
     .mobile-bottom-nav-link--write-fab {
         flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
         gap: 0 !important;
-        padding: 0.2rem 0.35rem 0.3rem !important;
+        /* Match vertical rhythm of icon+label items (no label here) */
+        padding: 0.5rem 0.4rem !important;
+        min-height: 0 !important;
     }
     
     /* Single circle: swap + / × inside without stacking two full circles */
@@ -362,10 +369,23 @@
         width: 48px;
         height: 48px;
         margin: 0 auto;
+        flex-shrink: 0;
         border-radius: 50%;
         background: linear-gradient(145deg, #8aab9a, #6f8f7f);
         box-shadow: 0 4px 14px rgba(111, 143, 127, 0.45), 0 0 0 3px #fff;
         transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    @keyframes mobile-write-fab-trigger-pop {
+        0% {
+            transform: scale(1);
+        }
+        55% {
+            transform: scale(1.07);
+        }
+        100% {
+            transform: scale(1);
+        }
     }
     
     .mobile-write-fab__trigger-surface i {
@@ -390,22 +410,23 @@
     
     .mobile-bottom-nav-link--write-fab.is-open .mobile-write-fab__trigger-surface {
         box-shadow: 0 6px 20px rgba(111, 143, 127, 0.5), 0 0 0 3px #fff;
+        animation: mobile-write-fab-trigger-pop 0.38s cubic-bezier(0.22, 1, 0.36, 1);
     }
     
     .mobile-write-fab__radial {
         position: absolute;
-        bottom: calc(100% + 10px);
+        bottom: calc(100% + 12px);
         left: 50%;
-        transform: translateX(-50%) translateY(8px);
+        transform: translateX(-50%) translateY(16px);
         display: flex;
         flex-direction: row;
-        gap: 12px;
+        gap: 14px;
         align-items: center;
         justify-content: center;
         z-index: 1003 !important;
         pointer-events: none;
         opacity: 0;
-        transition: opacity 0.2s ease, transform 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+        transition: opacity 0.28s ease, transform 0.34s cubic-bezier(0.22, 1, 0.36, 1);
     }
     
     .mobile-write-fab__radial:not([hidden]) {
@@ -426,22 +447,31 @@
         font-size: 1.05rem;
         background: linear-gradient(145deg, #4d6359, #2f3e36);
         box-shadow: 0 6px 18px rgba(47, 62, 54, 0.38);
-        transform: scale(0.55);
+        transform: translateY(18px) scale(0.45);
         opacity: 0;
-        transition: transform 0.26s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.22s ease;
+        transition: transform 0.34s cubic-bezier(0.22, 1, 0.45, 1), opacity 0.28s ease, box-shadow 0.2s ease;
     }
     
     .mobile-write-fab__radial:not([hidden]) .mobile-write-fab__sat {
-        transform: scale(1);
+        transform: translateY(0) scale(1);
         opacity: 1;
     }
     
-    .mobile-write-fab__sat--voice {
-        transition-delay: 0.05s !important;
+    .mobile-write-fab__sat--write {
+        transition-delay: 0.05s;
     }
     
-    .mobile-write-fab__sat:active {
-        transform: scale(0.92);
+    .mobile-write-fab__sat--voice {
+        transition-delay: 0.14s;
+    }
+    
+    .mobile-write-fab__radial[hidden] .mobile-write-fab__sat {
+        transition-delay: 0s !important;
+    }
+    
+    .mobile-write-fab__radial:not([hidden]) .mobile-write-fab__sat:active {
+        transform: translateY(0) scale(0.9);
+        box-shadow: 0 4px 12px rgba(47, 62, 54, 0.45);
     }
 }
 
