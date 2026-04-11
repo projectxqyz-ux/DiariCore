@@ -279,6 +279,10 @@ body {
         gap: 1.5rem !important;
         padding: 1rem !important;
         align-items: center !important;
+        margin-bottom: 2rem !important;
+        background-color: var(--card-background) !important;
+        border-radius: 16px !important;
+        border: 1px solid var(--border-color) !important;
     }
     
     .emotion-pie-chart {
@@ -349,6 +353,13 @@ body {
     /* Show mobile layout on mobile */
     .emotion-breakdown-mobile {
         display: flex !important;
+    }
+    
+    /* Hide chart-card container on mobile for emotion breakdown */
+    .charts-grid .chart-card:first-child {
+        background: transparent !important;
+        border: none !important;
+        padding: 0 !important;
     }
     
     /* Activity impact mobile styling */
