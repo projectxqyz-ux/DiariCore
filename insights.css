@@ -164,7 +164,7 @@ body {
         margin-bottom: 1rem; /* Match entries.html spacing */
     }
     
-    /* Make stress and happiness triggers display side by side on mobile with proper adaptation */
+    /* Make stress and happiness triggers display side by side on mobile with hidden details */
     .triggers-grid {
         display: flex !important;
         flex-direction: row !important;
@@ -179,34 +179,65 @@ body {
         min-width: 0 !important;
         padding: 1rem !important;
         font-size: 0.85rem !important;
+        cursor: pointer !important;
+        position: relative !important;
     }
     
+    /* Hide detailed explanations by default on mobile */
+    .stress-trigger .trigger-name,
+    .happiness-trigger .trigger-name {
+        display: none !important;
+    }
+    
+    .stress-trigger .trigger-description,
+    .happiness-trigger .trigger-description {
+        display: none !important;
+    }
+    
+    /* Show only title and icon by default */
     .stress-trigger .trigger-title,
     .happiness-trigger .trigger-title {
         font-size: 0.75rem !important;
+        margin-bottom: 0 !important;
+        text-align: center !important;
+    }
+    
+    .stress-trigger .trigger-icon,
+    .happiness-trigger .trigger-icon {
+        font-size: 1.5rem !important;
+        text-align: center !important;
+        display: block !important;
         margin-bottom: 0.5rem !important;
     }
     
-    .stress-trigger .trigger-name,
-    .happiness-trigger .trigger-name {
+    /* Show details when clicked */
+    .stress-trigger.expanded .trigger-name,
+    .happiness-trigger.expanded .trigger-name {
+        display: block !important;
         font-size: 0.9rem !important;
         margin-bottom: 0.5rem !important;
         line-height: 1.2 !important;
     }
     
-    .stress-trigger .trigger-description,
-    .happiness-trigger .trigger-description {
+    .stress-trigger.expanded .trigger-description,
+    .happiness-trigger.expanded .trigger-description {
+        display: block !important;
         font-size: 0.75rem !important;
         line-height: 1.3 !important;
-        display: -webkit-box !important;
-        -webkit-line-clamp: 2 !important;
-        -webkit-box-orient: vertical !important;
-        overflow: hidden !important;
+        margin-top: 0.5rem !important;
     }
     
-    .stress-trigger .trigger-icon,
-    .happiness-trigger .trigger-icon {
-        font-size: 1.2rem !important;
+    .stress-trigger.expanded .trigger-title,
+    .happiness-trigger.expanded .trigger-title {
+        margin-bottom: 0.5rem !important;
+        text-align: left !important;
+    }
+    
+    .stress-trigger.expanded .trigger-icon,
+    .happiness-trigger.expanded .trigger-icon {
+        display: inline-block !important;
+        margin-bottom: 0 !important;
+        margin-right: 0.5rem !important;
     }
 }
 

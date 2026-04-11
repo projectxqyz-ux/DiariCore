@@ -8,7 +8,41 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Load Data
     loadInsightsData();
+    
+    // Initialize Mobile Trigger Functionality
+    initializeMobileTriggers();
 });
+
+// Initialize Mobile Trigger Click Functionality
+function initializeMobileTriggers() {
+    // Only apply on mobile devices
+    if (window.innerWidth <= 768) {
+        const stressTrigger = document.querySelector('.stress-trigger');
+        const happinessTrigger = document.querySelector('.happiness-trigger');
+        
+        if (stressTrigger) {
+            stressTrigger.addEventListener('click', function() {
+                this.classList.toggle('expanded');
+                
+                // Close the other trigger if it's open
+                if (happinessTrigger && happinessTrigger.classList.contains('expanded')) {
+                    happinessTrigger.classList.remove('expanded');
+                }
+            });
+        }
+        
+        if (happinessTrigger) {
+            happinessTrigger.addEventListener('click', function() {
+                this.classList.toggle('expanded');
+                
+                // Close the other trigger if it's open
+                if (stressTrigger && stressTrigger.classList.contains('expanded')) {
+                    stressTrigger.classList.remove('expanded');
+                }
+            });
+        }
+    }
+}
 
 // Initialize Weekly Mood Chart
 function initializeWeeklyMoodChart() {
