@@ -1,8 +1,12 @@
 // DiariCore Dashboard JavaScript
 
 document.addEventListener('DOMContentLoaded', function() {
+    initDashboardWriteNavFab();
+    
     // Initialize Weekly Chart
-    const ctx = document.getElementById('weeklyChart').getContext('2d');
+    const weeklyCanvas = document.getElementById('weeklyChart');
+    if (weeklyCanvas && weeklyCanvas.getContext) {
+    const ctx = weeklyCanvas.getContext('2d');
     
     const gradient = ctx.createLinearGradient(0, 0, 0, 300);
     gradient.addColorStop(0, 'rgba(111, 143, 127, 0.3)');
@@ -90,6 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+    }
     
     // Add smooth scrolling for navigation
     document.querySelectorAll('.nav-link').forEach(link => {
@@ -148,6 +153,80 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+function initDashboardWriteNavFab() {
+    if (!document.body.classList.contains('dashboard-page')) return;
+    
+    let bound = false;
+    const tryBind = function() {
+        if (bound) return true;
+        const trigger = document.querySelector('.mobile-bottom-nav-link--write-fab');
+        const popup = document.getElementById('writeNavPopup');
+        if (!trigger || !popup) return false;
+        
+        bound = true; /* set before listeners to avoid double-bind */
+        trigger.addEventListener('click', function(e) {
+            if (window.innerWidth > 768) return;
+            e.preventDefault();
+            if (popup.hasAttribute('hidden')) {
+                openWriteNavPopup();
+            } else {
+                closeWriteNavPopup();
+            }
+        });
+        
+        popup.querySelectorAll('[data-close-write-popup]').forEach(function(el) {
+            el.addEventListener('click', closeWriteNavPopup);
+        });
+        
+        popup.querySelectorAll('.write-nav-popup__opt').forEach(function(link) {
+            link.addEventListener('click', function() {
+                closeWriteNavPopup();
+            });
+        });
+        
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeWriteNavPopup();
+        });
+        
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) closeWriteNavPopup();
+        });
+        
+        return true;
+    };
+    
+    if (!tryBind()) {
+        let n = 0;
+        const id = setInterval(function() {
+            if (tryBind() || ++n > 50) clearInterval(id);
+        }, 60);
+    }
+}
+
+function openWriteNavPopup() {
+    const popup = document.getElementById('writeNavPopup');
+    const trigger = document.querySelector('.mobile-bottom-nav-link--write-fab');
+    if (!popup || window.innerWidth > 768) return;
+    popup.removeAttribute('hidden');
+    popup.setAttribute('aria-hidden', 'false');
+    if (trigger) {
+        trigger.classList.add('is-open');
+        trigger.setAttribute('aria-expanded', 'true');
+    }
+}
+
+function closeWriteNavPopup() {
+    const popup = document.getElementById('writeNavPopup');
+    const trigger = document.querySelector('.mobile-bottom-nav-link--write-fab');
+    if (!popup) return;
+    popup.setAttribute('hidden', '');
+    popup.setAttribute('aria-hidden', 'true');
+    if (trigger) {
+        trigger.classList.remove('is-open');
+        trigger.setAttribute('aria-expanded', 'false');
+    }
+}
 
 // Mobile menu toggle (for responsive design)
 function toggleMobileMenu() {

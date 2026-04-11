@@ -88,8 +88,8 @@ class SidebarComponent {
             </a>
         </li>
         <li class="mobile-bottom-nav-item">
-            <a href="write-entry.html" class="mobile-bottom-nav-link" data-page="write-entry">
-                <i class="bi bi-pencil-square"></i>
+            <a href="#" class="mobile-bottom-nav-link mobile-bottom-nav-link--write-fab" data-page="write-entry" id="mobileWriteNavTrigger" role="button" aria-haspopup="true" aria-expanded="false" aria-controls="writeNavPopup">
+                <i class="bi bi-pencil"></i>
                 <span>Writing</span>
             </a>
         </li>
