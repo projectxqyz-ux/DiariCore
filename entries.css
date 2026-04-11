@@ -359,6 +359,16 @@ body {
         margin-top: 1.5rem;
     }
     
+    /* End-of-month note (mobile uses JS-injected copy after Load more instead) */
+    .april-section__end-note {
+        text-align: center;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        margin: 2rem 0 0;
+        padding: 0 0.5rem;
+        font-style: italic;
+    }
+    
     /* —— Desktop entry cards: clearer hierarchy (March + April markup) —— */
     .entries-section .entry-card {
         display: flex;
@@ -1012,6 +1022,11 @@ body {
     
     /* Hide extra entries beyond first 5 on mobile for each month section */
     .entries-grid > .entry-card:nth-child(n+7) {
+        display: none !important;
+    }
+    
+    /* Desktop-only end note lives in markup; mobile keeps JS message after Load more — hide duplicate */
+    .april-section__end-note {
         display: none !important;
     }
     
