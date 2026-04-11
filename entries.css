@@ -987,7 +987,7 @@ body {
             gap: 0.5rem !important;
             margin-top: 0.5rem !important;
             margin-bottom: 0 !important;
-            padding-bottom: 0rem !important;
+            padding-bottom: -0.5rem !important;
         }
         
         .entries-section.april-section .tag {
