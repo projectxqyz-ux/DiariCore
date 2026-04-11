@@ -186,7 +186,12 @@ body {
     /* Hide detailed explanations by default on mobile */
     .stress-trigger .trigger-name,
     .happiness-trigger .trigger-name {
-        display: none !important;
+        display: block !important;
+        font-size: 0.9rem !important;
+        margin-bottom: 0 !important;
+        line-height: 1.2 !important;
+        color: var(--text-secondary) !important;
+        opacity: 0.7 !important;
     }
     
     .stress-trigger .trigger-description,
@@ -198,11 +203,13 @@ body {
     .stress-trigger .trigger-title,
     .happiness-trigger .trigger-title {
         font-size: 0.75rem !important;
-        margin-bottom: 0 !important;
+        margin-bottom: 0.25rem !important;
         text-align: left !important;
         display: flex !important;
         align-items: center !important;
         gap: 0.5rem !important;
+        color: var(--text-secondary) !important;
+        opacity: 0.7 !important;
     }
     
     .stress-trigger .trigger-icon,
@@ -211,6 +218,8 @@ body {
         display: inline-block !important;
         margin-bottom: 0 !important;
         margin-right: 0 !important;
+        color: var(--text-secondary) !important;
+        opacity: 0.7 !important;
     }
     
     /* Show details when clicked */
