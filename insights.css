@@ -164,7 +164,7 @@ body {
         margin-bottom: 1rem; /* Match entries.html spacing */
     }
     
-    /* Reorder sections on mobile - weekly mood first at very top, then triggers, then charts */
+    /* Reorder sections on mobile - weekly mood first, then triggers, then charts */
     .main-content {
         display: flex !important;
         flex-direction: column !important;
@@ -187,6 +187,21 @@ body {
     
     .charts-section {
         order: 3 !important;
+    }
+    
+    /* Ensure emotion breakdown and activity impact maintain their order within charts-section */
+    .charts-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 1rem !important;
+    }
+    
+    .charts-grid .chart-card:nth-child(1) {
+        order: 1 !important;
+    }
+    
+    .charts-grid .chart-card:nth-child(2) {
+        order: 2 !important;
     }
     
     /* Make stress and happiness triggers display side by side on mobile with hidden details */
