@@ -273,52 +273,63 @@ body {
     }
     
     /* Emotion breakdown mobile styling */
-    .emotion-breakdown-list {
+    .emotion-breakdown-bars {
         display: flex !important;
         flex-direction: column !important;
-        gap: 0.75rem !important;
+        gap: 1rem !important;
         padding: 0.5rem !important;
     }
     
-    .emotion-item {
+    .emotion-bar-item {
         display: flex !important;
-        align-items: center !important;
-        gap: 0.75rem !important;
-        padding: 0.5rem 0 !important;
+        flex-direction: column !important;
+        gap: 0.5rem !important;
     }
     
-    .emotion-dot {
-        width: 12px !important;
-        height: 12px !important;
-        border-radius: 50% !important;
-        flex-shrink: 0 !important;
+    .emotion-bar-wrapper {
+        width: 100% !important;
+        height: 8px !important;
+        background-color: #f0f0f0 !important;
+        border-radius: 4px !important;
+        overflow: hidden !important;
     }
     
-    .emotion-dot.happy {
+    .emotion-bar {
+        height: 100% !important;
+        border-radius: 4px !important;
+        transition: width 0.3s ease !important;
+    }
+    
+    .emotion-bar.happy {
         background-color: #7FBF9F !important;
     }
     
-    .emotion-dot.neutral {
+    .emotion-bar.neutral {
         background-color: #F4A261 !important;
     }
     
-    .emotion-dot.sad {
+    .emotion-bar.sad {
         background-color: #7FA7BF !important;
     }
     
-    .emotion-dot.anxious {
+    .emotion-bar.anxious {
         background-color: #E76F51 !important;
     }
     
-    .emotion-name {
-        flex: 1 !important;
-        font-size: 0.9rem !important;
+    .emotion-bar-info {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+    }
+    
+    .emotion-bar-name {
+        font-size: 0.85rem !important;
         color: var(--text-dark) !important;
         font-weight: 500 !important;
     }
     
-    .emotion-percentage {
-        font-size: 0.9rem !important;
+    .emotion-bar-percentage {
+        font-size: 0.85rem !important;
         color: var(--text-secondary) !important;
         font-weight: 600 !important;
     }
