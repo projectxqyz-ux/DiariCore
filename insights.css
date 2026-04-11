@@ -164,6 +164,30 @@ body {
         margin-bottom: 1rem; /* Match entries.html spacing */
     }
     
+    /* Reorder sections on mobile - weekly mood first at very top, then triggers, then charts */
+    .main-content {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+    
+    .header-section {
+        order: 0 !important;
+    }
+    
+    .weekly-glance {
+        order: 1 !important;
+        margin-top: 0 !important;
+        margin-bottom: 2rem !important;
+    }
+    
+    .triggers-section {
+        order: 2 !important;
+    }
+    
+    .charts-section {
+        order: 3 !important;
+    }
+    
     /* Make stress and happiness triggers display side by side on mobile with hidden details */
     .triggers-grid {
         display: flex !important;
@@ -395,39 +419,121 @@ body {
         display: none !important;
     }
     
-    /* Show original weekly mood chart on mobile */
+    /* Show mobile weekly glance on mobile */
     .weekly-glance {
         display: block !important;
     }
     
-    /* Show original chart containers on mobile */
+    /* Hide original chart containers on mobile */
     .chart-card .chart-container {
-        display: block !important;
+        display: none !important;
     }
     
-    /* Hide mobile custom layouts */
+    /* Show mobile custom layouts */
     .emotion-breakdown-mobile {
-        display: none !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 1rem !important;
+        padding: 1rem !important;
+        margin-bottom: 2rem !important;
+        background-color: var(--card-background) !important;
+        border-radius: 16px !important;
+        border: 1px solid var(--border-color) !important;
     }
     
     .activity-impact-mobile {
-        display: none !important;
-    }
-    
-    /* Show original charts-grid layout on mobile */
-    .charts-grid {
-        display: grid !important;
-        grid-template-columns: 1fr !important;
+        display: flex !important;
+        flex-direction: column !important;
         gap: 1rem !important;
+        padding: 1rem !important;
+        margin-bottom: 2rem !important;
+        background-color: var(--card-background) !important;
+        border-radius: 16px !important;
+        border: 1px solid var(--border-color) !important;
     }
     
-    /* Show all chart cards on mobile */
+    /* Hide chart-card containers on mobile */
     .charts-grid .chart-card {
-        display: block !important;
-        background: var(--card-background) !important;
-        border: 1px solid var(--border-color) !important;
-        padding: 1rem !important;
-        border-radius: 16px !important;
+        background: transparent !important;
+        border: none !important;
+        padding: 0 !important;
+    }
+    
+    .mobile-section-header {
+        font-size: 1rem !important;
+        margin-bottom: 1rem !important;
+        color: var(--text-dark) !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.5rem !important;
+        font-weight: 600 !important;
+    }
+    
+    .emotion-breakdown-content {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 1.5rem !important;
+        align-items: center !important;
+    }
+    
+    .emotion-pie-chart {
+        flex: 0 0 120px !important;
+        height: 120px !important;
+        position: relative !important;
+    }
+    
+    .emotion-pie-chart canvas {
+        width: 100% !important;
+        height: 100% !important;
+    }
+    
+    .emotion-legend {
+        flex: 1 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 0.75rem !important;
+    }
+    
+    .emotion-legend-item {
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.75rem !important;
+    }
+    
+    .emotion-legend-dot {
+        width: 12px !important;
+        height: 12px !important;
+        border-radius: 50% !important;
+        flex-shrink: 0 !important;
+    }
+    
+    .emotion-legend-dot.happy {
+        background-color: #7FBF9F !important;
+    }
+    
+    .emotion-legend-dot.neutral {
+        background-color: #F4A261 !important;
+    }
+    
+    .emotion-legend-dot.sad {
+        background-color: #7FA7BF !important;
+    }
+    
+    .emotion-legend-dot.anxious {
+        background-color: #E76F51 !important;
+    }
+    
+    .emotion-legend-name {
+        flex: 1 !important;
+        font-size: 0.9rem !important;
+        color: var(--text-dark) !important;
+        font-weight: 500 !important;
+    }
+    
+    .emotion-legend-percentage {
+        font-size: 0.9rem !important;
+        color: var(--text-secondary) !important;
+        font-weight: 600 !important;
     }
     
     /* Activity impact mobile styling */
