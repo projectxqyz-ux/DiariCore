@@ -170,12 +170,20 @@ body {
         flex-direction: column !important;
     }
     
-    .triggers-section {
-        order: 2 !important;
+    .header-section {
+        order: 0 !important;
     }
     
     .weekly-glance {
         order: 1 !important;
+    }
+    
+    .triggers-section {
+        order: 2 !important;
+    }
+    
+    .charts-section {
+        order: 3 !important;
     }
     
     /* Make stress and happiness triggers display side by side on mobile with hidden details */
