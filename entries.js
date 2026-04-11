@@ -262,7 +262,7 @@ function loadMoreEntries() {
         if (remainingCount === 0) {
             const aprilSection = document.querySelector('.april-section');
             if (aprilSection) {
-                aprilSection.style.setProperty('display', 'block', 'important');
+                aprilSection.classList.add('april-section--visible');
                 
                 // Show first 2 April entries
                 const aprilEntries = aprilSection.querySelectorAll('.entries-grid > .entry-card:nth-child(n+7)');
@@ -308,24 +308,20 @@ function loadMoreEntries() {
         
         showNotification(`${shownCount} more entries loaded`, 'success');
     } else {
-        // Desktop: Show 2 more hidden entries (same as mobile for consistency)
-        const hiddenEntries = document.querySelectorAll('.entries-grid > .entry-card:nth-child(n+7)');
-        let shownCount = 0;
-        
-        hiddenEntries.forEach(entry => {
-            if (shownCount < 2 && entry.style.display === 'none') {
-                entry.style.display = 'block';
-                shownCount++;
+        // Desktop: reveal April month (hidden until first click); then hide control
+        const aprilSection = document.querySelector('.april-section');
+        if (aprilSection && !aprilSection.classList.contains('april-section--visible')) {
+            aprilSection.classList.add('april-section--visible');
+            if (loadMoreBtn) {
+                loadMoreBtn.style.display = 'none';
             }
-        });
-        
-        // Hide button if no more entries to show
-        const remainingHidden = document.querySelectorAll('.entries-grid > .entry-card:nth-child(n+7)[style="display: none;"]').length;
-        if (remainingHidden === 0) {
-            loadMoreBtn.style.display = 'none';
+            showNotification('More entries loaded', 'success');
+            return;
         }
         
-        showNotification(`${shownCount} more entries loaded`, 'success');
+        if (loadMoreBtn) {
+            loadMoreBtn.style.display = 'none';
+        }
     }
 }
 

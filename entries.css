@@ -324,6 +324,35 @@ body {
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         gap: 1.5rem;
     }
+    
+    /* April block hidden until “Load more” (JS adds .april-section--visible) */
+    .entries-section.april-section:not(.april-section--visible) {
+        display: none !important;
+    }
+    
+    /* April month header sits outside the grid — match March divider line */
+    .entries-section.april-section .month-header {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        width: 100%;
+        margin: 0 0 0.25rem 0;
+        padding: 0 0 1rem 0;
+        border-bottom: 1px solid var(--border-color);
+        box-sizing: border-box;
+    }
+    
+    .entries-section.april-section .month-header i {
+        font-size: 1.25rem;
+        color: var(--primary-color);
+    }
+    
+    .entries-section.april-section .month-text {
+        font-size: 0.9rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        color: var(--text-dark);
+    }
 }
 
 /* Entry Cards */
@@ -841,9 +870,13 @@ body {
         display: none !important;
     }
     
-    /* Hide April section specifically on mobile */
-    .april-section {
+    /* Hide April section on mobile until revealed via Load more */
+    .april-section:not(.april-section--visible) {
         display: none !important;
+    }
+    
+    .april-section.april-section--visible {
+        display: block !important;
     }
     
     /* Ensure March section is visible on mobile */
