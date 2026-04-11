@@ -91,7 +91,8 @@ class SidebarComponent {
         };
 
         const closeRadial = () => {
-            radial.setAttribute('hidden', '');
+            radial.classList.remove('mobile-write-fab__radial--open');
+            radial.setAttribute('aria-hidden', 'true');
             trigger.classList.remove('is-open');
             trigger.setAttribute('aria-expanded', 'false');
             setIconsClosed();
@@ -106,17 +107,23 @@ class SidebarComponent {
 
         const openRadial = () => {
             if (window.innerWidth > 768) return;
-            radial.removeAttribute('hidden');
+            radial.setAttribute('aria-hidden', 'false');
             trigger.classList.add('is-open');
             trigger.setAttribute('aria-expanded', 'true');
             setIconsOpen();
+            /* One frame at closed styles so opacity/transform transitions run (not display:none). */
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    radial.classList.add('mobile-write-fab__radial--open');
+                });
+            });
             setTimeout(() => document.addEventListener('click', docClose, true), 0);
         };
 
         trigger.addEventListener('click', (e) => {
             if (window.innerWidth > 768) return;
             e.preventDefault();
-            if (radial.hasAttribute('hidden')) {
+            if (!radial.classList.contains('mobile-write-fab__radial--open')) {
                 openRadial();
             } else {
                 closeRadial();
@@ -134,7 +141,7 @@ class SidebarComponent {
         });
         
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && !radial.hasAttribute('hidden')) {
+            if (e.key === 'Escape' && radial.classList.contains('mobile-write-fab__radial--open')) {
                 closeRadial();
             }
         });
