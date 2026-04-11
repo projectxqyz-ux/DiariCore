@@ -130,10 +130,6 @@ function clearAllFilters() {
     updateResultsMessage(entryCards.length, entryCards.length);
 }
 
-function isDesktopEntriesLayout() {
-    return window.innerWidth > 768;
-}
-
 function hasActiveSearchOrFilters() {
     const input = document.querySelector('.search-input');
     const q = input ? input.value.trim() : '';
@@ -166,17 +162,8 @@ function updateResultsMessage(visibleCount, totalCount) {
         const message = document.createElement('div');
         message.className = 'results-message';
         message.innerHTML = `<p>Showing ${visibleCount} of ${totalCount} entries</p>`;
-        if (isDesktopEntriesLayout()) {
-            searchSection.insertAdjacentElement('afterend', message);
-        } else {
-            const entriesSection = document.querySelector('.entries-section');
-            const firstGrid = entriesSection && entriesSection.querySelector('.entries-grid');
-            if (firstGrid) {
-                entriesSection.insertBefore(message, firstGrid);
-            } else {
-                searchSection.insertAdjacentElement('afterend', message);
-            }
-        }
+        /* After search, before empty-state markup — keeps “Showing X of Y” above the no-match card on all viewports */
+        searchSection.insertAdjacentElement('afterend', message);
     }
 
     syncEntriesEmptyResultsLayout(visibleCount);

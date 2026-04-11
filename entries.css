@@ -533,14 +533,19 @@ body {
         display: block;
     }
     
-    .entries-content--empty-results .entries-empty-state__title {
+    .entries-empty-state__title--mobile,
+    .entries-empty-state__hint--mobile {
+        display: none !important;
+    }
+    
+    .entries-content--empty-results .entries-empty-state__title--desktop {
         font-size: 1.125rem;
         font-weight: 600;
         color: var(--text-dark);
         margin: 0 0 0.5rem;
     }
     
-    .entries-content--empty-results .entries-empty-state__hint {
+    .entries-content--empty-results .entries-empty-state__hint--desktop {
         font-size: 0.9rem;
         color: var(--text-secondary);
         line-height: 1.5;
@@ -578,7 +583,12 @@ body {
         display: block;
     }
     
-    .entries-content--empty-results .entries-empty-state__title {
+    .entries-content--empty-results .entries-empty-state__title--desktop,
+    .entries-content--empty-results .entries-empty-state__hint--desktop {
+        display: none !important;
+    }
+    
+    .entries-content--empty-results .entries-empty-state__title--mobile {
         font-size: 0.98rem;
         font-weight: 600;
         color: var(--text-dark);
@@ -586,7 +596,7 @@ body {
         line-height: 1.35;
     }
     
-    .entries-content--empty-results .entries-empty-state__hint {
+    .entries-content--empty-results .entries-empty-state__hint--mobile {
         font-size: 0.82rem;
         color: var(--text-secondary);
         line-height: 1.45;
@@ -1123,8 +1133,8 @@ body {
         display: block !important;
     }
     
-    /* Ensure March section is visible on mobile */
-    .entries-section:not(.april-section) {
+    /* March visible on mobile unless search/filter returned nothing */
+    .entries-content:not(.entries-content--empty-results) .entries-section:not(.april-section) {
         display: block !important;
     }
     
