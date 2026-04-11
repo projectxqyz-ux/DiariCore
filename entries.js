@@ -6,7 +6,23 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeSearch();
     initializeEntryCards();
     initializeLoadMore();
+    initializeEntriesResizeEmptyState();
 });
+
+let entriesResizeTimer;
+function initializeEntriesResizeEmptyState() {
+    window.addEventListener('resize', function () {
+        clearTimeout(entriesResizeTimer);
+        entriesResizeTimer = setTimeout(function () {
+            if (window.innerWidth <= 768) {
+                document.querySelector('.entries-content')?.classList.remove('entries-content--empty-results');
+            } else {
+                const input = document.querySelector('.search-input');
+                if (input) performSearch(input.value.trim());
+            }
+        }, 150);
+    });
+}
 
 // Filter Dropdown Functionality
 function initializeFilterDropdown() {
@@ -118,25 +134,64 @@ function clearAllFilters() {
     updateResultsMessage(entryCards.length, entryCards.length);
 }
 
+function isDesktopEntriesLayout() {
+    return window.innerWidth > 768;
+}
+
+function hasActiveSearchOrFilters() {
+    const input = document.querySelector('.search-input');
+    const q = input ? input.value.trim() : '';
+    if (q.length > 0) return true;
+    return document.querySelectorAll('.filter-option input[type="checkbox"]:checked').length > 0;
+}
+
+function syncDesktopEmptyResultsLayout(visibleCount) {
+    const main = document.querySelector('.entries-content');
+    if (!main) return;
+    if (!isDesktopEntriesLayout()) {
+        main.classList.remove('entries-content--empty-results');
+        return;
+    }
+    if (visibleCount === 0 && hasActiveSearchOrFilters()) {
+        main.classList.add('entries-content--empty-results');
+    } else {
+        main.classList.remove('entries-content--empty-results');
+    }
+}
+
 // Update results message
 function updateResultsMessage(visibleCount, totalCount) {
-    // Remove existing message if any
     const existingMessage = document.querySelector('.results-message');
     if (existingMessage) {
         existingMessage.remove();
     }
 
-    // Add new message if needed
+    const searchSection = document.querySelector('.search-filter-section');
+    const main = document.querySelector('.entries-content');
+    if (!searchSection || !main) return;
+
     if (visibleCount < totalCount) {
         const message = document.createElement('div');
         message.className = 'results-message';
-        message.innerHTML = `
-            <p>Showing ${visibleCount} of ${totalCount} entries</p>
-        `;
-        
-        const entriesSection = document.querySelector('.entries-section');
-        entriesSection.insertBefore(message, entriesSection.querySelector('.entries-grid'));
+        let inner = `<p>Showing ${visibleCount} of ${totalCount} entries</p>`;
+        if (isDesktopEntriesLayout() && visibleCount === 0 && hasActiveSearchOrFilters()) {
+            inner += `<p class="results-message__empty-hint">No entries match what you typed or your filters. Try new keywords, clear the search box, or reset filters to see all entries.</p>`;
+        }
+        message.innerHTML = inner;
+        if (isDesktopEntriesLayout()) {
+            searchSection.insertAdjacentElement('afterend', message);
+        } else {
+            const entriesSection = document.querySelector('.entries-section');
+            const firstGrid = entriesSection && entriesSection.querySelector('.entries-grid');
+            if (firstGrid) {
+                entriesSection.insertBefore(message, firstGrid);
+            } else {
+                searchSection.insertAdjacentElement('afterend', message);
+            }
+        }
     }
+
+    syncDesktopEmptyResultsLayout(visibleCount);
 }
 
 // Search Functionality

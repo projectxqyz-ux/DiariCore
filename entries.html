@@ -104,6 +104,13 @@
                     </div>
                 </section>
 
+                <!-- Desktop-only empty state (shown via .entries-content--empty-results; hidden on mobile in CSS) -->
+                <div class="entries-empty-state" id="entriesEmptyState" aria-live="polite">
+                    <i class="bi bi-search entries-empty-state__icon" aria-hidden="true"></i>
+                    <p class="entries-empty-state__title">No entries match your search or filters</p>
+                    <p class="entries-empty-state__hint">Try different keywords, clear the search box, or adjust filters to see your journal entries.</p>
+                </div>
+
                 <!-- Entries Grid -->
                 <section class="entries-section">
                     <div class="entries-grid">
