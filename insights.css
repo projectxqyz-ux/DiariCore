@@ -415,6 +415,11 @@ body {
     }
     
     /* Hide desktop weekly mood chart on mobile */
+    .weekly-mood-desktop {
+        display: none !important;
+    }
+    
+    /* Hide desktop weekly mood chart from charts-grid on mobile */
     .charts-grid .chart-card:first-child {
         display: none !important;
     }
@@ -729,8 +734,27 @@ body {
         display: none !important;
     }
     
-    /* Show desktop weekly mood chart */
+    /* Show desktop weekly mood chart in its own row */
+    .weekly-mood-desktop {
+        display: block !important;
+        margin-bottom: 2rem !important;
+    }
+    
+    /* Show emotion breakdown and activity impact side by side */
+    .charts-grid {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 2rem !important;
+    }
+    
+    /* Hide first chart-card (weekly mood) from charts-grid on desktop */
     .charts-grid .chart-card:first-child {
+        display: none !important;
+    }
+    
+    /* Show emotion breakdown and activity impact charts */
+    .charts-grid .chart-card:nth-child(2),
+    .charts-grid .chart-card:nth-child(3) {
         display: block !important;
     }
 }
