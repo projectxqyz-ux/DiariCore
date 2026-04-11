@@ -163,6 +163,20 @@ body {
     .header-section {
         margin-bottom: 1rem; /* Match entries.html spacing */
     }
+    
+    /* Make stress and happiness triggers display side by side on mobile */
+    .triggers-grid {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 1rem !important;
+        margin-bottom: 2rem !important;
+    }
+    
+    .stress-trigger,
+    .happiness-trigger {
+        flex: 1 !important;
+        min-width: 0 !important;
+    }
 }
 
 /* Weekly Mood Chart Section */
