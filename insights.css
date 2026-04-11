@@ -164,7 +164,7 @@ body {
         margin-bottom: 1rem; /* Match entries.html spacing */
     }
     
-    /* Reorder sections on mobile - weekly mood first, then triggers */
+    /* Reorder sections on mobile - weekly mood first at very top, then triggers, then charts */
     .main-content {
         display: flex !important;
         flex-direction: column !important;
@@ -176,6 +176,8 @@ body {
     
     .weekly-glance {
         order: 1 !important;
+        margin-top: 0 !important;
+        margin-bottom: 2rem !important;
     }
     
     .triggers-section {
