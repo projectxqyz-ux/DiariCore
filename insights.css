@@ -177,23 +177,25 @@ body {
     .weekly-glance {
         order: 1 !important;
         margin-top: 0 !important;
-        margin-bottom: 2rem !important;
+        margin-bottom: 0.75rem !important;
         display: block !important;
     }
     
     .triggers-section {
         order: 2 !important;
+        margin-bottom: 0 !important;
     }
     
     .charts-section {
         order: 3 !important;
+        margin-bottom: 0.75rem !important;
     }
     
     /* Ensure emotion breakdown and activity impact maintain their order within charts-section */
     .charts-grid {
         display: flex !important;
         flex-direction: column !important;
-        gap: 1rem !important;
+        gap: 0.5rem !important;
     }
     
     .charts-grid .chart-card:nth-child(1) {
@@ -211,7 +213,7 @@ body {
         justify-content: space-between !important;
         align-items: flex-start !important;
         gap: 0.75rem !important;
-        margin-bottom: 2rem !important;
+        margin-bottom: 0.75rem !important;
         padding: 0 0.25rem !important;
     }
     
@@ -362,7 +364,7 @@ body {
     
     /* Weekly glance mobile styling */
     .weekly-glance {
-        margin-bottom: 2rem !important;
+        margin-bottom: 0.75rem !important;
         padding: 1rem !important;
         background-color: var(--card-background) !important;
         border-radius: 16px !important;
@@ -371,7 +373,7 @@ body {
     
     .weekly-glance .section-title {
         font-size: 1rem !important;
-        margin-bottom: 1rem !important;
+        margin-bottom: 0.65rem !important;
         color: var(--text-dark) !important;
         display: flex !important;
         align-items: center !important;
@@ -387,9 +389,9 @@ body {
     .emotion-breakdown-mobile {
         display: flex !important;
         flex-direction: column !important;
-        gap: 1rem !important;
-        padding: 1rem !important;
-        margin-bottom: 2rem !important;
+        gap: 0.75rem !important;
+        padding: 0.875rem 1rem !important;
+        margin-bottom: 0 !important;
         background-color: var(--card-background) !important;
         border-radius: 16px !important;
         border: 1px solid var(--border-color) !important;
@@ -397,7 +399,7 @@ body {
     
     .mobile-section-header {
         font-size: 1rem !important;
-        margin-bottom: 1rem !important;
+        margin-bottom: 0.65rem !important;
         color: var(--text-dark) !important;
         display: flex !important;
         align-items: center !important;
@@ -408,7 +410,7 @@ body {
     .emotion-breakdown-content {
         display: flex !important;
         flex-direction: row !important;
-        gap: 1.5rem !important;
+        gap: 1.25rem !important;
         align-items: center !important;
     }
     
@@ -427,7 +429,7 @@ body {
         flex: 1 !important;
         display: flex !important;
         flex-direction: column !important;
-        gap: 0.75rem !important;
+        gap: 0.6rem !important;
     }
     
     .emotion-legend-item {
@@ -509,7 +511,7 @@ body {
     /* Show mobile weekly glance on mobile */
     .weekly-glance {
         display: block !important;
-        margin-bottom: 2rem !important;
+        margin-bottom: 0.75rem !important;
         padding: 1rem !important;
         background-color: var(--card-background) !important;
         border-radius: 16px !important;
@@ -518,7 +520,7 @@ body {
     
     .weekly-glance .section-title {
         font-size: 1rem !important;
-        margin-bottom: 1rem !important;
+        margin-bottom: 0.65rem !important;
         color: var(--text-dark) !important;
         display: flex !important;
         align-items: center !important;
@@ -539,9 +541,9 @@ body {
     .emotion-breakdown-mobile {
         display: flex !important;
         flex-direction: column !important;
-        gap: 1rem !important;
-        padding: 1rem !important;
-        margin-bottom: 2rem !important;
+        gap: 0.75rem !important;
+        padding: 0.875rem 1rem !important;
+        margin-bottom: 0 !important;
         background-color: var(--card-background) !important;
         border-radius: 16px !important;
         border: 1px solid var(--border-color) !important;
@@ -550,9 +552,9 @@ body {
     .activity-impact-mobile {
         display: flex !important;
         flex-direction: column !important;
-        gap: 1rem !important;
-        padding: 1rem !important;
-        margin-bottom: 2rem !important;
+        gap: 0.55rem !important;
+        padding: 0.875rem 1rem !important;
+        margin-bottom: 0.5rem !important;
         background-color: var(--card-background) !important;
         border-radius: 16px !important;
         border: 1px solid var(--border-color) !important;
@@ -567,7 +569,7 @@ body {
     
     .mobile-section-header {
         font-size: 1rem !important;
-        margin-bottom: 1rem !important;
+        margin-bottom: 0.65rem !important;
         color: var(--text-dark) !important;
         display: flex !important;
         align-items: center !important;
@@ -578,7 +580,7 @@ body {
     .emotion-breakdown-content {
         display: flex !important;
         flex-direction: row !important;
-        gap: 1.5rem !important;
+        gap: 1.25rem !important;
         align-items: center !important;
     }
     
@@ -597,7 +599,7 @@ body {
         flex: 1 !important;
         display: flex !important;
         flex-direction: column !important;
-        gap: 0.75rem !important;
+        gap: 0.6rem !important;
     }
     
     .emotion-legend-item {
@@ -642,13 +644,13 @@ body {
         font-weight: 600 !important;
     }
     
-    /* Activity impact mobile styling */
+    /* Activity impact mobile: label — bar — % on one row */
     .activity-impact-mobile {
         display: flex !important;
         flex-direction: column !important;
-        gap: 1rem !important;
-        padding: 1rem !important;
-        margin-bottom: 2rem !important;
+        gap: 0.55rem !important;
+        padding: 0.875rem 1rem !important;
+        margin-bottom: 0.5rem !important;
         background-color: var(--card-background) !important;
         border-radius: 16px !important;
         border: 1px solid var(--border-color) !important;
@@ -656,12 +658,24 @@ body {
     
     .activity-bar-item {
         display: flex !important;
-        flex-direction: column !important;
+        flex-direction: row !important;
+        align-items: center !important;
         gap: 0.5rem !important;
     }
     
+    .activity-bar-name {
+        flex: 0 0 5rem !important;
+        min-width: 0 !important;
+        font-size: 0.8125rem !important;
+        color: var(--text-dark) !important;
+        font-weight: 500 !important;
+        line-height: 1.2 !important;
+    }
+    
     .activity-bar-wrapper {
-        width: 100% !important;
+        flex: 1 1 auto !important;
+        min-width: 0 !important;
+        width: auto !important;
         height: 8px !important;
         background-color: #f0f0f0 !important;
         border-radius: 4px !important;
@@ -675,22 +689,13 @@ body {
         transition: width 0.3s ease !important;
     }
     
-    .activity-bar-info {
-        display: flex !important;
-        justify-content: space-between !important;
-        align-items: center !important;
-    }
-    
-    .activity-bar-name {
-        font-size: 0.85rem !important;
-        color: var(--text-dark) !important;
-        font-weight: 500 !important;
-    }
-    
     .activity-bar-percentage {
-        font-size: 0.85rem !important;
+        flex: 0 0 2.35rem !important;
+        font-size: 0.8125rem !important;
         color: var(--text-secondary) !important;
         font-weight: 600 !important;
+        text-align: right !important;
+        line-height: 1.2 !important;
     }
     
     /* Hide desktop activity chart on mobile */
@@ -698,9 +703,9 @@ body {
         display: none !important;
     }
     
-    /* Show mobile activity impact on mobile */
-    .activity-impact-mobile {
-        display: flex !important;
+    /* Insights page: less empty space above fixed bottom nav (mobile) */
+    .insights-container .main-content {
+        padding-bottom: 3rem !important;
     }
 }
 
