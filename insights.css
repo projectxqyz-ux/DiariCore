@@ -269,7 +269,6 @@ body {
         width: auto !important;
         height: auto !important;
         flex-shrink: 0 !important;
-        order: -1 !important; /* Ensure icon comes first/left */
     }
     
     /* Show details when clicked */
