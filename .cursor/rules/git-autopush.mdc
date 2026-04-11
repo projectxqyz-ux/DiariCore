@@ -1,0 +1,14 @@
+---
+description: After code changes, commit and push to origin automatically
+alwaysApply: true
+---
+
+# Git: commit and push
+
+When you finish a task that modifies files in this repo:
+
+1. Run `git status` and stage only the files you changed (or the user asked to include).
+2. Commit with a short, clear message (e.g. conventional: `fix:`, `feat:`, `chore:`).
+3. Run `git push` to `origin` on the current branch.
+
+Do this before ending the turn unless the user explicitly asks not to commit/push or there is nothing to commit. If push fails (auth, network), report the error and what was committed locally.
