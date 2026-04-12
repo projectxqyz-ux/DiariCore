@@ -1091,7 +1091,9 @@ input:checked + .toggle-slider:before {
 .profile-mobile-block-title,
 .appearance-item__leading-icon,
 .notifications-item__leading-icon,
-.setting-chevron {
+.setting-chevron,
+.privacy-item__leading-icon,
+.danger-zone__leading-icon {
     display: none;
 }
 
@@ -1495,6 +1497,196 @@ input:checked + .toggle-slider:before {
         font-weight: 600;
         color: #1e3a5c;
         margin: 0;
+    }
+    
+    body.page-profile .profile-mobile-block-title--privacy,
+    body.page-profile .profile-mobile-block-title--danger {
+        margin-top: 0.35rem;
+    }
+    
+    /* Privacy — compact card, account-style rows (mobile only) */
+    body.page-profile .privacy-header {
+        display: none !important;
+    }
+    
+    body.page-profile .privacy-options {
+        padding: 0;
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        box-shadow: 0 2px 12px rgba(47, 62, 54, 0.06);
+        background: #fff;
+        overflow: hidden;
+    }
+    
+    body.page-profile .privacy-options::before {
+        display: none;
+    }
+    
+    body.page-profile .privacy-options:hover {
+        transform: none;
+        box-shadow: 0 2px 12px rgba(47, 62, 54, 0.06);
+    }
+    
+    body.page-profile .privacy-item {
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        text-align: left;
+        gap: 0.85rem;
+        padding: 1rem 1rem;
+        margin-bottom: 0;
+        background: transparent;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+    }
+    
+    body.page-profile .privacy-item:first-of-type {
+        border-bottom: 1px solid #eef2f0;
+    }
+    
+    body.page-profile .privacy-item:hover {
+        transform: none;
+        background: transparent;
+        border-color: transparent;
+    }
+    
+    body.page-profile .privacy-item__leading-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        border-radius: 10px;
+        background: rgba(111, 143, 127, 0.12);
+        color: #3d5a4a;
+        font-size: 1.1rem;
+    }
+    
+    body.page-profile .privacy-description {
+        display: none !important;
+    }
+    
+    body.page-profile .privacy-info {
+        flex: 1;
+        min-width: 0;
+    }
+    
+    body.page-profile .privacy-info h3,
+    body.page-profile .privacy-subtitle {
+        font-size: 0.98rem;
+        font-weight: 600;
+        color: #1e3a5c;
+        margin: 0;
+    }
+    
+    body.page-profile .privacy-control {
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+    }
+    
+    body.page-profile .btn-export,
+    body.page-profile .btn-privacy {
+        padding: 0.38rem 0.7rem;
+        font-size: 0.72rem;
+        font-weight: 600;
+        border-radius: 8px;
+        background: rgba(111, 143, 127, 0.1);
+        border: 1px solid rgba(111, 143, 127, 0.3);
+        color: #2f4d3e;
+        min-height: auto;
+        line-height: 1.2;
+    }
+    
+    body.page-profile .btn-privacy {
+        background: rgba(111, 143, 127, 0.08);
+        color: #2f4d3e;
+    }
+    
+    body.page-profile .btn-export:hover,
+    body.page-profile .btn-privacy:hover {
+        transform: none;
+        box-shadow: none;
+    }
+    
+    /* Danger zone — single compact row (mobile only) */
+    body.page-profile .danger-zone__leading-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        border-radius: 10px;
+        background: rgba(239, 68, 68, 0.1);
+        color: #dc2626;
+        font-size: 1.05rem;
+        flex-shrink: 0;
+    }
+    
+    body.page-profile .danger-zone-card {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.85rem 1rem;
+        border-width: 1px;
+        border-radius: 16px;
+        box-shadow: 0 2px 12px rgba(220, 38, 38, 0.08);
+        background: #fff;
+    }
+    
+    body.page-profile .danger-zone-card::before {
+        display: none;
+    }
+    
+    body.page-profile .danger-zone-card:hover {
+        transform: none;
+        box-shadow: 0 2px 12px rgba(220, 38, 38, 0.1);
+    }
+    
+    body.page-profile .danger-zone-header {
+        flex: 1;
+        min-width: 0;
+        margin: 0;
+        padding: 0;
+        border: none;
+    }
+    
+    body.page-profile .danger-zone-title {
+        font-size: 0.92rem;
+        font-weight: 600;
+        margin: 0;
+        line-height: 1.3;
+    }
+    
+    body.page-profile .danger-zone-description {
+        display: none !important;
+    }
+    
+    body.page-profile .danger-actions {
+        flex-shrink: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+    
+    body.page-profile .btn-delete-account {
+        padding: 0.42rem 0.65rem;
+        font-size: 0.7rem;
+        font-weight: 600;
+        white-space: normal;
+        max-width: 7.25rem;
+        text-align: center;
+        border-width: 1px;
+        line-height: 1.2;
+    }
+    
+    body.page-profile .btn-delete-account:hover {
+        transform: none;
     }
     
     body.page-profile .privacy-section {
