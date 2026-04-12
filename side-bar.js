@@ -196,9 +196,27 @@ class SidebarComponent {
 
         const close = () => setOpen(false);
 
+        const currentHtmlFile = () =>
+            (window.location.pathname.split('/').pop() || '').toLowerCase();
+
+        /** Mobile: from dashboard / insights / suggestions, go to entries with search already open */
+        const shouldRedirectSearchToEntries = () => {
+            if (!isMobile()) return false;
+            const f = currentHtmlFile();
+            return (
+                f === 'dashboard.html' ||
+                f === 'insights.html' ||
+                f === 'suggestions.html'
+            );
+        };
+
         openBtn.addEventListener('click', (e) => {
             if (!isMobile()) return;
             e.stopPropagation();
+            if (shouldRedirectSearchToEntries()) {
+                window.location.href = 'entries.html?openSearch=1';
+                return;
+            }
             if (topbar.classList.contains('mobile-app-topbar--search-active')) {
                 close();
             } else {
@@ -235,6 +253,7 @@ class SidebarComponent {
         });
 
         window.diariCloseMobileTopbarSearch = close;
+        window.diariOpenMobileTopbarSearch = () => setOpen(true);
     }
 
     setupMobileToggle() {

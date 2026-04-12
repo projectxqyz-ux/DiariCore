@@ -272,15 +272,17 @@
         padding-top: var(--mobile-app-topbar-below) !important;
     }
     
-    /* Write / voice entry: back row only — hide global DIARICORE top bar */
+    /* Write / voice / profile: hide global DIARICORE top bar (page has its own chrome or focus) */
     body.page-write-entry.has-mobile-app-topbar,
-    body.page-voice-entry.has-mobile-app-topbar {
+    body.page-voice-entry.has-mobile-app-topbar,
+    body.page-profile.has-mobile-app-topbar {
         --mobile-app-topbar-below: env(safe-area-inset-top, 0px);
         padding-top: env(safe-area-inset-top, 0px) !important;
     }
     
     body.page-write-entry .mobile-app-topbar,
-    body.page-voice-entry .mobile-app-topbar {
+    body.page-voice-entry .mobile-app-topbar,
+    body.page-profile .mobile-app-topbar {
         display: none !important;
     }
     

@@ -225,9 +225,25 @@ function attachMobileTopbarFilterTrigger() {
     });
 }
 
+function openMobileNavbarSearchFromQuery() {
+    if (window.innerWidth > 768) return;
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('openSearch') !== '1') return;
+    if (typeof window.diariOpenMobileTopbarSearch === 'function') {
+        window.diariOpenMobileTopbarSearch();
+    }
+    params.delete('openSearch');
+    const q = params.toString();
+    const base = window.location.pathname.split('/').pop() || 'entries.html';
+    history.replaceState({}, '', q ? `${base}?${q}` : base);
+}
+
 document.addEventListener('diari-mobile-shell-ready', function() {
     attachMobileTopbarSearchInput();
     attachMobileTopbarFilterTrigger();
+    requestAnimationFrame(() => {
+        requestAnimationFrame(openMobileNavbarSearchFromQuery);
+    });
 });
 
 // Perform Search
