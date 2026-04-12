@@ -338,8 +338,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const saveEntryBtn = document.getElementById('saveEntryBtn');
     saveEntryBtn.addEventListener('click', function() {
         const entryText = journalText.value.trim();
+        const mobileNoFeelings = window.innerWidth <= 768;
         
-        if (!selectedFeeling) {
+        if (!mobileNoFeelings && !selectedFeeling) {
             alert('Please select how you are feeling.');
             return;
         }
@@ -351,7 +352,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Create entry object
         const entry = {
-            feeling: selectedFeeling,
+            feeling: selectedFeeling || (mobileNoFeelings ? 'unspecified' : ''),
             tags: Array.from(selectedTags),
             text: entryText,
             date: new Date().toISOString(),
