@@ -545,6 +545,15 @@
         justify-content: center;
         padding: 1rem;
     }
+    
+    /* Back button is primary nav; hide bottom bar (side-bar.css uses !important) */
+    body .mobile-bottom-nav {
+        display: none !important;
+    }
+    
+    body .main-content {
+        padding-bottom: 1rem !important;
+    }
 }
 
 @media (max-width: 480px) {

@@ -807,4 +807,12 @@
         max-width: 300px;
         justify-content: center;
     }
+    
+    body .mobile-bottom-nav {
+        display: none !important;
+    }
+    
+    body .main-content {
+        padding-bottom: 1rem !important;
+    }
 }

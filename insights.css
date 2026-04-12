@@ -217,28 +217,71 @@ body {
         padding: 0 0.25rem !important;
     }
     
+    /* Flip cards: outer shell + 3D inner (mobile only; desktop resets in min-width: 769px) */
     .stress-trigger,
     .happiness-trigger {
         flex: 1 !important;
         min-width: 0 !important;
-        padding: 1.125rem 0.75rem 1.2rem !important;
+        padding: 0 !important;
         cursor: pointer !important;
+        perspective: 1000px !important;
+        display: block !important;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        min-height: 0 !important;
+    }
+    
+    .stress-trigger .trigger-flip-inner,
+    .happiness-trigger .trigger-flip-inner {
         position: relative !important;
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        justify-content: flex-start !important;
-        gap: 0 !important;
+        width: 100% !important;
         min-height: 152px !important;
-        background-color: var(--card-background) !important;
+        transform-style: preserve-3d !important;
+        transition: transform 0.55s cubic-bezier(0.4, 0.2, 0.2, 1) !important;
         border-radius: 16px !important;
+        background-color: var(--card-background) !important;
         border: 1px solid var(--border-color) !important;
         box-shadow: 0 2px 12px rgba(47, 62, 54, 0.07) !important;
     }
     
-    /* Icon first, centered above text block */
-    .stress-trigger .trigger-icon,
-    .happiness-trigger .trigger-icon {
+    .stress-trigger .trigger-flip-inner.is-flipped,
+    .happiness-trigger .trigger-flip-inner.is-flipped {
+        transform: rotateY(180deg) !important;
+    }
+    
+    .stress-trigger .trigger-flip-face,
+    .happiness-trigger .trigger-flip-face {
+        position: absolute !important;
+        inset: 0 !important;
+        border-radius: 16px !important;
+        backface-visibility: hidden !important;
+        -webkit-backface-visibility: hidden !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        padding: 1.125rem 0.75rem 1.2rem !important;
+        background-color: var(--card-background) !important;
+    }
+    
+    .stress-trigger .trigger-flip-face--front,
+    .happiness-trigger .trigger-flip-face--front {
+        transform: rotateY(0deg) !important;
+    }
+    
+    .stress-trigger .trigger-flip-face--back,
+    .happiness-trigger .trigger-flip-face--back {
+        transform: rotateY(180deg) !important;
+        justify-content: center !important;
+        text-align: center !important;
+        padding-left: 0.875rem !important;
+        padding-right: 0.875rem !important;
+    }
+    
+    /* Icon first, centered above text on front */
+    .stress-trigger .trigger-flip-face--front .trigger-icon,
+    .happiness-trigger .trigger-flip-face--front .trigger-icon {
         order: -1 !important;
         margin-left: 0 !important;
         margin-bottom: 0.7rem !important;
@@ -255,18 +298,18 @@ body {
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06) !important;
     }
     
-    .stress-trigger .trigger-icon {
+    .stress-trigger .trigger-flip-face--front .trigger-icon {
         background-color: #FFE8DC !important;
         color: #D97736 !important;
     }
     
-    .happiness-trigger .trigger-icon {
+    .happiness-trigger .trigger-flip-face--front .trigger-icon {
         background-color: #E3F4EA !important;
         color: #2D6A4F !important;
     }
     
-    .stress-trigger .trigger-content,
-    .happiness-trigger .trigger-content {
+    .stress-trigger .trigger-flip-face--front .trigger-content,
+    .happiness-trigger .trigger-flip-face--front .trigger-content {
         order: 0 !important;
         width: 100% !important;
         display: flex !important;
@@ -317,49 +360,20 @@ body {
         overflow-wrap: break-word !important;
     }
     
-    .stress-trigger .trigger-description,
-    .happiness-trigger .trigger-description {
-        display: none !important;
-    }
-    
-    /* Expanded: show description; align copy left for readability */
-    .stress-trigger.expanded .trigger-content,
-    .happiness-trigger.expanded .trigger-content {
-        align-items: flex-start !important;
-        text-align: left !important;
-        justify-content: flex-start !important;
-    }
-    
-    .stress-trigger.expanded,
-    .happiness-trigger.expanded {
-        align-items: stretch !important;
-    }
-    
-    .stress-trigger.expanded .trigger-icon,
-    .happiness-trigger.expanded .trigger-icon {
-        align-self: center !important;
-    }
-    
-    .stress-trigger.expanded .trigger-description,
-    .happiness-trigger.expanded .trigger-description {
+    .stress-trigger .trigger-flip-face--back .trigger-description,
+    .happiness-trigger .trigger-flip-face--back .trigger-description {
         display: block !important;
-        font-size: 0.75rem !important;
-        line-height: 1.4 !important;
-        margin-top: 0.6rem !important;
-        padding-top: 0.6rem !important;
-        border-top: 1px solid var(--border-color) !important;
+        font-size: 0.8rem !important;
+        line-height: 1.45 !important;
         color: var(--text-secondary) !important;
-        width: 100% !important;
+        margin: 0 !important;
     }
     
-    .stress-trigger.expanded .trigger-title,
-    .happiness-trigger.expanded .trigger-title {
-        margin-bottom: 0 !important;
-    }
-    
-    .stress-trigger.expanded .trigger-name,
-    .happiness-trigger.expanded .trigger-name {
-        margin-bottom: 0 !important;
+    .stress-trigger .trigger-flip-hint,
+    .happiness-trigger .trigger-flip-hint {
+        font-size: 0.65rem !important;
+        color: var(--text-muted) !important;
+        margin: 0.75rem 0 0 !important;
     }
     
     /* Weekly glance mobile styling */
@@ -823,6 +837,16 @@ body {
     margin: 0;
 }
 
+.trigger-flip-inner {
+    width: 100%;
+}
+
+.trigger-flip-hint {
+    margin: 0;
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
 /* Section Headers */
 .section-header {
     margin-bottom: 1.5rem;
@@ -988,5 +1012,102 @@ body {
     /* Hide any additional charts if present */
     .charts-grid .chart-card:nth-child(n+3) {
         display: none !important;
+    }
+    
+    /* Stress/joy: flip markup renders as original row + description (no 3D on desktop) */
+    .stress-trigger,
+    .happiness-trigger {
+        display: flex !important;
+        cursor: default !important;
+        perspective: none !important;
+        background-color: var(--card-background) !important;
+        border: 1px solid var(--border-color) !important;
+        border-radius: 16px !important;
+        box-shadow: none !important;
+    }
+    
+    .stress-trigger .trigger-flip-inner,
+    .happiness-trigger .trigger-flip-inner {
+        position: static !important;
+        width: 100% !important;
+        min-height: 0 !important;
+        transform: none !important;
+        transform-style: flat !important;
+        transition: none !important;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 1rem !important;
+    }
+    
+    .stress-trigger .trigger-flip-inner.is-flipped,
+    .happiness-trigger .trigger-flip-inner.is-flipped {
+        transform: none !important;
+    }
+    
+    .stress-trigger .trigger-flip-face,
+    .happiness-trigger .trigger-flip-face {
+        position: static !important;
+        inset: auto !important;
+        backface-visibility: visible !important;
+        -webkit-backface-visibility: visible !important;
+        transform: none !important;
+        padding: 0 !important;
+        border-radius: 0 !important;
+        width: 100% !important;
+        min-height: 0 !important;
+        background: transparent !important;
+    }
+    
+    .stress-trigger .trigger-flip-face--front,
+    .happiness-trigger .trigger-flip-face--front {
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        align-items: flex-start !important;
+    }
+    
+    .stress-trigger .trigger-flip-face--back,
+    .happiness-trigger .trigger-flip-face--back {
+        flex-direction: column !important;
+        justify-content: flex-start !important;
+        text-align: left !important;
+    }
+    
+    .stress-trigger .trigger-flip-hint,
+    .happiness-trigger .trigger-flip-hint {
+        display: none !important;
+    }
+    
+    .stress-trigger .trigger-flip-face--front .trigger-icon,
+    .happiness-trigger .trigger-flip-face--front .trigger-icon {
+        order: 0 !important;
+        margin-left: 1rem !important;
+        margin-bottom: 0 !important;
+        width: 48px !important;
+        height: 48px !important;
+        min-width: 48px !important;
+        min-height: 48px !important;
+        border-radius: 12px !important;
+        box-shadow: none !important;
+    }
+    
+    .stress-trigger .trigger-flip-face--front .trigger-icon {
+        background-color: var(--warning-bg) !important;
+        color: var(--warning-color) !important;
+    }
+    
+    .happiness-trigger .trigger-flip-face--front .trigger-icon {
+        background-color: var(--success-bg) !important;
+        color: var(--success-color) !important;
+    }
+    
+    .stress-trigger .trigger-flip-face--front .trigger-content,
+    .happiness-trigger .trigger-flip-face--front .trigger-content {
+        align-items: stretch !important;
+        text-align: left !important;
+        flex: 1 !important;
+        justify-content: flex-start !important;
     }
 }

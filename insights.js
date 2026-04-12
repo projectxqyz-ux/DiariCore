@@ -15,35 +15,59 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeMobileTriggers();
 });
 
-// Initialize Mobile Trigger Click Functionality
+// Mobile: Top Stressor / Top Joy flip cards (desktop uses static layout from CSS)
 function initializeMobileTriggers() {
-    // Only apply on mobile devices
-    if (window.innerWidth <= 768) {
-        const stressTrigger = document.querySelector('.stress-trigger');
-        const happinessTrigger = document.querySelector('.happiness-trigger');
+    const mq = window.matchMedia('(max-width: 768px)');
+    const stressTrigger = document.querySelector('.stress-trigger');
+    const happinessTrigger = document.querySelector('.happiness-trigger');
+    
+    function resetFlips() {
+        document.querySelectorAll('.trigger-flip-inner.is-flipped').forEach(function (el) {
+            el.classList.remove('is-flipped');
+        });
+    }
+    
+    function flipHandler(card, inner, otherInner) {
+        return function (ev) {
+            if (!mq.matches) return;
+            ev.preventDefault();
+            inner.classList.toggle('is-flipped');
+            if (otherInner && otherInner.classList.contains('is-flipped')) {
+                otherInner.classList.remove('is-flipped');
+            }
+        };
+    }
+    
+    function apply() {
+        const stressInner = stressTrigger && stressTrigger.querySelector('.trigger-flip-inner');
+        const happyInner = happinessTrigger && happinessTrigger.querySelector('.trigger-flip-inner');
         
-        if (stressTrigger) {
-            stressTrigger.addEventListener('click', function() {
-                this.classList.toggle('expanded');
-                
-                // Close the other trigger if it's open
-                if (happinessTrigger && happinessTrigger.classList.contains('expanded')) {
-                    happinessTrigger.classList.remove('expanded');
-                }
-            });
+        if (stressTrigger && stressTrigger._stressFlipHandler) {
+            stressTrigger.removeEventListener('click', stressTrigger._stressFlipHandler);
+            stressTrigger._stressFlipHandler = null;
+        }
+        if (happinessTrigger && happinessTrigger._happyFlipHandler) {
+            happinessTrigger.removeEventListener('click', happinessTrigger._happyFlipHandler);
+            happinessTrigger._happyFlipHandler = null;
         }
         
-        if (happinessTrigger) {
-            happinessTrigger.addEventListener('click', function() {
-                this.classList.toggle('expanded');
-                
-                // Close the other trigger if it's open
-                if (stressTrigger && stressTrigger.classList.contains('expanded')) {
-                    stressTrigger.classList.remove('expanded');
-                }
-            });
+        if (!mq.matches) {
+            resetFlips();
+            return;
+        }
+        
+        if (stressTrigger && stressInner) {
+            stressTrigger._stressFlipHandler = flipHandler(stressTrigger, stressInner, happyInner);
+            stressTrigger.addEventListener('click', stressTrigger._stressFlipHandler);
+        }
+        if (happinessTrigger && happyInner) {
+            happinessTrigger._happyFlipHandler = flipHandler(happinessTrigger, happyInner, stressInner);
+            happinessTrigger.addEventListener('click', happinessTrigger._happyFlipHandler);
         }
     }
+    
+    apply();
+    mq.addEventListener('change', apply);
 }
 
 // Initialize Weekly Mood Chart
