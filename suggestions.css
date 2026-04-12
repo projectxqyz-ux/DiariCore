@@ -201,11 +201,6 @@ body {
     box-shadow: var(--box-shadow-hover);
 }
 
-/* Mobile Header - Hidden on Desktop */
-.mobile-header {
-    display: none;
-}
-
 .emotional-support-header {
     display: none;
 }
@@ -659,8 +654,25 @@ body {
         padding: 1rem;
     }
     
-    .main-title {
-        font-size: 2rem;
+    /* Page title row — match insights.html mobile (Insights & Analytics / subtitle) */
+    .suggestions-content .header-section {
+        display: block !important;
+        text-align: left !important;
+        margin-bottom: 1rem !important;
+    }
+    
+    .suggestions-content .main-title {
+        font-size: 20px !important;
+        font-weight: 600 !important;
+        margin-bottom: 0.1rem !important;
+        color: var(--text-dark) !important;
+    }
+    
+    .suggestions-content .subtitle {
+        font-size: 14px !important;
+        font-weight: 400 !important;
+        color: var(--text-secondary) !important;
+        margin: 0 !important;
     }
     
     .emotional-support-section,
@@ -724,8 +736,12 @@ body {
         padding: 0.75rem;
     }
     
-    .main-title {
-        font-size: 1.75rem;
+    .suggestions-content .main-title {
+        font-size: 20px !important;
+    }
+    
+    .suggestions-content .subtitle {
+        font-size: 14px !important;
     }
     
     .emotional-support-notice {
@@ -797,57 +813,6 @@ body {
         min-width: auto;
         flex-direction: row;
         gap: 0.5rem;
-    }
-    
-    .mobile-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1rem;
-        background: var(--card-background);
-        border-bottom: 1px solid var(--border-color);
-        margin: -1rem -1rem 1rem -1rem;
-        position: sticky;
-        top: 0;
-        z-index: 100;
-    }
-    
-    .back-btn {
-        background: var(--primary-bg);
-        border: 1px solid var(--border-color);
-        color: var(--primary-color);
-        font-size: 1rem;
-        cursor: pointer;
-        padding: 0.5rem;
-        border-radius: 12px;
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 36px;
-        height: 36px;
-    }
-    
-    .back-btn:hover {
-        background-color: var(--primary-color);
-        color: white;
-    }
-    
-    .mobile-title {
-        font-size: 0.95rem;
-        font-weight: 600;
-        color: var(--text-dark);
-        margin: 0;
-        margin-left: 0.5rem;
-    }
-    
-    .header-spacer {
-        width: 36px;
-        height: 36px;
-    }
-    
-    .header-section {
-        display: none;
     }
     
     .emotional-support-header {
