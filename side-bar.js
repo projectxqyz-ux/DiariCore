@@ -41,7 +41,9 @@ class SidebarComponent {
             this.setActivePage();
             this.setupLogoutButton();
             this.initMobileWriteFab();
+            this.initMobileTopbarSearchExpand();
             
+            document.dispatchEvent(new CustomEvent('diari-mobile-shell-ready', { bubbles: true }));
         } catch (error) {
             console.error('Failed to load sidebar:', error);
         }
@@ -151,6 +153,88 @@ class SidebarComponent {
                 closeRadial();
             }
         });
+    }
+
+    /**
+     * Mobile (≤768px): expand search field over the top bar; close on outside tap or Escape.
+     * Entries page wires the input + filter trigger in entries.js.
+     */
+    initMobileTopbarSearchExpand() {
+        const topbar = document.querySelector('.mobile-app-topbar');
+        const openBtn = document.querySelector('.mobile-app-topbar__btn--search-toggle');
+        const closeBtn = document.querySelector('.mobile-app-topbar__search-close');
+        const expand = document.getElementById('mobileAppTopbarSearchExpand');
+        const input = document.getElementById('mobileAppTopbarSearchInput');
+        if (!topbar || !openBtn || !closeBtn || !expand || !input) return;
+
+        const filterMenu = document.getElementById('filterMenu');
+
+        const isMobile = () => window.innerWidth <= 768;
+
+        const syncFromEntriesInput = () => {
+            const hidden = document.querySelector('.search-input');
+            if (hidden) input.value = hidden.value;
+        };
+
+        const setOpen = (open) => {
+            if (!isMobile()) return;
+            topbar.classList.toggle('mobile-app-topbar--search-active', open);
+            expand.setAttribute('aria-hidden', open ? 'false' : 'true');
+            openBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+            if (open) {
+                syncFromEntriesInput();
+                if (!document.body.classList.contains('page-entries')) {
+                    input.placeholder = 'Search…';
+                } else {
+                    input.placeholder = 'Search entries…';
+                }
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => input.focus({ preventScroll: true }));
+                });
+            }
+        };
+
+        const close = () => setOpen(false);
+
+        openBtn.addEventListener('click', (e) => {
+            if (!isMobile()) return;
+            e.stopPropagation();
+            if (topbar.classList.contains('mobile-app-topbar--search-active')) {
+                close();
+            } else {
+                setOpen(true);
+            }
+        });
+
+        closeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            close();
+        });
+
+        expand.addEventListener('click', (e) => e.stopPropagation());
+
+        document.addEventListener(
+            'click',
+            (e) => {
+                if (!isMobile() || !topbar.classList.contains('mobile-app-topbar--search-active')) return;
+                if (topbar.contains(e.target)) return;
+                if (filterMenu && filterMenu.contains(e.target)) return;
+                close();
+            },
+            true
+        );
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && topbar.classList.contains('mobile-app-topbar--search-active')) {
+                close();
+            }
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) close();
+        });
+
+        window.diariCloseMobileTopbarSearch = close;
     }
 
     setupMobileToggle() {

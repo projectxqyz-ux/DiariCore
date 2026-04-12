@@ -10,12 +10,19 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 let entriesResizeTimer;
+function getEntriesSearchQuery() {
+    const input = document.querySelector('.search-input');
+    const top = document.getElementById('mobileAppTopbarSearchInput');
+    const a = input ? input.value.trim() : '';
+    const b = top ? top.value.trim() : '';
+    return a || b;
+}
+
 function initializeEntriesResizeEmptyState() {
     window.addEventListener('resize', function () {
         clearTimeout(entriesResizeTimer);
         entriesResizeTimer = setTimeout(function () {
-            const input = document.querySelector('.search-input');
-            if (input) performSearch(input.value.trim());
+            performSearch(getEntriesSearchQuery());
         }, 150);
     });
 }
@@ -34,9 +41,12 @@ function initializeFilterDropdown() {
             filterMenu.classList.toggle('show');
         });
 
-        // Close filter menu when clicking outside
+        // Close filter menu when clicking outside (mobile trigger may load later — resolve each click)
         document.addEventListener('click', function(e) {
-            if (!filterMenu.contains(e.target) && e.target !== filterBtn) {
+            const mb = document.getElementById('mobileTopbarFilterTrigger');
+            const inFilterBtn = filterBtn.contains(e.target);
+            const inMobileTrigger = mb && mb.contains(e.target);
+            if (!filterMenu.contains(e.target) && !inFilterBtn && !inMobileTrigger) {
                 filterMenu.classList.remove('show');
             }
         });
@@ -131,8 +141,7 @@ function clearAllFilters() {
 }
 
 function hasActiveSearchOrFilters() {
-    const input = document.querySelector('.search-input');
-    const q = input ? input.value.trim() : '';
+    const q = getEntriesSearchQuery();
     if (q.length > 0) return true;
     return document.querySelectorAll('.filter-option input[type="checkbox"]:checked').length > 0;
 }
@@ -169,21 +178,57 @@ function updateResultsMessage(visibleCount, totalCount) {
     syncEntriesEmptyResultsLayout(visibleCount);
 }
 
-// Search Functionality
+let entriesSearchDebounceTimer;
+
+function onEntriesSearchInput(source) {
+    const searchInput = document.querySelector('.search-input');
+    const topbarInput = document.getElementById('mobileAppTopbarSearchInput');
+    const v = source.value;
+    if (searchInput && source !== searchInput) searchInput.value = v;
+    if (topbarInput && source !== topbarInput) topbarInput.value = v;
+    clearTimeout(entriesSearchDebounceTimer);
+    entriesSearchDebounceTimer = setTimeout(() => {
+        performSearch(v.trim());
+    }, 300);
+}
+
+// Search: desktop field binds on load; navbar field binds when side-bar injects (async)
 function initializeSearch() {
     const searchInput = document.querySelector('.search-input');
-    
-    if (searchInput) {
-        let searchTimeout;
-        
+    if (searchInput && !searchInput.dataset.entriesSearchInit) {
+        searchInput.dataset.entriesSearchInit = '1';
         searchInput.addEventListener('input', function() {
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(() => {
-                performSearch(this.value.trim());
-            }, 300);
+            onEntriesSearchInput(this);
         });
     }
+    attachMobileTopbarSearchInput();
 }
+
+function attachMobileTopbarSearchInput() {
+    const topbarInput = document.getElementById('mobileAppTopbarSearchInput');
+    if (!topbarInput || topbarInput.dataset.entriesSearchInit) return;
+    topbarInput.dataset.entriesSearchInit = '1';
+    topbarInput.addEventListener('input', function() {
+        onEntriesSearchInput(this);
+    });
+}
+
+function attachMobileTopbarFilterTrigger() {
+    const filterBtn = document.getElementById('filterBtn');
+    const mobileTopbarFilterTrigger = document.getElementById('mobileTopbarFilterTrigger');
+    if (!filterBtn || !mobileTopbarFilterTrigger || mobileTopbarFilterTrigger.dataset.filterInit) return;
+    mobileTopbarFilterTrigger.dataset.filterInit = '1';
+    mobileTopbarFilterTrigger.addEventListener('click', function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        filterBtn.click();
+    });
+}
+
+document.addEventListener('diari-mobile-shell-ready', function() {
+    attachMobileTopbarSearchInput();
+    attachMobileTopbarFilterTrigger();
+});
 
 // Perform Search
 function performSearch(query) {
