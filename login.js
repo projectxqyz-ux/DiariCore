@@ -1362,15 +1362,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="auth-toast__title">Password Reset Successful!</div>
                 <div class="auth-toast__text">You can now login with your new password.</div>
             </div>
+            <button class="auth-toast__close" aria-label="Close notification">×</button>
         `;
         document.body.appendChild(toast);
         requestAnimationFrame(() => toast.classList.add('show'));
-        setTimeout(() => {
+
+        const closeToast = () => {
             toast.classList.remove('show');
             setTimeout(() => {
                 if (toast.parentNode) toast.remove();
             }, 250);
-        }, 3600);
+        };
+
+        const closeBtn = toast.querySelector('.auth-toast__close');
+        if (closeBtn) closeBtn.addEventListener('click', closeToast);
+        setTimeout(closeToast, 4200);
     }
     
     // Check auth status
