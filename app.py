@@ -9,7 +9,7 @@ import random
 import urllib.request
 from datetime import date, datetime, timedelta, timezone
 
-from flask import Flask, jsonify, request, send_from_directory, abort
+from flask import Flask, jsonify, request, send_from_directory, abort, session
 
 import db
 
@@ -17,6 +17,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 app = Flask(__name__)
 app.config["JSON_SORT_KEYS"] = False
+app.secret_key = os.environ.get("SECRET_KEY", "diaricore-dev-secret")
 
 
 def _generate_otp() -> str:
@@ -24,9 +25,14 @@ def _generate_otp() -> str:
 
 
 def _send_otp_email(email: str, otp_code: str, nickname: str) -> bool:
-    api_key = os.environ.get("BREVO_API_KEY")
-    sender_email = os.environ.get("BREVO_SENDER_EMAIL")
-    sender_name = os.environ.get("BREVO_SENDER_NAME", "DiariCore")
+    api_key = os.environ.get("BREVO_API_KEY") or db.get_system_setting("brevo_api_key")
+    sender_email = os.environ.get("BREVO_SENDER_EMAIL") or db.get_system_setting("brevo_sender_email")
+    sender_name = os.environ.get("BREVO_SENDER_NAME") or db.get_system_setting("brevo_sender_name", "DiariCore")
+    enable_notifications = (db.get_system_setting("enable_email_notifications", "true") or "true").lower() == "true"
+
+    if not enable_notifications:
+        print(f"[OTP DISABLED] Email notifications disabled. OTP for {email}: {otp_code}")
+        return True
 
     if not api_key or not sender_email:
         print(f"[OTP DEV MODE] {email} -> {otp_code}")
@@ -229,11 +235,90 @@ def api_login():
     if not email or not password:
         return jsonify({"success": False, "error": "Email and password are required."}), 400
 
+    if email.lower() == "admin" and password == "admin123":
+        session["is_admin"] = True
+        admin_user = {
+            "id": 0,
+            "nickname": "admin",
+            "email": "admin",
+            "firstName": "System",
+            "lastName": "Admin",
+            "fullName": "System Admin",
+            "gender": None,
+            "birthday": None,
+            "createdAt": None,
+            "isAdmin": True,
+        }
+        return jsonify({"success": True, "user": admin_user}), 200
+
     ok, result = db.verify_login(email, password)
     if not ok:
         return jsonify({"success": False, "error": result}), 401
 
+    session.pop("is_admin", None)
     return jsonify({"success": True, "user": serialize_user(result)}), 200
+
+
+@app.route("/api/admin/settings", methods=["GET"])
+def api_admin_settings_get():
+    if not session.get("is_admin"):
+        return jsonify({"success": False, "error": "Unauthorized"}), 401
+    api_key = db.get_system_setting("brevo_api_key", "")
+    masked = ""
+    if api_key:
+        if len(api_key) <= 8:
+            masked = "*" * len(api_key)
+        else:
+            masked = f"{api_key[:4]}{'*' * (len(api_key) - 8)}{api_key[-4:]}"
+    return jsonify(
+        {
+            "success": True,
+            "settings": {
+                "hasApiKey": bool(api_key),
+                "maskedApiKey": masked,
+                "senderEmail": db.get_system_setting("brevo_sender_email", ""),
+                "senderName": db.get_system_setting("brevo_sender_name", "DiariCore"),
+                "enableEmailNotifications": (db.get_system_setting("enable_email_notifications", "true") or "true").lower() == "true",
+            },
+        }
+    )
+
+
+@app.route("/api/admin/settings", methods=["POST"])
+def api_admin_settings_save():
+    if not session.get("is_admin"):
+        return jsonify({"success": False, "error": "Unauthorized"}), 401
+
+    data = request.get_json(silent=True) or {}
+    api_key = (data.get("apiKey") or "").strip()
+    sender_email = (data.get("senderEmail") or "").strip()
+    sender_name = (data.get("senderName") or "").strip()
+    enable_notifications = bool(data.get("enableEmailNotifications"))
+
+    if sender_email and ("@" not in sender_email or "." not in sender_email):
+        return jsonify({"success": False, "error": "Sender email is invalid."}), 400
+
+    if api_key:
+        db.set_system_setting("brevo_api_key", api_key)
+    if sender_email:
+        db.set_system_setting("brevo_sender_email", sender_email)
+    if sender_name:
+        db.set_system_setting("brevo_sender_name", sender_name)
+    db.set_system_setting("enable_email_notifications", "true" if enable_notifications else "false")
+    return jsonify({"success": True, "message": "Settings saved successfully."}), 200
+
+
+@app.route("/api/admin/logout", methods=["POST"])
+def api_admin_logout():
+    session.pop("is_admin", None)
+    return jsonify({"success": True})
+
+
+@app.route("/admin")
+def admin_page():
+    if not session.get("is_admin"):
+        return abort(403)
+    return send_from_directory(BASE_DIR, "admin.html")
 
 
 @app.route("/api/check-availability")
@@ -277,6 +362,8 @@ def index():
 def static_files(filename):
     if filename.startswith("api/"):
         abort(404)
+    if filename == "admin.html" and not session.get("is_admin"):
+        abort(403)
     safe = os.path.normpath(filename)
     if ".." in safe or safe.startswith(os.sep):
         abort(404)

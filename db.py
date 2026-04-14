@@ -111,6 +111,26 @@ def init_db():
                 );
                 """
             )
+        if USE_POSTGRES:
+            cur.execute(
+                """
+                CREATE TABLE IF NOT EXISTS system_settings (
+                    key VARCHAR(128) PRIMARY KEY,
+                    value TEXT,
+                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                );
+                """
+            )
+        else:
+            cur.execute(
+                """
+                CREATE TABLE IF NOT EXISTS system_settings (
+                    key TEXT PRIMARY KEY,
+                    value TEXT,
+                    updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+                );
+                """
+            )
         conn.commit()
     finally:
         conn.close()
@@ -401,6 +421,59 @@ def create_user_from_pending(pending: dict):
         if "email" in err:
             return False, ("signUpEmail", "Email already exists.")
         return False, (None, "Could not create account. Please try again.")
+    finally:
+        conn.close()
+
+
+def get_system_setting(key: str, default=None):
+    conn = get_conn()
+    cur = conn.cursor()
+    try:
+        if USE_POSTGRES:
+            cur.execute("SELECT value FROM system_settings WHERE key = %s", (key,))
+        else:
+            cur.execute("SELECT value FROM system_settings WHERE key = ?", (key,))
+        row = cur.fetchone()
+        if not row:
+            return default
+        if isinstance(row, dict):
+            return row.get("value", default)
+        return row[0] if row[0] is not None else default
+    finally:
+        conn.close()
+
+
+def set_system_setting(key: str, value: str):
+    conn = get_conn()
+    cur = conn.cursor()
+    try:
+        if USE_POSTGRES:
+            cur.execute(
+                """
+                INSERT INTO system_settings (key, value, updated_at)
+                VALUES (%s, %s, CURRENT_TIMESTAMP)
+                ON CONFLICT (key) DO UPDATE SET
+                    value = EXCLUDED.value,
+                    updated_at = CURRENT_TIMESTAMP
+                """,
+                (key, value),
+            )
+        else:
+            cur.execute(
+                """
+                INSERT INTO system_settings (key, value, updated_at)
+                VALUES (?, ?, CURRENT_TIMESTAMP)
+                ON CONFLICT(key) DO UPDATE SET
+                    value = excluded.value,
+                    updated_at = CURRENT_TIMESTAMP
+                """,
+                (key, value),
+            )
+        conn.commit()
+        return True
+    except Exception:
+        conn.rollback()
+        return False
     finally:
         conn.close()
 

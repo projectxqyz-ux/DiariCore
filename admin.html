@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DiariCore Admin</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <div class="admin-wrap">
+        <aside class="admin-sidebar">
+            <h1>DiariCore</h1>
+            <p>Admin Panel</p>
+            <nav>
+                <button class="nav-item active"><i class="bi bi-gear"></i> System Settings</button>
+            </nav>
+            <button id="logoutBtn" class="logout-btn"><i class="bi bi-box-arrow-right"></i> Logout</button>
+        </aside>
+
+        <main class="admin-main">
+            <section class="card">
+                <h2>System Settings</h2>
+                <p class="muted">Configure Brevo email settings used for OTP verification emails.</p>
+
+                <label for="brevoApiKey">Brevo API Key</label>
+                <input id="brevoApiKey" type="password" placeholder="Enter new API key to update">
+                <p class="muted" id="apiKeyHint">No API key configured.</p>
+
+                <div class="row">
+                    <div>
+                        <label for="senderEmail">Sender Email</label>
+                        <input id="senderEmail" type="email" placeholder="no-reply@yourdomain.com">
+                    </div>
+                    <div>
+                        <label for="senderName">Sender Name</label>
+                        <input id="senderName" type="text" placeholder="DiariCore">
+                    </div>
+                </div>
+
+                <label class="checkline">
+                    <input id="enableEmailNotifications" type="checkbox">
+                    Enable Email Notifications
+                </label>
+
+                <button id="saveSettingsBtn" class="save-btn"><i class="bi bi-floppy"></i> Save Settings</button>
+            </section>
+        </main>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>

@@ -453,6 +453,13 @@ document.addEventListener('DOMContentLoaded', function() {
                             isLoggedIn: true,
                             loginTime: new Date().toISOString()
                         }));
+                        if (u.isAdmin) {
+                            showNotification('Admin login successful! Redirecting...', 'success');
+                            setTimeout(() => {
+                                window.location.href = 'admin';
+                            }, 500);
+                            return;
+                        }
                         showNotification('Login successful! Redirecting...', 'success');
                         setTimeout(() => {
                             window.location.href = 'dashboard.html';
@@ -822,6 +829,10 @@ document.addEventListener('DOMContentLoaded', function() {
         if (user && user.isLoggedIn) {
             const currentPage = window.location.pathname.split('/').pop();
             if (currentPage === 'index.html' || currentPage === '' || currentPage === 'login.html') {
+                if (user.isAdmin) {
+                    window.location.href = 'admin';
+                    return;
+                }
                 window.location.href = 'dashboard.html';
             }
         }
