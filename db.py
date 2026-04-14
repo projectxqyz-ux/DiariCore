@@ -79,6 +79,16 @@ def init_db():
                 );
                 """
             )
+            cur.execute(
+                """
+                CREATE TABLE IF NOT EXISTS password_resets (
+                    email VARCHAR(255) PRIMARY KEY,
+                    reset_code VARCHAR(6) NOT NULL,
+                    expires_at TIMESTAMP NOT NULL,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                );
+                """
+            )
         else:
             cur.execute(
                 """
@@ -107,6 +117,16 @@ def init_db():
                     birthday TEXT,
                     otp_code TEXT NOT NULL,
                     otp_expires_at TEXT NOT NULL,
+                    created_at TEXT DEFAULT CURRENT_TIMESTAMP
+                );
+                """
+            )
+            cur.execute(
+                """
+                CREATE TABLE IF NOT EXISTS password_resets (
+                    email TEXT PRIMARY KEY,
+                    reset_code TEXT NOT NULL,
+                    expires_at TEXT NOT NULL,
                     created_at TEXT DEFAULT CURRENT_TIMESTAMP
                 );
                 """
@@ -499,3 +519,98 @@ def verify_login(identifier: str, password: str):
         return False, "Invalid username or password."
     out = {k: v for k, v in user.items() if k != "password_hash"}
     return True, out
+
+
+def store_password_reset(email: str, reset_code: str, expires_at):
+    email_norm = (email or "").strip().lower()
+    conn = get_conn()
+    cur = conn.cursor()
+    try:
+        if USE_POSTGRES:
+            cur.execute(
+                """
+                INSERT INTO password_resets (email, reset_code, expires_at, created_at)
+                VALUES (%s, %s, %s, CURRENT_TIMESTAMP)
+                ON CONFLICT (email) DO UPDATE SET
+                    reset_code = EXCLUDED.reset_code,
+                    expires_at = EXCLUDED.expires_at,
+                    created_at = CURRENT_TIMESTAMP
+                """,
+                (email_norm, reset_code, expires_at),
+            )
+        else:
+            cur.execute(
+                """
+                INSERT INTO password_resets (email, reset_code, expires_at, created_at)
+                VALUES (?, ?, ?, CURRENT_TIMESTAMP)
+                ON CONFLICT(email) DO UPDATE SET
+                    reset_code = excluded.reset_code,
+                    expires_at = excluded.expires_at,
+                    created_at = CURRENT_TIMESTAMP
+                """,
+                (email_norm, reset_code, str(expires_at)),
+            )
+        conn.commit()
+        return True
+    except Exception:
+        conn.rollback()
+        return False
+    finally:
+        conn.close()
+
+
+def get_password_reset(email: str):
+    email_norm = (email or "").strip().lower()
+    conn = get_conn()
+    cur = conn.cursor()
+    try:
+        if USE_POSTGRES:
+            cur.execute("SELECT * FROM password_resets WHERE email = %s", (email_norm,))
+        else:
+            cur.execute("SELECT * FROM password_resets WHERE lower(email) = ?", (email_norm,))
+        return row_to_dict(cur.fetchone())
+    finally:
+        conn.close()
+
+
+def delete_password_reset(email: str):
+    email_norm = (email or "").strip().lower()
+    conn = get_conn()
+    cur = conn.cursor()
+    try:
+        if USE_POSTGRES:
+            cur.execute("DELETE FROM password_resets WHERE email = %s", (email_norm,))
+        else:
+            cur.execute("DELETE FROM password_resets WHERE lower(email) = ?", (email_norm,))
+        conn.commit()
+        return True
+    except Exception:
+        conn.rollback()
+        return False
+    finally:
+        conn.close()
+
+
+def update_user_password_by_email(email: str, password: str):
+    email_norm = (email or "").strip().lower()
+    password_hash = generate_password_hash(password)
+    conn = get_conn()
+    cur = conn.cursor()
+    try:
+        if USE_POSTGRES:
+            cur.execute(
+                "UPDATE users SET password_hash = %s WHERE email = %s",
+                (password_hash, email_norm),
+            )
+        else:
+            cur.execute(
+                "UPDATE users SET password_hash = ? WHERE lower(email) = ?",
+                (password_hash, email_norm),
+            )
+        conn.commit()
+        return cur.rowcount > 0
+    except Exception:
+        conn.rollback()
+        return False
+    finally:
+        conn.close()

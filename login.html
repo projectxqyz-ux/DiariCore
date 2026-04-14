@@ -93,6 +93,45 @@
             </div>
         </div>
     </div>
+
+    <div class="reset-modal" id="resetModal" hidden>
+        <div class="reset-backdrop" id="resetBackdrop"></div>
+        <div class="reset-dialog" role="dialog" aria-modal="true" aria-labelledby="resetTitle">
+            <button type="button" class="reset-close" id="resetCloseBtn" aria-label="Close">
+                <i class="bi bi-x-lg"></i>
+            </button>
+
+            <div class="reset-header">
+                <div class="reset-icon-wrap">
+                    <i class="bi bi-key"></i>
+                </div>
+                <h3 id="resetTitle">Recover Your Account</h3>
+                <p id="resetSubtitle">Enter your username or email to receive a reset code.</p>
+            </div>
+
+            <div class="reset-alert" id="resetAlert" hidden></div>
+
+            <form id="resetRequestForm" class="reset-form" autocomplete="off">
+                <label class="reset-label" for="resetIdentifier">Username or Email</label>
+                <input id="resetIdentifier" class="reset-input" type="text" autocomplete="off" required>
+                <button type="submit" class="reset-btn" id="sendResetCodeBtn">Send Reset Code</button>
+            </form>
+
+            <form id="resetConfirmForm" class="reset-form" autocomplete="off" hidden>
+                <label class="reset-label" for="resetCode">Reset Code</label>
+                <input id="resetCode" class="reset-input" type="text" inputmode="numeric" maxlength="6" autocomplete="off" required>
+
+                <label class="reset-label" for="resetNewPassword">New Password</label>
+                <input id="resetNewPassword" class="reset-input" type="password" autocomplete="new-password" required>
+
+                <label class="reset-label" for="resetConfirmPassword">Confirm New Password</label>
+                <input id="resetConfirmPassword" class="reset-input" type="password" autocomplete="new-password" required>
+
+                <button type="submit" class="reset-btn" id="confirmResetBtn">Update Password</button>
+                <button type="button" class="reset-btn reset-btn-secondary" id="resetBackBtn">Back</button>
+            </form>
+        </div>
+    </div>
     
     <script src="login.js"></script>
 </body>

@@ -41,9 +41,24 @@ document.addEventListener('DOMContentLoaded', function() {
     // Google buttons
     const googleSignInBtn = document.getElementById('googleSignInBtn');
     const googleSignUpBtn = document.getElementById('googleSignUpBtn');
+    const resetModal = document.getElementById('resetModal');
+    const resetBackdrop = document.getElementById('resetBackdrop');
+    const resetCloseBtn = document.getElementById('resetCloseBtn');
+    const resetAlert = document.getElementById('resetAlert');
+    const resetRequestForm = document.getElementById('resetRequestForm');
+    const resetConfirmForm = document.getElementById('resetConfirmForm');
+    const resetIdentifierInput = document.getElementById('resetIdentifier');
+    const resetCodeInput = document.getElementById('resetCode');
+    const resetNewPasswordInput = document.getElementById('resetNewPassword');
+    const resetConfirmPasswordInput = document.getElementById('resetConfirmPassword');
+    const sendResetCodeBtn = document.getElementById('sendResetCodeBtn');
+    const confirmResetBtn = document.getElementById('confirmResetBtn');
+    const resetBackBtn = document.getElementById('resetBackBtn');
+    const resetSubtitle = document.getElementById('resetSubtitle');
     let pendingRegistrationEmail = '';
     let otpTimerInterval = null;
     let otpExpirySeconds = 0;
+    let resetIdentifier = '';
     
     // Switch to Sign Up mode
     function switchToSignUp() {
@@ -815,18 +830,162 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
+    function setResetAlert(message, type = 'error') {
+        if (!resetAlert) return;
+        resetAlert.textContent = message;
+        resetAlert.className = `reset-alert ${type}`;
+        resetAlert.hidden = false;
+    }
+
+    function clearResetAlert() {
+        if (!resetAlert) return;
+        resetAlert.hidden = true;
+        resetAlert.textContent = '';
+        resetAlert.className = 'reset-alert';
+    }
+
+    function openResetModal() {
+        if (!resetModal) return;
+        resetModal.hidden = false;
+        resetIdentifier = '';
+        clearResetAlert();
+        if (resetRequestForm) resetRequestForm.hidden = false;
+        if (resetConfirmForm) resetConfirmForm.hidden = true;
+        if (resetSubtitle) resetSubtitle.textContent = 'Enter your username or email to receive a reset code.';
+        if (resetIdentifierInput) {
+            resetIdentifierInput.value = '';
+            resetIdentifierInput.focus();
+        }
+        if (resetCodeInput) resetCodeInput.value = '';
+        if (resetNewPasswordInput) resetNewPasswordInput.value = '';
+        if (resetConfirmPasswordInput) resetConfirmPasswordInput.value = '';
+    }
+
+    function closeResetModal() {
+        if (!resetModal) return;
+        resetModal.hidden = true;
+        resetIdentifier = '';
+        clearResetAlert();
+    }
+
+    if (resetCloseBtn) resetCloseBtn.addEventListener('click', closeResetModal);
+    if (resetBackdrop) resetBackdrop.addEventListener('click', closeResetModal);
+
+    if (resetRequestForm) {
+        resetRequestForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const identifier = (resetIdentifierInput?.value || '').trim();
+            if (!identifier) {
+                setResetAlert('Username or email is required.');
+                return;
+            }
+            clearResetAlert();
+            if (sendResetCodeBtn) {
+                sendResetCodeBtn.disabled = true;
+                sendResetCodeBtn.textContent = 'Sending...';
+            }
+            fetch('/api/password/forgot', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ identifier })
+            })
+                .then((res) => res.json().then((data) => ({ ok: res.ok, data })))
+                .then(({ ok, data }) => {
+                    if (!ok || !data.success) {
+                        setResetAlert(data.error || 'Failed to send reset code.');
+                        return;
+                    }
+                    resetIdentifier = identifier;
+                    if (resetRequestForm) resetRequestForm.hidden = true;
+                    if (resetConfirmForm) resetConfirmForm.hidden = false;
+                    if (resetSubtitle) resetSubtitle.textContent = 'Enter your reset code and choose a new password.';
+                    setResetAlert(data.message || 'Reset code sent.', 'success');
+                    if (resetCodeInput) resetCodeInput.focus();
+                })
+                .catch(() => setResetAlert('Could not reach the server. Please try again.'))
+                .finally(() => {
+                    if (sendResetCodeBtn) {
+                        sendResetCodeBtn.disabled = false;
+                        sendResetCodeBtn.textContent = 'Send Reset Code';
+                    }
+                });
+        });
+    }
+
+    if (resetBackBtn) {
+        resetBackBtn.addEventListener('click', function () {
+            clearResetAlert();
+            if (resetConfirmForm) resetConfirmForm.hidden = true;
+            if (resetRequestForm) resetRequestForm.hidden = false;
+            if (resetSubtitle) resetSubtitle.textContent = 'Enter your username or email to receive a reset code.';
+        });
+    }
+
+    if (resetConfirmForm) {
+        resetConfirmForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const code = (resetCodeInput?.value || '').trim();
+            const newPassword = resetNewPasswordInput?.value || '';
+            const confirmPassword = resetConfirmPasswordInput?.value || '';
+
+            if (!code) {
+                setResetAlert('Reset code is required.');
+                return;
+            }
+            if (!newPassword) {
+                setResetAlert('New password is required.');
+                return;
+            }
+            if (newPassword.length < 8) {
+                setResetAlert('Password must be at least 8 characters.');
+                return;
+            }
+            if (confirmPassword !== newPassword) {
+                setResetAlert('Passwords do not match.');
+                return;
+            }
+
+            clearResetAlert();
+            if (confirmResetBtn) {
+                confirmResetBtn.disabled = true;
+                confirmResetBtn.textContent = 'Updating...';
+            }
+            fetch('/api/password/reset', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ identifier: resetIdentifier || (resetIdentifierInput?.value || '').trim(), code, newPassword })
+            })
+                .then((res) => res.json().then((data) => ({ ok: res.ok, data })))
+                .then(({ ok, data }) => {
+                    if (!ok || !data.success) {
+                        setResetAlert(data.error || 'Failed to reset password.');
+                        return;
+                    }
+                    setResetAlert(data.message || 'Password updated successfully.', 'success');
+                    setTimeout(() => {
+                        closeResetModal();
+                        showNotification('Password reset complete. Please sign in.', 'success');
+                    }, 700);
+                })
+                .catch(() => setResetAlert('Could not reach the server. Please try again.'))
+                .finally(() => {
+                    if (confirmResetBtn) {
+                        confirmResetBtn.disabled = false;
+                        confirmResetBtn.textContent = 'Update Password';
+                    }
+                });
+        });
+    }
+
     // Forgot password
     const forgotPassword = document.querySelector('.forgot-password');
     if (forgotPassword) {
         forgotPassword.addEventListener('click', function(e) {
             e.preventDefault();
             const username = document.getElementById('email').value.trim();
-            
-            if (!username) {
-                showNotification('Please enter your username first', 'error');
-                document.getElementById('email').focus();
-            } else {
-                showNotification('Password recovery will be available soon.', 'info');
+            openResetModal();
+            if (username && resetIdentifierInput) {
+                resetIdentifierInput.value = username;
             }
         });
     }
