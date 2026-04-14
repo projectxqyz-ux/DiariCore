@@ -231,6 +231,11 @@ body {
     margin-bottom: 1.25rem;
 }
 
+/* Keep sign-in spacing tight like register: only validation expands layout */
+.signin-section .form-group {
+    margin-bottom: 0;
+}
+
 .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
