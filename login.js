@@ -61,6 +61,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const resetPasswordBackBtn = document.getElementById('resetPasswordBackBtn');
     const resetPasswordForm = document.getElementById('resetPasswordForm');
     const resetSubtitle = document.getElementById('resetSubtitle');
+    const resetToggleNewPassword = document.getElementById('resetToggleNewPassword');
+    const resetToggleConfirmPassword = document.getElementById('resetToggleConfirmPassword');
     let pendingRegistrationEmail = '';
     let otpTimerInterval = null;
     let otpExpirySeconds = 0;
@@ -173,6 +175,8 @@ document.addEventListener('DOMContentLoaded', function() {
     setupPasswordToggle(togglePassword, passwordInput);
     setupPasswordToggle(toggleSignUpPassword, signUpPasswordInput);
     setupPasswordToggle(toggleConfirmPassword, confirmPasswordInput);
+    setupPasswordToggle(resetToggleNewPassword, resetNewPasswordInput);
+    setupPasswordToggle(resetToggleConfirmPassword, resetConfirmPasswordInput);
     
     // Email validation
     function isValidEmail(email) {
@@ -905,7 +909,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 verifiedResetCode = code;
                 if (resetConfirmForm) resetConfirmForm.hidden = true;
                 if (resetPasswordForm) resetPasswordForm.hidden = false;
-                if (resetSubtitle) resetSubtitle.textContent = 'Set your new password to finish recovery.';
+                if (resetSubtitle) resetSubtitle.textContent = 'Please choose a new password that is different from your old one.';
                 setResetAlert('Code verified. Set your new password.', 'success');
             })
             .catch(() => setResetAlert('Could not reach the server. Please try again.'))
