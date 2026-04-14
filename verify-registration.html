@@ -37,6 +37,11 @@
                     <input class="digit" inputmode="numeric" maxlength="1" aria-label="Digit 6">
                 </div>
 
+                <button class="btn" id="verifyBtn" disabled>
+                    <i class="bi bi-check2-circle" id="verifyBtnIcon"></i>
+                    <span id="verifyBtnText">Verify Code</span>
+                </button>
+
                 <div class="alert alert-error" id="otpError" hidden aria-live="polite">
                     <div class="alert__left">
                         <i class="bi bi-exclamation-circle"></i>
@@ -44,11 +49,6 @@
                     </div>
                     <button class="alert__close" id="otpErrorClose" aria-label="Close">×</button>
                 </div>
-
-                <button class="btn" id="verifyBtn" disabled>
-                    <i class="bi bi-check2-circle" id="verifyBtnIcon"></i>
-                    <span id="verifyBtnText">Verify Code</span>
-                </button>
 
                 <div class="meta">
                     <button class="link" id="resendBtn">Resend Code</button>
