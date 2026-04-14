@@ -1250,6 +1250,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (!ok || !data.success) {
                         const errorMessage = data.error || 'Failed to reset password.';
                         if (errorMessage === 'Please enter a password different from your previous one.') {
+                            showError(resetNewPasswordInput, 'Password must be different from your old password.');
                             showError(resetConfirmPasswordInput, errorMessage);
                         } else {
                             setResetAlert(errorMessage);
