@@ -36,6 +36,9 @@ body {
     margin: 22px auto;
     border: 1px solid var(--border-color);
     box-shadow: 0 6px 22px rgba(0, 0, 0, 0.05);
+    align-self: center;
+    justify-self: center;
+    height: fit-content;
 }
 
 .verify-shell {
