@@ -901,7 +901,8 @@ document.addEventListener('DOMContentLoaded', function() {
             clearResetAlert();
             if (sendResetCodeBtn) {
                 sendResetCodeBtn.disabled = true;
-                sendResetCodeBtn.textContent = 'Sending...';
+                sendResetCodeBtn.classList.add('is-loading');
+                sendResetCodeBtn.innerHTML = '<span class="reset-btn-spinner" aria-hidden="true"></span><span>Sending Reset Code...</span>';
             }
             fetch('/api/password/forgot', {
                 method: 'POST',
@@ -935,6 +936,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 .finally(() => {
                     if (sendResetCodeBtn) {
                         sendResetCodeBtn.disabled = false;
+                        sendResetCodeBtn.classList.remove('is-loading');
                         sendResetCodeBtn.textContent = 'Send Reset Code';
                     }
                 });

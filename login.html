@@ -113,9 +113,9 @@
 
             <div class="reset-alert" id="resetAlert" hidden></div>
 
-            <form id="resetRequestForm" class="reset-form" autocomplete="off">
+            <form id="resetRequestForm" class="reset-form" autocomplete="off" novalidate>
                 <div class="input-wrapper" data-label="Email Address">
-                    <input id="resetIdentifier" class="form-input" type="email" placeholder=" " autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" required>
+                    <input id="resetIdentifier" class="form-input" type="text" placeholder=" " autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" required>
                     <span class="floating-label">Email Address</span>
                     <i class="bi bi-envelope input-icon"></i>
                 </div>
@@ -123,7 +123,7 @@
                 <button type="submit" class="reset-btn" id="sendResetCodeBtn">Send Reset Code</button>
             </form>
 
-            <form id="resetConfirmForm" class="reset-form" autocomplete="off" hidden>
+            <form id="resetConfirmForm" class="reset-form" autocomplete="off" novalidate hidden>
                 <label class="reset-label" for="resetCode">Reset Code</label>
                 <input id="resetCode" class="reset-input" type="text" inputmode="numeric" maxlength="6" autocomplete="off" required>
 

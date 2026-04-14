@@ -1124,7 +1124,7 @@ body {
 
 .reset-form {
     display: grid;
-    gap: 10px;
+    gap: 6px;
 }
 
 .reset-label {
@@ -1145,7 +1145,7 @@ body {
 }
 
 .reset-form .input-wrapper {
-    margin-bottom: 2px;
+    margin-bottom: 0;
 }
 
 .reset-input:focus {
@@ -1163,6 +1163,28 @@ body {
     font-weight: 700;
     background: linear-gradient(135deg, #6F8F7F 0%, #8FAF9F 100%);
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.reset-btn.is-loading {
+    opacity: 0.92;
+    pointer-events: none;
+}
+
+.reset-btn-spinner {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.45);
+    border-top-color: #fff;
+    animation: resetBtnSpin 0.8s linear infinite;
+}
+
+@keyframes resetBtnSpin {
+    to { transform: rotate(360deg); }
 }
 
 .reset-btn-secondary {
