@@ -218,6 +218,35 @@
                     Already have an account? <a href="#" id="mobileSwitchToSignIn">Sign in</a>
                 </p>
             </div>
+
+            <div class="form-section otp-section hidden" id="otpSection">
+                <div class="otp-card">
+                    <div class="otp-icon-wrap">
+                        <i class="bi bi-shield-lock"></i>
+                    </div>
+                    <h2 class="form-title otp-title">Verify Your Account</h2>
+                    <p class="form-subtitle otp-subtitle">Enter the 6-digit code sent to your email.</p>
+                    <div class="otp-email" id="otpEmailDisplay"></div>
+
+                    <div class="otp-inputs" id="otpInputs">
+                        <input type="text" maxlength="1" class="otp-digit" data-idx="0">
+                        <input type="text" maxlength="1" class="otp-digit" data-idx="1">
+                        <input type="text" maxlength="1" class="otp-digit" data-idx="2">
+                        <input type="text" maxlength="1" class="otp-digit" data-idx="3">
+                        <input type="text" maxlength="1" class="otp-digit" data-idx="4">
+                        <input type="text" maxlength="1" class="otp-digit" data-idx="5">
+                    </div>
+                    <div class="custom-error otp-error" id="otpCode-error">Please enter the 6-digit code.</div>
+
+                    <button type="button" class="btn-signin" id="verifyOtpBtn" disabled>VERIFY CODE</button>
+
+                    <div class="otp-actions">
+                        <button type="button" class="otp-link-btn" id="resendOtpBtn">Resend code</button>
+                        <span class="otp-timer" id="otpTimerLabel">Code expires in 10:00</span>
+                    </div>
+                    <button type="button" class="otp-back-btn" id="otpBackBtn">Back to sign up</button>
+                </div>
+            </div>
         </div>
         
         <!-- Right Side - Sliding Panel -->

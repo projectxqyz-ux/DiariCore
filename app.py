@@ -4,7 +4,10 @@ Deploy on Railway with PostgreSQL (DATABASE_URL). Local dev uses SQLite.
 """
 
 import os
-from datetime import date, datetime
+import json
+import random
+import urllib.request
+from datetime import date, datetime, timedelta, timezone
 
 from flask import Flask, jsonify, request, send_from_directory, abort
 
@@ -14,6 +17,47 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 app = Flask(__name__)
 app.config["JSON_SORT_KEYS"] = False
+
+
+def _generate_otp() -> str:
+    return f"{random.randint(0, 999999):06d}"
+
+
+def _send_otp_email(email: str, otp_code: str, nickname: str) -> bool:
+    api_key = os.environ.get("BREVO_API_KEY")
+    sender_email = os.environ.get("BREVO_SENDER_EMAIL")
+    sender_name = os.environ.get("BREVO_SENDER_NAME", "DiariCore")
+
+    if not api_key or not sender_email:
+        print(f"[OTP DEV MODE] {email} -> {otp_code}")
+        return True
+
+    payload = {
+        "sender": {"name": sender_name, "email": sender_email},
+        "to": [{"email": email, "name": nickname or email.split("@")[0]}],
+        "subject": "DiariCore verification code",
+        "htmlContent": f"""
+            <html><body style='font-family: Arial, sans-serif; color: #2F3E36;'>
+            <h2>Verify your DiariCore account</h2>
+            <p>Hello {nickname or 'there'},</p>
+            <p>Your verification code is:</p>
+            <p style='font-size: 28px; font-weight: bold; letter-spacing: 6px;'>{otp_code}</p>
+            <p>This code expires in 10 minutes.</p>
+            </body></html>
+        """,
+        "textContent": f"Your DiariCore verification code is {otp_code}. It expires in 10 minutes.",
+    }
+    req = urllib.request.Request(
+        "https://api.brevo.com/v3/smtp/email",
+        data=json.dumps(payload).encode("utf-8"),
+        headers={"Content-Type": "application/json", "api-key": api_key},
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=15):
+            return True
+    except Exception:
+        return False
 
 
 def _serialize_value(v):
@@ -93,7 +137,10 @@ def api_register():
     if not birthday:
         return jsonify({"success": False, "field": "birthday", "error": "Date of birth is required."}), 400
 
-    result = db.create_user(
+    otp_code = _generate_otp()
+    otp_expires_at = datetime.now(timezone.utc) + timedelta(minutes=10)
+
+    if not db.store_pending_registration(
         nickname=nickname,
         email=email,
         password=password,
@@ -101,15 +148,77 @@ def api_register():
         last_name=last_name,
         gender=gender,
         birthday=birthday,
-    )
-    if not result[0]:
-        _, field_id, message = result
+        otp_code=otp_code,
+        otp_expires_at=otp_expires_at,
+    ):
+        return jsonify({"success": False, "error": "Could not start verification. Please try again."}), 500
+
+    if not _send_otp_email(email, otp_code, nickname):
+        return jsonify({"success": False, "error": "Failed to send verification code. Please try again."}), 500
+
+    return jsonify({"success": True, "message": "Verification code sent to your email.", "email": email}), 200
+
+
+@app.route("/api/register/verify", methods=["POST"])
+def api_register_verify():
+    data = request.get_json(silent=True) or {}
+    email = (data.get("email") or "").strip().lower()
+    otp_code = (data.get("otpCode") or "").strip()
+    if not email or not otp_code:
+        return jsonify({"success": False, "error": "Email and verification code are required."}), 400
+
+    pending = db.get_pending_registration(email)
+    if not pending:
+        return jsonify({"success": False, "error": "No pending registration found. Please sign up again."}), 404
+
+    expires_raw = pending.get("otp_expires_at")
+    try:
+        if isinstance(expires_raw, str):
+            expires_at = datetime.fromisoformat(expires_raw.replace("Z", "+00:00"))
+        else:
+            expires_at = expires_raw
+        if expires_at.tzinfo is None:
+            expires_at = expires_at.replace(tzinfo=timezone.utc)
+    except Exception:
+        expires_at = datetime.now(timezone.utc) - timedelta(seconds=1)
+
+    if datetime.now(timezone.utc) > expires_at:
+        return jsonify({"success": False, "error": "Verification code expired. Please resend a new code."}), 400
+
+    if pending.get("otp_code") != otp_code:
+        return jsonify({"success": False, "error": "Invalid verification code."}), 400
+
+    created, payload = db.create_user_from_pending(pending)
+    if not created:
+        field_id, message = payload
         if field_id:
             return jsonify({"success": False, "field": field_id, "error": message}), 409
         return jsonify({"success": False, "error": message}), 400
 
-    user_row = result[1]
-    return jsonify({"success": True, "user": serialize_user(user_row)}), 201
+    db.delete_pending_registration(email)
+    return jsonify({"success": True, "user": serialize_user(payload)}), 201
+
+
+@app.route("/api/register/resend", methods=["POST"])
+def api_register_resend():
+    data = request.get_json(silent=True) or {}
+    email = (data.get("email") or "").strip().lower()
+    if not email:
+        return jsonify({"success": False, "error": "Email is required."}), 400
+
+    pending = db.get_pending_registration(email)
+    if not pending:
+        return jsonify({"success": False, "error": "No pending registration found."}), 404
+
+    otp_code = _generate_otp()
+    otp_expires_at = datetime.now(timezone.utc) + timedelta(minutes=10)
+    if not db.update_pending_otp(email, otp_code, otp_expires_at):
+        return jsonify({"success": False, "error": "Could not refresh verification code."}), 500
+
+    if not _send_otp_email(email, otp_code, pending.get("nickname") or ""):
+        return jsonify({"success": False, "error": "Failed to resend verification code."}), 500
+
+    return jsonify({"success": True, "message": "Verification code resent."}), 200
 
 
 @app.route("/api/login", methods=["POST"])

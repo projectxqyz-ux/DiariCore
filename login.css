@@ -83,8 +83,114 @@ body {
     max-width: 470px;
 }
 
+.otp-section {
+    max-width: 470px;
+}
+
 .form-section.hidden {
     display: none;
+}
+
+.otp-card {
+    background: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 1.5rem;
+    box-shadow: var(--box-shadow);
+    text-align: center;
+}
+
+.otp-icon-wrap {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 0.75rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #6F8F7F 0%, #8FAF9F 100%);
+    color: #fff;
+    font-size: 22px;
+}
+
+.otp-title {
+    text-align: center;
+    margin-bottom: 0.25rem;
+}
+
+.otp-subtitle {
+    text-align: center;
+    margin-bottom: 0.75rem;
+}
+
+.otp-email {
+    background: #f6f9f8;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 0.6rem 0.75rem;
+    margin-bottom: 1rem;
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.otp-inputs {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 0.6rem;
+}
+
+.otp-digit {
+    width: 44px;
+    height: 48px;
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    color: var(--text-dark);
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.otp-digit:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(111, 143, 127, 0.1);
+}
+
+.otp-error {
+    text-align: left;
+    margin-bottom: 0.6rem;
+}
+
+.otp-actions {
+    margin-top: 0.5rem;
+}
+
+.otp-link-btn,
+.otp-back-btn {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.otp-link-btn[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.otp-timer {
+    display: block;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 0.3rem;
+}
+
+.otp-back-btn {
+    margin-top: 0.8rem;
+    font-size: 13px;
 }
 
 /* Form Header - Left Aligned */

@@ -19,6 +19,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // Forms
     const loginForm = document.getElementById('loginForm');
     const signUpForm = document.getElementById('signUpForm');
+    const otpSection = document.getElementById('otpSection');
+    const otpEmailDisplay = document.getElementById('otpEmailDisplay');
+    const verifyOtpBtn = document.getElementById('verifyOtpBtn');
+    const resendOtpBtn = document.getElementById('resendOtpBtn');
+    const otpBackBtn = document.getElementById('otpBackBtn');
+    const otpCodeError = document.getElementById('otpCode-error');
+    const otpTimerLabel = document.getElementById('otpTimerLabel');
+    const otpDigits = Array.from(document.querySelectorAll('.otp-digit'));
     
     // Password toggles
     const togglePassword = document.getElementById('togglePassword');
@@ -31,10 +39,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // Google buttons
     const googleSignInBtn = document.getElementById('googleSignInBtn');
     const googleSignUpBtn = document.getElementById('googleSignUpBtn');
+    let pendingRegistrationEmail = '';
+    let otpTimerInterval = null;
+    let otpExpirySeconds = 0;
     
     // Switch to Sign Up mode
     function switchToSignUp() {
         loginContainer.classList.add('signup-mode');
+        if (otpSection) otpSection.classList.add('hidden');
+        if (signupSection) signupSection.classList.remove('hidden');
         
         // Fade out current content
         signinSection.style.opacity = '0';
@@ -63,6 +76,12 @@ document.addEventListener('DOMContentLoaded', function() {
         // Hide signup welcome immediately to prevent flash during panel swap
         signupWelcome.classList.add('hidden');
         signupWelcome.style.opacity = '0';
+        if (otpTimerInterval) {
+            clearInterval(otpTimerInterval);
+            otpTimerInterval = null;
+        }
+        if (otpSection) otpSection.classList.add('hidden');
+        if (signupSection) signupSection.classList.remove('hidden');
         loginContainer.classList.remove('signup-mode');
         
         // Fade out current content
@@ -131,6 +150,65 @@ document.addEventListener('DOMContentLoaded', function() {
     function isValidEmail(email) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
+    }
+
+    function showOtpError(message) {
+        if (!otpCodeError) return;
+        otpCodeError.textContent = message;
+        otpCodeError.classList.add('show');
+    }
+
+    function hideOtpError() {
+        if (!otpCodeError) return;
+        otpCodeError.classList.remove('show');
+    }
+
+    function getOtpCode() {
+        return otpDigits.map((d) => d.value).join('');
+    }
+
+    function updateOtpButtonState() {
+        if (!verifyOtpBtn) return;
+        verifyOtpBtn.disabled = getOtpCode().length !== 6;
+    }
+
+    function resetOtpInputs() {
+        otpDigits.forEach((d) => {
+            d.value = '';
+            d.classList.remove('error');
+        });
+        updateOtpButtonState();
+        hideOtpError();
+        if (otpDigits[0]) otpDigits[0].focus();
+    }
+
+    function startOtpCountdown(seconds) {
+        otpExpirySeconds = seconds;
+        if (otpTimerInterval) clearInterval(otpTimerInterval);
+        const render = () => {
+            const m = Math.floor(otpExpirySeconds / 60);
+            const s = otpExpirySeconds % 60;
+            if (otpTimerLabel) otpTimerLabel.textContent = `Code expires in ${m}:${String(s).padStart(2, '0')}`;
+        };
+        render();
+        otpTimerInterval = setInterval(() => {
+            otpExpirySeconds -= 1;
+            if (otpExpirySeconds <= 0) {
+                clearInterval(otpTimerInterval);
+                if (otpTimerLabel) otpTimerLabel.textContent = 'Code expired. Resend a new one.';
+                return;
+            }
+            render();
+        }, 1000);
+    }
+
+    function showOtpSection(email) {
+        pendingRegistrationEmail = email;
+        if (otpEmailDisplay) otpEmailDisplay.textContent = email;
+        signupSection.classList.add('hidden');
+        if (otpSection) otpSection.classList.remove('hidden');
+        resetOtpInputs();
+        startOtpCountdown(10 * 60);
     }
 
     const availabilityState = {
@@ -485,7 +563,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
 
                 const submitBtn = signUpForm.querySelector('.btn-signin');
-                submitBtn.textContent = 'Creating Account...';
+                submitBtn.textContent = 'Sending Code...';
                 submitBtn.disabled = true;
                 
                 fetch('/api/register', {
@@ -518,16 +596,10 @@ document.addEventListener('DOMContentLoaded', function() {
                             submitBtn.disabled = false;
                             return;
                         }
-                        const u = data.user;
-                        localStorage.setItem('diariCoreUser', JSON.stringify({
-                            ...u,
-                            isLoggedIn: true,
-                            loginTime: new Date().toISOString()
-                        }));
-                        showNotification('Account created successfully! Redirecting...', 'success');
-                        setTimeout(() => {
-                            window.location.href = 'dashboard.html';
-                        }, 900);
+                        showNotification(data.message || 'Verification code sent to your email.', 'success');
+                        showOtpSection(data.email || email);
+                        submitBtn.textContent = 'SIGN UP';
+                        submitBtn.disabled = false;
                     })
                     .catch(() => {
                         showNotification('Could not reach the server. Run the DiariCore app (Flask) or check your connection.', 'error');
@@ -535,6 +607,117 @@ document.addEventListener('DOMContentLoaded', function() {
                         submitBtn.disabled = false;
                     });
             }
+        });
+    }
+
+    if (otpDigits.length) {
+        otpDigits.forEach((input, idx) => {
+            input.addEventListener('input', (e) => {
+                const v = e.target.value.replace(/\D/g, '').slice(-1);
+                e.target.value = v;
+                e.target.classList.remove('error');
+                hideOtpError();
+                if (v && idx < otpDigits.length - 1) {
+                    otpDigits[idx + 1].focus();
+                }
+                updateOtpButtonState();
+            });
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && !input.value && idx > 0) {
+                    otpDigits[idx - 1].focus();
+                }
+            });
+            input.addEventListener('paste', (e) => {
+                e.preventDefault();
+                const digits = (e.clipboardData.getData('text') || '').replace(/\D/g, '').slice(0, 6).split('');
+                otpDigits.forEach((d, i) => {
+                    d.value = digits[i] || '';
+                });
+                updateOtpButtonState();
+            });
+        });
+    }
+
+    if (verifyOtpBtn) {
+        verifyOtpBtn.addEventListener('click', () => {
+            const otpCode = getOtpCode();
+            if (otpCode.length !== 6) {
+                showOtpError('Please enter the 6-digit code.');
+                otpDigits.forEach((d) => d.classList.add('error'));
+                return;
+            }
+            verifyOtpBtn.disabled = true;
+            verifyOtpBtn.textContent = 'Verifying...';
+            fetch('/api/register/verify', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: pendingRegistrationEmail, otpCode })
+            })
+                .then((res) => res.json().then((data) => ({ ok: res.ok, data })))
+                .then(({ ok, data }) => {
+                    if (!ok || !data.success) {
+                        showOtpError(data.error || 'Invalid verification code.');
+                        otpDigits.forEach((d) => d.classList.add('error'));
+                        verifyOtpBtn.disabled = false;
+                        verifyOtpBtn.textContent = 'VERIFY CODE';
+                        return;
+                    }
+                    const u = data.user;
+                    localStorage.setItem('diariCoreUser', JSON.stringify({
+                        ...u,
+                        isLoggedIn: true,
+                        loginTime: new Date().toISOString()
+                    }));
+                    showNotification('Account verified successfully! Redirecting...', 'success');
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 700);
+                })
+                .catch(() => {
+                    showOtpError('Could not verify right now. Please try again.');
+                    verifyOtpBtn.disabled = false;
+                    verifyOtpBtn.textContent = 'VERIFY CODE';
+                });
+        });
+    }
+
+    if (resendOtpBtn) {
+        resendOtpBtn.addEventListener('click', () => {
+            if (!pendingRegistrationEmail || resendOtpBtn.disabled) return;
+            resendOtpBtn.disabled = true;
+            fetch('/api/register/resend', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: pendingRegistrationEmail })
+            })
+                .then((res) => res.json().then((data) => ({ ok: res.ok, data })))
+                .then(({ ok, data }) => {
+                    if (!ok || !data.success) {
+                        showOtpError(data.error || 'Failed to resend code.');
+                        return;
+                    }
+                    showNotification('Verification code resent.', 'success');
+                    resetOtpInputs();
+                    startOtpCountdown(10 * 60);
+                })
+                .catch(() => showOtpError('Failed to resend code.'))
+                .finally(() => {
+                    setTimeout(() => {
+                        resendOtpBtn.disabled = false;
+                    }, 1200);
+                });
+        });
+    }
+
+    if (otpBackBtn) {
+        otpBackBtn.addEventListener('click', () => {
+            if (otpTimerInterval) {
+                clearInterval(otpTimerInterval);
+                otpTimerInterval = null;
+            }
+            if (otpSection) otpSection.classList.add('hidden');
+            signupSection.classList.remove('hidden');
+            hideOtpError();
         });
     }
     
