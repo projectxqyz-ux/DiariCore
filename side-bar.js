@@ -42,6 +42,7 @@ class SidebarComponent {
             this.setupLogoutButton();
             this.initMobileWriteFab();
             this.initMobileTopbarSearchExpand();
+            this.applyGuestEmptyState();
             
             document.dispatchEvent(new CustomEvent('diari-mobile-shell-ready', { bubbles: true }));
         } catch (error) {
@@ -342,6 +343,208 @@ class SidebarComponent {
                 window.location.href = 'index.html';
             });
         }
+    }
+
+    getCurrentUser() {
+        try {
+            return JSON.parse(localStorage.getItem('diariCoreUser') || 'null');
+        } catch (error) {
+            return null;
+        }
+    }
+
+    isGuestUser() {
+        return !this.getCurrentUser();
+    }
+
+    upsertGuestNotice(target, message) {
+        if (!target) return;
+        const existing = target.querySelector('.guest-empty-notice');
+        if (existing) {
+            existing.textContent = message;
+            return;
+        }
+        const notice = document.createElement('div');
+        notice.className = 'guest-empty-notice';
+        notice.textContent = message;
+        target.appendChild(notice);
+    }
+
+    applyGuestEmptyState() {
+        if (!this.isGuestUser()) return;
+        document.body.classList.add('guest-empty-state');
+
+        const sidebarName = document.querySelector('.user-name');
+        const sidebarEmail = document.querySelector('.user-email');
+        if (sidebarName) sidebarName.textContent = 'Guest user';
+        if (sidebarEmail) sidebarEmail.textContent = 'No account logged in';
+
+        switch (this.currentPage) {
+            case 'dashboard':
+                this.applyDashboardGuestEmptyState();
+                break;
+            case 'entries':
+                this.applyEntriesGuestEmptyState();
+                break;
+            case 'insights':
+                this.applyInsightsGuestEmptyState();
+                break;
+            case 'suggestions':
+                this.applySuggestionsGuestEmptyState();
+                break;
+            case 'profile':
+                this.applyProfileGuestEmptyState();
+                break;
+            case 'write-entry':
+                this.applyWriteEntryGuestEmptyState();
+                break;
+            case 'voice-entry':
+                this.applyVoiceEntryGuestEmptyState();
+                break;
+            default:
+                break;
+        }
+    }
+
+    applyDashboardGuestEmptyState() {
+        const mainTitle = document.querySelector('.main-title');
+        const subtitle = document.querySelector('.subtitle');
+        if (mainTitle) mainTitle.textContent = 'Welcome';
+        if (subtitle) subtitle.textContent = 'No user logged in yet';
+
+        const streakCount = document.querySelector('.streak-count');
+        if (streakCount) streakCount.textContent = '0';
+
+        document.querySelectorAll('.stat-card .stat-value').forEach((el) => {
+            el.textContent = 'No data yet';
+        });
+        document.querySelectorAll('.stat-card .stat-description').forEach((el) => {
+            el.textContent = 'Log in to start generating insights';
+        });
+
+        const sectionsToHide = document.querySelectorAll('.mobile-smart-insights, .weekly-glance, .smart-insights');
+        sectionsToHide.forEach((section) => section.classList.add('guest-empty-hide'));
+        this.upsertGuestNotice(
+            document.querySelector('.main-content'),
+            'Dashboard is empty right now because no user is logged in.'
+        );
+    }
+
+    applyEntriesGuestEmptyState() {
+        const title = document.querySelector('.main-title');
+        const subtitle = document.querySelector('.subtitle');
+        if (title) title.textContent = 'Entries';
+        if (subtitle) subtitle.textContent = 'No user logged in yet';
+
+        const content = document.querySelector('.entries-content');
+        if (content) content.classList.add('entries-content--empty-results');
+
+        const searchInput = document.querySelector('.search-input');
+        if (searchInput) {
+            searchInput.value = '';
+            searchInput.placeholder = 'No entries available (guest mode)';
+            searchInput.disabled = true;
+        }
+
+        document.querySelectorAll('.entries-section, .load-more-section').forEach((el) => {
+            el.classList.add('guest-empty-hide');
+        });
+
+        const emptyTitleDesktop = document.querySelector('.entries-empty-state__title--desktop');
+        const emptyHintDesktop = document.querySelector('.entries-empty-state__hint--desktop');
+        const emptyTitleMobile = document.querySelector('.entries-empty-state__title--mobile');
+        const emptyHintMobile = document.querySelector('.entries-empty-state__hint--mobile');
+        if (emptyTitleDesktop) emptyTitleDesktop.textContent = 'No journal entries yet';
+        if (emptyHintDesktop) emptyHintDesktop.textContent = 'This page is empty because no user is logged in.';
+        if (emptyTitleMobile) emptyTitleMobile.textContent = 'No entries yet';
+        if (emptyHintMobile) emptyHintMobile.textContent = 'Empty because no user is logged in.';
+    }
+
+    applyInsightsGuestEmptyState() {
+        const title = document.querySelector('.main-title');
+        const subtitle = document.querySelector('.subtitle');
+        if (title) title.textContent = 'Insights';
+        if (subtitle) subtitle.textContent = 'No user logged in yet';
+
+        document.querySelectorAll('.weekly-glance, .triggers-section, .weekly-mood-desktop, .charts-section').forEach((el) => {
+            el.classList.add('guest-empty-hide');
+        });
+
+        this.upsertGuestNotice(
+            document.querySelector('.insights-content'),
+            'Insights are empty right now because no user is logged in.'
+        );
+    }
+
+    applySuggestionsGuestEmptyState() {
+        const title = document.querySelector('.main-title');
+        const subtitle = document.querySelector('.subtitle');
+        if (title) title.textContent = 'Suggestions';
+        if (subtitle) subtitle.textContent = 'No user logged in yet';
+
+        document.querySelectorAll(
+            '.emotional-support-header, .emotional-support-section, .activity-suggestions-header, .activity-suggestions-section, .content-recommendations-header, .content-recommendations-section, .daily-wellness-header, .daily-wellness-section'
+        ).forEach((el) => {
+            el.classList.add('guest-empty-hide');
+        });
+
+        this.upsertGuestNotice(
+            document.querySelector('.suggestions-content'),
+            'Suggestions are empty right now because no user is logged in.'
+        );
+    }
+
+    applyProfileGuestEmptyState() {
+        const profileName = document.querySelector('.profile-name');
+        const profileEmail = document.querySelector('.profile-email');
+        const memberSince = document.querySelector('.profile-member-since');
+        if (profileName) profileName.textContent = 'Guest user';
+        if (profileEmail) profileEmail.textContent = 'No account logged in';
+        if (memberSince) memberSince.textContent = 'Member since --';
+
+        document.querySelectorAll('.profile-stats .stat-number').forEach((el) => {
+            el.textContent = '0';
+        });
+    }
+
+    applyWriteEntryGuestEmptyState() {
+        const title = document.querySelector('.main-title');
+        const subtitle = document.querySelector('.subtitle');
+        const mobileTitle = document.querySelector('.mobile-title');
+        if (title) title.textContent = 'Write Entry';
+        if (subtitle) subtitle.textContent = 'No user logged in yet';
+        if (mobileTitle) mobileTitle.textContent = 'Write Entry';
+
+        document.querySelectorAll(
+            '.feelings-section, .tags-section, .journal-input-section, .action-buttons-section'
+        ).forEach((el) => {
+            el.classList.add('guest-empty-hide');
+        });
+
+        this.upsertGuestNotice(
+            document.querySelector('.main-content'),
+            'Writing is unavailable because no user is logged in.'
+        );
+    }
+
+    applyVoiceEntryGuestEmptyState() {
+        const title = document.querySelector('.main-title');
+        const subtitle = document.querySelector('.subtitle');
+        const mobileTitle = document.querySelector('.mobile-title');
+        if (title) title.textContent = 'Voice Entry';
+        if (subtitle) subtitle.textContent = 'No user logged in yet';
+        if (mobileTitle) mobileTitle.textContent = 'Voice Entry';
+
+        document.querySelectorAll(
+            '.voice-entry-container, .post-recording-container, .tips-container'
+        ).forEach((el) => {
+            el.classList.add('guest-empty-hide');
+        });
+
+        this.upsertGuestNotice(
+            document.querySelector('.main-content'),
+            'Voice entry is unavailable because no user is logged in.'
+        );
     }
 
     toggleMobileMenu() {

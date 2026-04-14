@@ -818,3 +818,19 @@
         overflow: hidden;
     }
 }
+
+/* Global empty-state mode when no user is logged in */
+.guest-empty-hide {
+    display: none !important;
+}
+
+.guest-empty-notice {
+    margin: 1rem 0;
+    padding: 0.9rem 1rem;
+    border-radius: 12px;
+    border: 1px dashed rgba(107, 142, 126, 0.45);
+    background: rgba(107, 142, 126, 0.08);
+    color: #385646;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
