@@ -60,11 +60,13 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Switch to Sign In mode
     function switchToSignIn() {
+        // Hide signup welcome immediately to prevent flash during panel swap
+        signupWelcome.classList.add('hidden');
+        signupWelcome.style.opacity = '0';
         loginContainer.classList.remove('signup-mode');
         
         // Fade out current content
         signupSection.style.opacity = '0';
-        signupWelcome.style.opacity = '0';
         signinWelcome.classList.add('hidden');
         
         setTimeout(() => {
