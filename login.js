@@ -61,6 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const resetPasswordBackBtn = document.getElementById('resetPasswordBackBtn');
     const resetPasswordForm = document.getElementById('resetPasswordForm');
     const resetSubtitle = document.getElementById('resetSubtitle');
+    const resetTitle = document.getElementById('resetTitle');
     const resetToggleNewPassword = document.getElementById('resetToggleNewPassword');
     const resetToggleConfirmPassword = document.getElementById('resetToggleConfirmPassword');
     let pendingRegistrationEmail = '';
@@ -909,6 +910,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 verifiedResetCode = code;
                 if (resetConfirmForm) resetConfirmForm.hidden = true;
                 if (resetPasswordForm) resetPasswordForm.hidden = false;
+                if (resetTitle) resetTitle.textContent = 'Reset Password';
                 if (resetSubtitle) resetSubtitle.textContent = 'Please choose a new password that is different from your old one.';
                 setResetAlert('Code verified. Set your new password.', 'success');
             })
@@ -953,6 +955,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (resetRequestForm) resetRequestForm.hidden = false;
         if (resetConfirmForm) resetConfirmForm.hidden = true;
         if (resetPasswordForm) resetPasswordForm.hidden = true;
+        if (resetTitle) resetTitle.textContent = 'Forgot Your Password?';
         if (resetSubtitle) resetSubtitle.textContent = 'Enter the email associated with your account to reset your password.';
         if (resetIdentifierInput) {
             resetIdentifierInput.value = '';
@@ -1047,6 +1050,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     resetIdentifier = identifier;
                     if (resetRequestForm) resetRequestForm.hidden = true;
                     if (resetConfirmForm) resetConfirmForm.hidden = false;
+                    if (resetTitle) resetTitle.textContent = 'Verification';
                     if (resetSubtitle) resetSubtitle.textContent = 'Thank you for verifying. Kindly check your email for the code.';
                     clearResetAlert();
                     startResetResendCooldown(60);
@@ -1069,6 +1073,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (resetConfirmForm) resetConfirmForm.hidden = true;
             if (resetRequestForm) resetRequestForm.hidden = false;
             if (resetPasswordForm) resetPasswordForm.hidden = true;
+            if (resetTitle) resetTitle.textContent = 'Forgot Your Password?';
             if (resetSubtitle) resetSubtitle.textContent = 'Enter the email associated with your account to reset your password.';
             if (resetResendInterval) {
                 clearInterval(resetResendInterval);
@@ -1082,6 +1087,7 @@ document.addEventListener('DOMContentLoaded', function() {
             clearResetAlert();
             if (resetPasswordForm) resetPasswordForm.hidden = true;
             if (resetConfirmForm) resetConfirmForm.hidden = false;
+            if (resetTitle) resetTitle.textContent = 'Verification';
             if (resetSubtitle) resetSubtitle.textContent = 'Thank you for verifying. Kindly check your email for the code.';
             startResetResendCooldown(Math.max(resetResendRemaining, 20));
         });
