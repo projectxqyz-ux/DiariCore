@@ -503,22 +503,6 @@ body {
     order: 1;
 }
 
-.login-container.signup-mode .signin-welcome {
-    display: none;
-}
-
-.login-container.signup-mode .signup-welcome {
-    display: block;
-}
-
-.login-container.signup-mode .signin-section {
-    display: none;
-}
-
-.login-container.signup-mode .signup-section {
-    display: block;
-}
-
 /* Keep sign-in on original sizing; only widen in sign-up mode */
 .login-container.signup-mode {
     max-width: 1280px;
