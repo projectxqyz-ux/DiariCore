@@ -111,8 +111,6 @@
                 <p id="resetSubtitle">Enter the email associated with your account to reset your password.</p>
             </div>
 
-            <div class="reset-alert" id="resetAlert" hidden></div>
-
             <form id="resetRequestForm" class="reset-form" autocomplete="off" novalidate>
                 <div class="input-wrapper" data-label="Email Address">
                     <input id="resetIdentifier" class="form-input" type="text" placeholder=" " autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" required>
@@ -133,6 +131,7 @@
                     <input class="reset-otp-digit" inputmode="numeric" maxlength="1" aria-label="Digit 5">
                     <input class="reset-otp-digit" inputmode="numeric" maxlength="1" aria-label="Digit 6">
                 </div>
+                <div class="reset-alert" id="resetAlert" hidden></div>
 
                 <button type="submit" class="reset-btn" id="verifyResetCodeBtn">Verify Code</button>
                 <div class="reset-meta">

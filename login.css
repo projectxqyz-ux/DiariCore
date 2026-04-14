@@ -1106,7 +1106,7 @@ body {
 
 .reset-alert {
     border-radius: 8px;
-    margin: 0 0 12px;
+    margin: 2px 0 8px;
     padding: 8px 10px;
     font-size: 13px;
     font-weight: 500;
@@ -1247,7 +1247,17 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    text-decoration: none;
+    text-decoration: underline;
+}
+
+.reset-link-btn.is-loading::before {
+    content: '';
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid rgba(111, 143, 127, 0.35);
+    border-top-color: var(--primary-color);
+    animation: resetBtnSpin 0.8s linear infinite;
 }
 
 .reset-link-btn:disabled {

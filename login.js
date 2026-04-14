@@ -986,7 +986,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (resetRequestForm) resetRequestForm.hidden = true;
                     if (resetConfirmForm) resetConfirmForm.hidden = false;
                     if (resetSubtitle) resetSubtitle.textContent = 'Thank you for verifying. Kindly check your email for the code.';
-                    setResetAlert(data.message || 'Reset code sent.', 'success');
+                    clearResetAlert();
                     startResetResendCooldown(60);
                     if (resetOtpDigits[0]) resetOtpDigits[0].focus();
                 })
@@ -1055,7 +1055,6 @@ document.addEventListener('DOMContentLoaded', function() {
             clearResetAlert();
             resendResetCodeBtn.disabled = true;
             resendResetCodeBtn.classList.add('is-loading');
-            resendResetCodeBtn.innerHTML = '<span class="reset-btn-spinner" aria-hidden="true"></span><span>Resending...</span>';
             fetch('/api/password/forgot', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -1066,7 +1065,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (!ok || !data.success) {
                         setResetAlert(data.error || 'Failed to resend reset code.');
                         resendResetCodeBtn.classList.remove('is-loading');
-                        resendResetCodeBtn.textContent = 'Resend OTP';
                         resendResetCodeBtn.disabled = false;
                         return;
                     }
@@ -1074,12 +1072,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     resetOtpInputs();
                     startResetResendCooldown(60);
                     resendResetCodeBtn.classList.remove('is-loading');
-                    resendResetCodeBtn.textContent = 'Resend OTP';
                 })
                 .catch(() => {
                     setResetAlert('Could not reach the server. Please try again.');
                     resendResetCodeBtn.classList.remove('is-loading');
-                    resendResetCodeBtn.textContent = 'Resend OTP';
                     resendResetCodeBtn.disabled = false;
                 });
         });
