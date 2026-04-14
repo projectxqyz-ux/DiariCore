@@ -10,6 +10,13 @@
 </head>
 <body>
     <div class="page">
+        <div class="top-banner" id="topBanner" hidden>
+            <div class="top-banner__content">
+                <span>Verification code sent to your email. Please check your inbox.</span>
+                <button class="top-banner__close" id="bannerCloseBtn" aria-label="Close">×</button>
+            </div>
+        </div>
+
         <div class="card">
             <div class="header">
                 <div class="icon">
@@ -30,11 +37,17 @@
                 <input class="digit" inputmode="numeric" maxlength="1" aria-label="Digit 6">
             </div>
 
-            <div class="error" id="otpError" aria-live="polite"></div>
+            <div class="alert alert-error" id="otpError" hidden aria-live="polite">
+                <div class="alert__left">
+                    <i class="bi bi-exclamation-circle"></i>
+                    <span class="alert__text"></span>
+                </div>
+                <button class="alert__close" id="otpErrorClose" aria-label="Close">×</button>
+            </div>
 
             <button class="btn" id="verifyBtn" disabled>
-                <i class="bi bi-check2-circle"></i>
-                Verify Code
+                <i class="bi bi-check2-circle" id="verifyBtnIcon"></i>
+                <span id="verifyBtnText">Verify Code</span>
             </button>
 
             <div class="meta">

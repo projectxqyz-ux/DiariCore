@@ -4,8 +4,17 @@ function getQueryParam(name) {
 }
 
 function setError(message) {
-    const el = document.getElementById('otpError');
-    if (el) el.textContent = message || '';
+    const box = document.getElementById('otpError');
+    if (!box) return;
+    const text = box.querySelector('.alert__text');
+    if (text) text.textContent = message || '';
+    if (!message) {
+        box.classList.remove('show');
+        box.hidden = true;
+        return;
+    }
+    box.hidden = false;
+    requestAnimationFrame(() => box.classList.add('show'));
 }
 
 function maskEmail(email) {
@@ -21,8 +30,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const emailDisplay = document.getElementById('emailDisplay');
     const inputs = Array.from(document.querySelectorAll('.digit'));
     const verifyBtn = document.getElementById('verifyBtn');
+    let verifyBtnText = document.getElementById('verifyBtnText');
+    let verifyBtnIcon = document.getElementById('verifyBtnIcon');
     const resendBtn = document.getElementById('resendBtn');
     const timerLabel = document.getElementById('timerLabel');
+    const errorClose = document.getElementById('otpErrorClose');
+    const banner = document.getElementById('topBanner');
+    const bannerClose = document.getElementById('bannerCloseBtn');
 
     if (!email) {
         setError('No pending registration found. Please sign up again.');
@@ -31,7 +45,16 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
+    // Top banner like reference project
+    if (banner) {
+        banner.hidden = false;
+        if (bannerClose) {
+            bannerClose.addEventListener('click', () => (banner.hidden = true));
+        }
+    }
+
     emailDisplay.textContent = maskEmail(email);
+    if (errorClose) errorClose.addEventListener('click', () => setError(''));
 
     let seconds = 10 * 60;
     const renderTimer = () => {
@@ -50,7 +73,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 1000);
 
     const code = () => inputs.map(i => i.value).join('');
-    const updateBtn = () => { verifyBtn.disabled = code().length !== 6; };
+    let autoVerifyTimeout = null;
+    const updateBtn = () => {
+        const filled = code().length === 6;
+        verifyBtn.disabled = !filled;
+        if (filled && !verifyBtn.disabled) {
+            if (autoVerifyTimeout) clearTimeout(autoVerifyTimeout);
+            autoVerifyTimeout = setTimeout(() => {
+                if (!verifyBtn.disabled) verifyBtn.click();
+            }, 350);
+        }
+    };
 
     const clearErrors = () => {
         setError('');
@@ -85,7 +118,13 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         verifyBtn.disabled = true;
-        verifyBtn.textContent = 'Verifying...';
+        verifyBtn.classList.add('is-loading');
+        // refresh references in case markup changed
+        verifyBtnText = document.getElementById('verifyBtnText');
+        verifyBtnIcon = document.getElementById('verifyBtnIcon');
+        if (verifyBtnIcon) verifyBtnIcon.outerHTML = '<span class="spinner" aria-hidden="true"></span>';
+        verifyBtnText = document.getElementById('verifyBtnText');
+        if (verifyBtnText) verifyBtnText.textContent = 'Verifying...';
 
         fetch('/api/register/verify', {
             method: 'POST',
@@ -98,7 +137,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     setError(data.error || 'Invalid verification code.');
                     inputs.forEach(i => i.classList.add('error'));
                     verifyBtn.disabled = false;
-                    verifyBtn.innerHTML = '<i class="bi bi-check2-circle"></i> Verify Code';
+                    verifyBtn.classList.remove('is-loading');
+                    verifyBtn.innerHTML = '<i class="bi bi-check2-circle" id="verifyBtnIcon"></i> <span id="verifyBtnText">Verify Code</span>';
                     return;
                 }
                 const u = data.user;
@@ -113,7 +153,8 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(() => {
                 setError('Could not verify right now. Please try again.');
                 verifyBtn.disabled = false;
-                verifyBtn.innerHTML = '<i class="bi bi-check2-circle"></i> Verify Code';
+                verifyBtn.classList.remove('is-loading');
+                verifyBtn.innerHTML = '<i class="bi bi-check2-circle" id="verifyBtnIcon"></i> <span id="verifyBtnText">Verify Code</span>';
             });
     });
 
