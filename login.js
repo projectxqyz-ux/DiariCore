@@ -33,6 +33,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const googleSignUpBtn = document.getElementById('googleSignUpBtn');
     const PANEL_TRANSITION_MS = 300;
     let isPanelTransitioning = false;
+
+    function setWelcomeVisibility(element, visible) {
+        if (visible) {
+            element.classList.remove('hidden');
+            element.style.display = '';
+        } else {
+            element.classList.add('hidden');
+            element.style.opacity = '0';
+            element.style.display = 'none';
+        }
+    }
     
     function switchPanel(toSignUp) {
         if (isPanelTransitioning) return;
@@ -43,6 +54,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const hideWelcome = toSignUp ? signinWelcome : signupWelcome;
         const showWelcome = toSignUp ? signupWelcome : signinWelcome;
 
+        // Hard-hide target we do NOT want visible to prevent text flash during mode change.
+        setWelcomeVisibility(hideWelcome, false);
         loginContainer.classList.toggle('signup-mode', toSignUp);
 
         // Fade out current pane and text first.
@@ -51,10 +64,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
         setTimeout(() => {
             hideSection.classList.add('hidden');
-            hideWelcome.classList.add('hidden');
+            setWelcomeVisibility(hideWelcome, false);
 
             showSection.classList.remove('hidden');
-            showWelcome.classList.remove('hidden');
+            setWelcomeVisibility(showWelcome, true);
             showSection.style.opacity = '0';
             showWelcome.style.opacity = '0';
 
