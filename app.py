@@ -189,10 +189,10 @@ def api_register_verify():
         expires_at = datetime.now(timezone.utc) - timedelta(seconds=1)
 
     if datetime.now(timezone.utc) > expires_at:
-        return jsonify({"success": False, "error": "Verification code expired. Please resend a new code."}), 400
+        return jsonify({"success": False, "error": "Invalid or expired verification code. Please try again."}), 400
 
     if pending.get("otp_code") != otp_code:
-        return jsonify({"success": False, "error": "Invalid verification code."}), 400
+        return jsonify({"success": False, "error": "Invalid or expired verification code. Please try again."}), 400
 
     created, payload = db.create_user_from_pending(pending)
     if not created:

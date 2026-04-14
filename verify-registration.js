@@ -134,8 +134,10 @@ document.addEventListener('DOMContentLoaded', () => {
             .then((res) => res.json().then((data) => ({ ok: res.ok, data })))
             .then(({ ok, data }) => {
                 if (!ok || !data.success) {
-                    setError(data.error || 'Invalid verification code.');
+                    setError('Invalid or expired verification code. Please try again.');
+                    inputs.forEach(i => { i.value = ''; });
                     inputs.forEach(i => i.classList.add('error'));
+                    inputs[0]?.focus();
                     verifyBtn.disabled = false;
                     verifyBtn.classList.remove('is-loading');
                     verifyBtn.innerHTML = '<i class="bi bi-check2-circle" id="verifyBtnIcon"></i> <span id="verifyBtnText">Verify Code</span>';
