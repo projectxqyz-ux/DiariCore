@@ -23,8 +23,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Password toggles
     const togglePassword = document.getElementById('togglePassword');
     const toggleSignUpPassword = document.getElementById('toggleSignUpPassword');
+    const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
     const passwordInput = document.getElementById('password');
     const signUpPasswordInput = document.getElementById('signUpPassword');
+    const confirmPasswordInput = document.getElementById('confirmPassword');
     
     // Google buttons
     const googleSignInBtn = document.getElementById('googleSignInBtn');
@@ -119,6 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     setupPasswordToggle(togglePassword, passwordInput);
     setupPasswordToggle(toggleSignUpPassword, signUpPasswordInput);
+    setupPasswordToggle(toggleConfirmPassword, confirmPasswordInput);
     
     // Email validation
     function isValidEmail(email) {
@@ -221,21 +224,64 @@ document.addEventListener('DOMContentLoaded', function() {
         signUpForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const fullName = document.getElementById('fullName').value.trim();
+            const nickname = document.getElementById('nickname').value.trim();
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const gender = document.getElementById('gender').value;
+            const birthday = document.getElementById('birthday').value;
             const email = document.getElementById('signUpEmail').value.trim();
             const password = document.getElementById('signUpPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
             
             let isValid = true;
             
-            // Validate full name
-            if (!fullName) {
-                showError(document.getElementById('fullName'), 'Name is required');
+            // Validate nickname
+            if (!nickname) {
+                showError(document.getElementById('nickname'), 'Nickname is required');
                 isValid = false;
-            } else if (fullName.length < 2) {
-                showError(document.getElementById('fullName'), 'Name must be at least 2 characters');
+            } else if (nickname.length < 2) {
+                showError(document.getElementById('nickname'), 'Nickname must be at least 2 characters');
                 isValid = false;
             } else {
-                showSuccess(document.getElementById('fullName'));
+                showSuccess(document.getElementById('nickname'));
+            }
+
+            // Validate first name
+            if (!firstName) {
+                showError(document.getElementById('firstName'), 'First name is required');
+                isValid = false;
+            } else if (firstName.length < 2) {
+                showError(document.getElementById('firstName'), 'First name must be at least 2 characters');
+                isValid = false;
+            } else {
+                showSuccess(document.getElementById('firstName'));
+            }
+
+            // Validate last name
+            if (!lastName) {
+                showError(document.getElementById('lastName'), 'Last name is required');
+                isValid = false;
+            } else if (lastName.length < 2) {
+                showError(document.getElementById('lastName'), 'Last name must be at least 2 characters');
+                isValid = false;
+            } else {
+                showSuccess(document.getElementById('lastName'));
+            }
+
+            // Validate gender
+            if (!gender) {
+                showError(document.getElementById('gender'), 'Gender is required');
+                isValid = false;
+            } else {
+                showSuccess(document.getElementById('gender'));
+            }
+
+            // Validate birthday
+            if (!birthday) {
+                showError(document.getElementById('birthday'), 'Birthday is required');
+                isValid = false;
+            } else {
+                showSuccess(document.getElementById('birthday'));
             }
             
             // Validate email
@@ -259,6 +305,17 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 showSuccess(document.getElementById('signUpPassword'));
             }
+
+            // Validate confirm password
+            if (!confirmPassword) {
+                showError(document.getElementById('confirmPassword'), 'Please confirm your password');
+                isValid = false;
+            } else if (confirmPassword !== password) {
+                showError(document.getElementById('confirmPassword'), 'Passwords do not match');
+                isValid = false;
+            } else {
+                showSuccess(document.getElementById('confirmPassword'));
+            }
             
             if (isValid) {
                 const submitBtn = signUpForm.querySelector('.btn-signin');
@@ -267,8 +324,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 setTimeout(() => {
                     const users = JSON.parse(localStorage.getItem('diariCoreUsers') || '[]');
+                    const fullName = `${firstName} ${lastName}`.trim();
                     users.push({
+                        nickname: nickname,
+                        firstName: firstName,
+                        lastName: lastName,
                         fullName: fullName,
+                        gender: gender,
+                        birthday: birthday,
                         email: email,
                         password: password,
                         createdAt: new Date().toISOString()
@@ -276,8 +339,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     localStorage.setItem('diariCoreUsers', JSON.stringify(users));
                     
                     localStorage.setItem('diariCoreUser', JSON.stringify({
+                        nickname: nickname,
+                        firstName: firstName,
+                        lastName: lastName,
                         email: email,
                         fullName: fullName,
+                        gender: gender,
+                        birthday: birthday,
                         isLoggedIn: true,
                         loginTime: new Date().toISOString()
                     }));
