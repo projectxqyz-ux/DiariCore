@@ -122,7 +122,7 @@ body {
 }
 
 .form-group {
-    margin-bottom: 1.25rem;
+    margin-bottom: 0.72rem;
 }
 
 .form-row {
@@ -132,7 +132,7 @@ body {
 }
 
 .form-row .form-group {
-    margin-bottom: 1.1rem;
+    margin-bottom: 0.65rem;
 }
 
 .input-wrapper {
@@ -529,16 +529,16 @@ body {
 .custom-error {
     background-color: #dc3545;
     color: white;
-    padding: 8px 12px;
+    padding: 6px 10px;
     border-radius: 6px;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500;
-    margin-top: 6px;
+    margin-top: 4px;
     line-height: 1.25;
     opacity: 0;
     max-height: 0;
     transform: translateY(-4px);
-    transition: opacity 0.22s ease, transform 0.22s ease, max-height 0.22s ease, margin-top 0.22s ease;
+    transition: opacity 0.16s ease, transform 0.16s ease, max-height 0.16s ease, margin-top 0.16s ease;
     pointer-events: none;
     overflow: hidden;
     margin-top: 0;
@@ -546,9 +546,9 @@ body {
 
 .custom-error.show {
     opacity: 1;
-    max-height: 80px;
+    max-height: 44px;
     transform: translateY(0);
-    margin-top: 6px;
+    margin-top: 4px;
 }
 
 /* Success States */
