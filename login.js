@@ -909,7 +909,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 verifiedResetCode = code;
                 if (resetConfirmForm) resetConfirmForm.hidden = true;
-                if (resetPasswordForm) resetPasswordForm.hidden = false;
+                if (resetPasswordForm) showResetStep(resetPasswordForm);
                 if (resetTitle) resetTitle.textContent = 'Reset Password';
                 if (resetSubtitle) resetSubtitle.textContent = 'Please choose a new password that is different from your old one.';
                 setResetAlert('Code verified. Set your new password.', 'success');
@@ -946,13 +946,21 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 1000);
     }
 
+    function showResetStep(form) {
+        if (!form) return;
+        form.hidden = false;
+        form.classList.remove('is-animating-in');
+        void form.offsetWidth;
+        form.classList.add('is-animating-in');
+    }
+
     function openResetModal() {
         if (!resetModal) return;
         resetModal.hidden = false;
         resetIdentifier = '';
         verifiedResetCode = '';
         clearResetAlert();
-        if (resetRequestForm) resetRequestForm.hidden = false;
+        if (resetRequestForm) showResetStep(resetRequestForm);
         if (resetConfirmForm) resetConfirmForm.hidden = true;
         if (resetPasswordForm) resetPasswordForm.hidden = true;
         if (resetTitle) resetTitle.textContent = 'Forgot Your Password?';
@@ -1049,7 +1057,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                     resetIdentifier = identifier;
                     if (resetRequestForm) resetRequestForm.hidden = true;
-                    if (resetConfirmForm) resetConfirmForm.hidden = false;
+                    if (resetConfirmForm) showResetStep(resetConfirmForm);
                     if (resetTitle) resetTitle.textContent = 'Verification';
                     if (resetSubtitle) resetSubtitle.textContent = 'Thank you for verifying. Kindly check your email for the code.';
                     clearResetAlert();
@@ -1071,7 +1079,7 @@ document.addEventListener('DOMContentLoaded', function() {
         resetVerifyBackBtn.addEventListener('click', function () {
             clearResetAlert();
             if (resetConfirmForm) resetConfirmForm.hidden = true;
-            if (resetRequestForm) resetRequestForm.hidden = false;
+            if (resetRequestForm) showResetStep(resetRequestForm);
             if (resetPasswordForm) resetPasswordForm.hidden = true;
             if (resetTitle) resetTitle.textContent = 'Forgot Your Password?';
             if (resetSubtitle) resetSubtitle.textContent = 'Enter the email associated with your account to reset your password.';
@@ -1086,7 +1094,7 @@ document.addEventListener('DOMContentLoaded', function() {
         resetPasswordBackBtn.addEventListener('click', function () {
             clearResetAlert();
             if (resetPasswordForm) resetPasswordForm.hidden = true;
-            if (resetConfirmForm) resetConfirmForm.hidden = false;
+            if (resetConfirmForm) showResetStep(resetConfirmForm);
             if (resetTitle) resetTitle.textContent = 'Verification';
             if (resetSubtitle) resetSubtitle.textContent = 'Thank you for verifying. Kindly check your email for the code.';
             startResetResendCooldown(Math.max(resetResendRemaining, 20));
