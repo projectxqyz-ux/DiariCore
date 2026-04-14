@@ -1041,6 +1041,7 @@ body {
     inset: 0;
     background: rgba(35, 44, 40, 0.45);
     backdrop-filter: blur(2px);
+    animation: resetBackdropIn 0.24s ease forwards;
 }
 
 .reset-dialog {
@@ -1051,7 +1052,7 @@ body {
     border: 1px solid var(--border-color);
     box-shadow: 0 24px 60px rgba(0, 0, 0, 0.2);
     padding: 22px 22px 20px;
-    animation: resetDialogIn 0.26s ease;
+    animation: resetDialogPop 0.34s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .reset-close {
@@ -1066,8 +1067,14 @@ body {
 }
 
 .reset-header {
-    text-align: center;
+    text-align: left;
     margin-bottom: 14px;
+}
+
+.reset-hero {
+    display: flex;
+    justify-content: center;
+    margin-top: 8px;
 }
 
 .reset-icon-wrap {
@@ -1082,16 +1089,17 @@ body {
 }
 
 .reset-header h3 {
-    margin: 0 0 4px;
+    margin: 0 0 2px;
     color: var(--primary-color);
     font-size: 22px;
     font-weight: 700;
 }
 
 .reset-header p {
-    margin: 0;
+    margin: 10px 0 0;
     color: var(--text-secondary);
     font-size: 13px;
+    text-align: center;
 }
 
 .reset-alert {
@@ -1163,12 +1171,25 @@ body {
     border: 1px solid var(--border-color);
 }
 
-@keyframes resetDialogIn {
+@keyframes resetBackdropIn {
     from {
         opacity: 0;
-        transform: translateY(14px) scale(0.98);
     }
     to {
+        opacity: 1;
+    }
+}
+
+@keyframes resetDialogPop {
+    0% {
+        opacity: 0;
+        transform: translateY(22px) scale(0.92);
+    }
+    70% {
+        opacity: 1;
+        transform: translateY(-2px) scale(1.01);
+    }
+    100% {
         opacity: 1;
         transform: translateY(0) scale(1);
     }
