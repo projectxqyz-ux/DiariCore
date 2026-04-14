@@ -444,7 +444,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     .then((res) => res.json().then((data) => ({ ok: res.ok, data })))
                     .then(({ ok, data }) => {
                         if (!ok || !data.success) {
-                            showNotification(data.error || 'Sign in failed', 'error');
+                            const usernameField = document.getElementById('email');
+                            const passwordField = document.getElementById('password');
+                            const loginError = data.error || 'Invalid username or password.';
+                            if (usernameField) {
+                                usernameField.classList.add('error');
+                                usernameField.classList.remove('success');
+                            }
+                            if (passwordField) {
+                                showError(passwordField, loginError);
+                            }
                             submitBtn.textContent = 'SIGN IN';
                             submitBtn.disabled = false;
                             return;
