@@ -1248,7 +1248,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then((res) => res.json().then((data) => ({ ok: res.ok, data })))
                 .then(({ ok, data }) => {
                     if (!ok || !data.success) {
-                        setResetAlert(data.error || 'Failed to reset password.');
+                        const errorMessage = data.error || 'Failed to reset password.';
+                        if (errorMessage === 'Please enter a password different from your previous one.') {
+                            showError(resetConfirmPasswordInput, errorMessage);
+                        } else {
+                            setResetAlert(errorMessage);
+                        }
                         return;
                     }
                     setResetAlert(data.message || 'Password updated successfully.', 'success');

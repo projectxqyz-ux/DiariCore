@@ -10,6 +10,7 @@ import urllib.request
 from datetime import date, datetime, timedelta, timezone
 
 from flask import Flask, jsonify, request, send_from_directory, abort, session
+from werkzeug.security import check_password_hash
 
 import db
 
@@ -344,6 +345,9 @@ def api_password_reset():
     user = db.get_user_by_email(email)
     if not user:
         return jsonify({"success": False, "error": "Invalid reset request."}), 400
+
+    if check_password_hash(user.get("password_hash") or "", new_password):
+        return jsonify({"success": False, "error": "Please enter a password different from your previous one."}), 400
 
     reset_row = db.get_password_reset(user["email"])
     if not reset_row:
