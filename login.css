@@ -1216,7 +1216,7 @@ body {
 }
 
 .reset-form.is-animating-in {
-    animation: resetStepIn 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+    animation: resetStepIn 0.34s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .reset-label {
@@ -1403,7 +1403,7 @@ body {
 @keyframes resetStepIn {
     0% {
         opacity: 0;
-        transform: translateY(10px) scale(0.985);
+        transform: translateY(14px) scale(0.97);
     }
     100% {
         opacity: 1;

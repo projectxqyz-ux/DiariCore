@@ -950,8 +950,12 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!form) return;
         form.hidden = false;
         form.classList.remove('is-animating-in');
-        void form.offsetWidth;
-        form.classList.add('is-animating-in');
+        requestAnimationFrame(() => {
+            form.classList.add('is-animating-in');
+        });
+        form.addEventListener('animationend', () => {
+            form.classList.remove('is-animating-in');
+        }, { once: true });
     }
 
     function openResetModal() {
