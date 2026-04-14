@@ -872,15 +872,30 @@ document.addEventListener('DOMContentLoaded', function() {
     if (resetBackdrop) resetBackdrop.addEventListener('click', closeResetModal);
 
     if (resetRequestForm) {
+        const validateResetIdentifierField = () => {
+            if (!resetIdentifierInput) return false;
+            const value = (resetIdentifierInput.value || '').trim();
+            if (!value) {
+                showError(resetIdentifierInput, 'Email address is required.');
+                return false;
+            }
+            if (!isValidEmail(value)) {
+                showError(resetIdentifierInput, 'Please enter a valid email.');
+                return false;
+            }
+            clearValidation(resetIdentifierInput);
+            return true;
+        };
+
+        if (resetIdentifierInput) {
+            resetIdentifierInput.addEventListener('input', validateResetIdentifierField);
+            resetIdentifierInput.addEventListener('blur', validateResetIdentifierField);
+        }
+
         resetRequestForm.addEventListener('submit', function (e) {
             e.preventDefault();
             const identifier = (resetIdentifierInput?.value || '').trim();
-            if (!identifier) {
-                setResetAlert('Email address is required.');
-                return;
-            }
-            if (!isValidEmail(identifier)) {
-                setResetAlert('Please enter a valid email.');
+            if (!validateResetIdentifierField()) {
                 return;
             }
             clearResetAlert();
@@ -896,8 +911,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then((res) => res.json().then((data) => ({ ok: res.ok, data })))
                 .then(({ ok, data }) => {
                     if (!ok || !data.success) {
-                        setResetAlert(data.error || 'Failed to send reset code.');
+                        if (resetIdentifierInput) {
+                            showError(
+                                resetIdentifierInput,
+                                data.error || 'This email doesn’t appear to be associated with any account yet.'
+                            );
+                        } else {
+                            setResetAlert(data.error || 'Failed to send reset code.');
+                        }
                         return;
+                    }
+                    if (resetIdentifierInput) {
+                        clearValidation(resetIdentifierInput);
                     }
                     resetIdentifier = identifier;
                     if (resetRequestForm) resetRequestForm.hidden = true;
