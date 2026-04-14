@@ -137,11 +137,11 @@ body {
 
 /* Keep tighter spacing only on sign-up form fields */
 .signup-section .form-group {
-    margin-bottom: 0.72rem;
+    margin-bottom: 0.5rem;
 }
 
 .signup-section .form-row .form-group {
-    margin-bottom: 0.65rem;
+    margin-bottom: 0.45rem;
 }
 
 .input-wrapper {
@@ -185,15 +185,17 @@ body {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    height: 46px;
+    height: 48px;
     line-height: normal;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 .input-wrapper.has-content .form-select-input,
 .input-wrapper:focus-within .form-select-input {
     /* Keep selected value readable while floating label is active */
-    padding-top: 20px;
-    padding-bottom: 4px;
+    padding-top: 18px;
+    padding-bottom: 2px;
     line-height: normal;
 }
 
@@ -230,8 +232,8 @@ body {
 }
 
 /* Floating Label Animation */
-.input-wrapper.has-content .form-input,
-.input-wrapper:focus-within .form-input {
+.input-wrapper.has-content .form-input:not(.form-select-input),
+.input-wrapper:focus-within .form-input:not(.form-select-input) {
     padding-top: 14px;
     padding-bottom: 14px;
     height: 44px;
