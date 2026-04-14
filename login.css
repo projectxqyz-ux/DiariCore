@@ -1031,41 +1031,42 @@ body {
 
 .auth-toast {
     position: fixed;
-    top: 20px;
-    right: 20px;
-    width: min(420px, calc(100vw - 28px));
-    padding: 16px 16px 14px;
-    border-radius: 14px;
-    background: linear-gradient(180deg, #ffffff 0%, #f6fbf8 100%);
-    border: 1px solid #d7e7de;
-    box-shadow: 0 16px 38px rgba(25, 35, 30, 0.2);
+    top: 22px;
+    right: 22px;
+    width: min(460px, calc(100vw - 28px));
+    padding: 18px 18px 16px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #f5fff9 0%, #edf9f2 48%, #ffffff 100%);
+    border: 2px solid #b9e2c9;
+    box-shadow: 0 18px 42px rgba(19, 52, 34, 0.24);
     display: grid;
     grid-template-columns: auto 1fr auto;
     align-items: start;
-    gap: 12px;
+    gap: 14px;
     z-index: 12000;
-    transform: translateY(-8px);
+    transform: translateY(-10px) scale(0.98);
     opacity: 0;
     pointer-events: auto;
-    transition: transform 0.24s ease, opacity 0.24s ease;
+    transition: transform 0.26s ease, opacity 0.26s ease;
 }
 
 .auth-toast.show {
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
     opacity: 1;
 }
 
 .auth-toast__icon {
-    width: 34px;
-    height: 34px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #e2f7ea 0%, #c9efd8 100%);
-    color: #168a4a;
+    background: linear-gradient(135deg, #33b36b 0%, #1f9d57 100%);
+    color: #ffffff;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 16px;
-    flex: 0 0 34px;
+    font-size: 20px;
+    flex: 0 0 42px;
+    box-shadow: 0 6px 16px rgba(31, 157, 87, 0.35);
 }
 
 .auth-toast__body {
@@ -1073,27 +1074,38 @@ body {
 }
 
 .auth-toast__title {
-    font-size: 15px;
+    font-size: 17px;
     font-weight: 700;
-    color: #244136;
+    color: #123829;
     line-height: 1.2;
 }
 
 .auth-toast__text {
-    margin-top: 4px;
-    font-size: 13px;
-    color: #5f7469;
-    line-height: 1.35;
+    margin-top: 5px;
+    font-size: 14px;
+    color: #365d4a;
+    line-height: 1.4;
 }
 
 .auth-toast__close {
     border: none;
     background: transparent;
-    color: #7a8f84;
-    font-size: 16px;
+    color: #4f7a64;
+    font-size: 18px;
     line-height: 1;
     cursor: pointer;
-    padding: 2px;
+    padding: 1px;
+}
+
+.auth-toast::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 4px;
+    border-radius: 0 0 14px 14px;
+    background: linear-gradient(90deg, #36b96e 0%, #7fd3a3 100%);
 }
 
 .reset-modal[hidden] {
