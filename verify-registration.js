@@ -6,6 +6,30 @@ function getQueryParam(name) {
 function setError(message) {
     const box = document.getElementById('otpError');
     if (!box) return;
+    const successBox = document.getElementById('otpSuccess');
+    if (successBox) {
+        successBox.classList.remove('show');
+        successBox.hidden = true;
+    }
+    const text = box.querySelector('.alert__text');
+    if (text) text.textContent = message || '';
+    if (!message) {
+        box.classList.remove('show');
+        box.hidden = true;
+        return;
+    }
+    box.hidden = false;
+    requestAnimationFrame(() => box.classList.add('show'));
+}
+
+function setSuccess(message) {
+    const box = document.getElementById('otpSuccess');
+    if (!box) return;
+    const errorBox = document.getElementById('otpError');
+    if (errorBox) {
+        errorBox.classList.remove('show');
+        errorBox.hidden = true;
+    }
     const text = box.querySelector('.alert__text');
     if (text) text.textContent = message || '';
     if (!message) {
@@ -35,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const resendBtn = document.getElementById('resendBtn');
     const timerLabel = document.getElementById('timerLabel');
     const errorClose = document.getElementById('otpErrorClose');
+    const successClose = document.getElementById('otpSuccessClose');
     const banner = document.getElementById('topBanner');
     const bannerClose = document.getElementById('bannerCloseBtn');
 
@@ -55,8 +80,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     emailDisplay.textContent = maskEmail(email);
     if (errorClose) errorClose.addEventListener('click', () => setError(''));
+    if (successClose) successClose.addEventListener('click', () => setSuccess(''));
 
     let seconds = 10 * 60;
+    let resendCooldown = 0;
+    let resendCooldownInterval = null;
     const renderTimer = () => {
         const m = Math.floor(seconds / 60);
         const s = seconds % 60;
@@ -87,7 +115,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const clearErrors = () => {
         setError('');
+        setSuccess('');
         inputs.forEach(i => i.classList.remove('error'));
+    };
+
+    const startResendCooldown = () => {
+        resendCooldown = 60;
+        resendBtn.disabled = true;
+        if (resendCooldownInterval) clearInterval(resendCooldownInterval);
+        const renderCooldown = () => {
+            const m = Math.floor(resendCooldown / 60);
+            const s = resendCooldown % 60;
+            resendBtn.textContent = `Resend Code (${m}:${String(s).padStart(2, '0')})`;
+        };
+        renderCooldown();
+        resendCooldownInterval = setInterval(() => {
+            resendCooldown -= 1;
+            if (resendCooldown <= 0) {
+                clearInterval(resendCooldownInterval);
+                resendBtn.disabled = false;
+                resendBtn.textContent = 'Resend Code';
+                return;
+            }
+            renderCooldown();
+        }, 1000);
     };
 
     inputs.forEach((input, idx) => {
@@ -175,6 +226,8 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(({ ok, data }) => {
                 if (!ok || !data.success) {
                     setError(data.error || 'Failed to resend code.');
+                    resendBtn.disabled = false;
+                    resendBtn.textContent = 'Resend Code';
                     return;
                 }
                 seconds = 10 * 60;
@@ -182,13 +235,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 inputs.forEach(i => i.value = '');
                 inputs[0].focus();
                 updateBtn();
+                setSuccess('Verification code has been resent to your email.');
+                startResendCooldown();
             })
-            .catch(() => setError('Failed to resend code.'))
-            .finally(() => {
-                setTimeout(() => {
-                    resendBtn.disabled = false;
-                    resendBtn.textContent = 'Resend Code';
-                }, 900);
+            .catch(() => {
+                setError('Failed to resend code.');
+                resendBtn.disabled = false;
+                resendBtn.textContent = 'Resend Code';
             });
     });
 
