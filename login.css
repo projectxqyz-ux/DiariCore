@@ -1229,8 +1229,16 @@ body {
 }
 
 .reset-form .custom-error.show {
-    margin-top: 4px;
-    margin-bottom: 4px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+#resetPasswordForm {
+    gap: 0;
+}
+
+#resetPasswordForm #resetNewPassword-error.show {
+    margin-bottom: 6px;
 }
 
 .reset-input:focus {
