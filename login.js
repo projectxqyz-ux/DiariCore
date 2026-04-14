@@ -851,7 +851,7 @@ document.addEventListener('DOMContentLoaded', function() {
         clearResetAlert();
         if (resetRequestForm) resetRequestForm.hidden = false;
         if (resetConfirmForm) resetConfirmForm.hidden = true;
-        if (resetSubtitle) resetSubtitle.textContent = 'Enter your username or email to receive a reset code.';
+        if (resetSubtitle) resetSubtitle.textContent = 'Enter the email associated with your account to reset your password.';
         if (resetIdentifierInput) {
             resetIdentifierInput.value = '';
             resetIdentifierInput.focus();
@@ -876,7 +876,11 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             const identifier = (resetIdentifierInput?.value || '').trim();
             if (!identifier) {
-                setResetAlert('Username or email is required.');
+                setResetAlert('Email address is required.');
+                return;
+            }
+            if (!isValidEmail(identifier)) {
+                setResetAlert('Please enter a valid email address.');
                 return;
             }
             clearResetAlert();
@@ -917,7 +921,7 @@ document.addEventListener('DOMContentLoaded', function() {
             clearResetAlert();
             if (resetConfirmForm) resetConfirmForm.hidden = true;
             if (resetRequestForm) resetRequestForm.hidden = false;
-            if (resetSubtitle) resetSubtitle.textContent = 'Enter your username or email to receive a reset code.';
+            if (resetSubtitle) resetSubtitle.textContent = 'Enter the email associated with your account to reset your password.';
         });
     }
 
@@ -984,7 +988,7 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             const username = document.getElementById('email').value.trim();
             openResetModal();
-            if (username && resetIdentifierInput) {
+            if (username && resetIdentifierInput && isValidEmail(username)) {
                 resetIdentifierInput.value = username;
             }
         });

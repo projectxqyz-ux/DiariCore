@@ -106,14 +106,17 @@
                     <i class="bi bi-key"></i>
                 </div>
                 <h3 id="resetTitle">Recover Your Account</h3>
-                <p id="resetSubtitle">Enter your username or email to receive a reset code.</p>
+                <p id="resetSubtitle">Enter the email associated with your account to reset your password.</p>
             </div>
 
             <div class="reset-alert" id="resetAlert" hidden></div>
 
             <form id="resetRequestForm" class="reset-form" autocomplete="off">
-                <label class="reset-label" for="resetIdentifier">Username or Email</label>
-                <input id="resetIdentifier" class="reset-input" type="text" autocomplete="off" required>
+                <div class="input-wrapper" data-label="Email Address">
+                    <input id="resetIdentifier" class="form-input" type="email" placeholder=" " autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" required>
+                    <span class="floating-label">Email Address</span>
+                    <i class="bi bi-envelope input-icon"></i>
+                </div>
                 <button type="submit" class="reset-btn" id="sendResetCodeBtn">Send Reset Code</button>
             </form>
 

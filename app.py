@@ -304,13 +304,15 @@ def api_login():
 @app.route("/api/password/forgot", methods=["POST"])
 def api_password_forgot():
     data = request.get_json(silent=True) or {}
-    identifier = (data.get("identifier") or "").strip()
-    if not identifier:
-        return jsonify({"success": False, "error": "Username or email is required."}), 400
+    email = (data.get("identifier") or "").strip().lower()
+    if not email:
+        return jsonify({"success": False, "error": "Email address is required."}), 400
+    if "@" not in email or "." not in email:
+        return jsonify({"success": False, "error": "Please enter a valid email address."}), 400
 
-    user = db.get_user_by_email(identifier) if "@" in identifier else db.get_user_by_username(identifier)
+    user = db.get_user_by_email(email)
     if not user:
-        return jsonify({"success": True, "message": "If an account exists, a reset code has been sent."}), 200
+        return jsonify({"success": False, "error": "No account found for this email address."}), 404
 
     reset_code = _generate_otp()
     expires_at = datetime.now(timezone.utc) + timedelta(minutes=10)
@@ -326,18 +328,20 @@ def api_password_forgot():
 @app.route("/api/password/reset", methods=["POST"])
 def api_password_reset():
     data = request.get_json(silent=True) or {}
-    identifier = (data.get("identifier") or "").strip()
+    email = (data.get("identifier") or "").strip().lower()
     reset_code = (data.get("code") or "").strip()
     new_password = data.get("newPassword") or ""
 
-    if not identifier:
-        return jsonify({"success": False, "error": "Username or email is required."}), 400
+    if not email:
+        return jsonify({"success": False, "error": "Email address is required."}), 400
+    if "@" not in email or "." not in email:
+        return jsonify({"success": False, "error": "Please enter a valid email address."}), 400
     if not reset_code:
         return jsonify({"success": False, "error": "Reset code is required."}), 400
     if len(new_password) < 8:
         return jsonify({"success": False, "error": "Password must be at least 8 characters."}), 400
 
-    user = db.get_user_by_email(identifier) if "@" in identifier else db.get_user_by_username(identifier)
+    user = db.get_user_by_email(email)
     if not user:
         return jsonify({"success": False, "error": "Invalid reset request."}), 400
 

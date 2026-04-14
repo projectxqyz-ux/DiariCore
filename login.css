@@ -1116,7 +1116,7 @@ body {
 
 .reset-form {
     display: grid;
-    gap: 8px;
+    gap: 10px;
 }
 
 .reset-label {
@@ -1134,6 +1134,10 @@ body {
     font-size: 14px;
     color: var(--text-dark);
     outline: none;
+}
+
+.reset-form .input-wrapper {
+    margin-bottom: 2px;
 }
 
 .reset-input:focus {
