@@ -959,8 +959,14 @@ document.addEventListener('DOMContentLoaded', function() {
             resetIdentifierInput.focus();
         }
         resetOtpInputs();
-        if (resetNewPasswordInput) resetNewPasswordInput.value = '';
-        if (resetConfirmPasswordInput) resetConfirmPasswordInput.value = '';
+        if (resetNewPasswordInput) {
+            resetNewPasswordInput.value = '';
+            clearValidation(resetNewPasswordInput);
+        }
+        if (resetConfirmPasswordInput) {
+            resetConfirmPasswordInput.value = '';
+            clearValidation(resetConfirmPasswordInput);
+        }
         if (resetResendInterval) {
             clearInterval(resetResendInterval);
             resetResendInterval = null;
@@ -1168,23 +1174,62 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     if (resetPasswordForm) {
+        const validateResetPasswordField = (fieldId) => {
+            if (!resetPasswordForm || resetPasswordForm.hidden) return true;
+            const newPassword = resetNewPasswordInput?.value || '';
+            const confirmPassword = resetConfirmPasswordInput?.value || '';
+
+            if (fieldId === 'resetNewPassword') {
+                if (!newPassword) {
+                    showError(resetNewPasswordInput, 'New password is required.');
+                    return false;
+                }
+                if (newPassword.length < 8) {
+                    showError(resetNewPasswordInput, 'Password must be at least 8 characters.');
+                    return false;
+                }
+                showSuccess(resetNewPasswordInput);
+                if (confirmPassword) validateResetPasswordField('resetConfirmPassword');
+                return true;
+            }
+
+            if (fieldId === 'resetConfirmPassword') {
+                if (!confirmPassword) {
+                    showError(resetConfirmPasswordInput, 'Confirming new password is required.');
+                    return false;
+                }
+                if (confirmPassword.length < 8) {
+                    showError(resetConfirmPasswordInput, 'Password must be at least 8 characters.');
+                    return false;
+                }
+                if (confirmPassword !== newPassword) {
+                    showError(resetConfirmPasswordInput, 'Passwords do not match.');
+                    return false;
+                }
+                showSuccess(resetConfirmPasswordInput);
+                return true;
+            }
+
+            return true;
+        };
+
+        if (resetNewPasswordInput) {
+            resetNewPasswordInput.addEventListener('input', () => validateResetPasswordField('resetNewPassword'));
+            resetNewPasswordInput.addEventListener('blur', () => validateResetPasswordField('resetNewPassword'));
+        }
+        if (resetConfirmPasswordInput) {
+            resetConfirmPasswordInput.addEventListener('input', () => validateResetPasswordField('resetConfirmPassword'));
+            resetConfirmPasswordInput.addEventListener('blur', () => validateResetPasswordField('resetConfirmPassword'));
+        }
+
         resetPasswordForm.addEventListener('submit', function (e) {
             e.preventDefault();
             const newPassword = resetNewPasswordInput?.value || '';
             const confirmPassword = resetConfirmPasswordInput?.value || '';
 
-            if (!newPassword) {
-                setResetAlert('New password is required.');
-                return;
-            }
-            if (newPassword.length < 8) {
-                setResetAlert('Password must be at least 8 characters.');
-                return;
-            }
-            if (confirmPassword !== newPassword) {
-                setResetAlert('Passwords do not match.');
-                return;
-            }
+            const isNewPasswordValid = validateResetPasswordField('resetNewPassword');
+            const isConfirmPasswordValid = validateResetPasswordField('resetConfirmPassword');
+            if (!isNewPasswordValid || !isConfirmPasswordValid) return;
 
             clearResetAlert();
             if (confirmResetBtn) {

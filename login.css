@@ -1161,6 +1161,10 @@ body {
     margin-bottom: 0;
 }
 
+.reset-form#resetPasswordForm .input-wrapper + .custom-error + .input-wrapper {
+    margin-top: 8px;
+}
+
 .reset-form .custom-error.show {
     margin-top: 4px;
     margin-bottom: 4px;
