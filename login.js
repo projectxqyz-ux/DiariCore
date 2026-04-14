@@ -251,7 +251,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     showSuccess(document.getElementById(fieldId));
                     return true;
                 }
-                showError(document.getElementById(fieldId), data.message || (fieldId === 'nickname' ? 'Nickname already exists.' : 'Email already exists.'));
+                showError(document.getElementById(fieldId), data.message || (fieldId === 'nickname' ? 'Username already exists.' : 'Email already exists.'));
                 return false;
             })
             .catch(() => true)
@@ -335,7 +335,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (fieldId === 'nickname') {
             if (!value) {
                 resetAvailability('nickname');
-                return showError(field, 'Nickname is required.'), false;
+                return showError(field, 'Username is required.'), false;
             }
             if (value.length < 4 || value.length > 64) {
                 resetAvailability('nickname');
@@ -404,17 +404,14 @@ document.addEventListener('DOMContentLoaded', function() {
         loginForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const email = document.getElementById('email').value.trim();
+            const username = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
             
             let isValid = true;
             
-            // Validate email
-            if (!email) {
-                showError(document.getElementById('email'), 'Email is required.');
-                isValid = false;
-            } else if (email.toLowerCase() !== 'admin' && !isValidEmail(email)) {
-                showError(document.getElementById('email'), 'Please enter a valid email.');
+            // Validate username
+            if (!username) {
+                showError(document.getElementById('email'), 'Username is required.');
                 isValid = false;
             } else {
                 showSuccess(document.getElementById('email'));
@@ -439,7 +436,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 fetch('/api/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email: email, password: password })
+                    body: JSON.stringify({ username: username, password: password })
                 })
                     .then((res) => res.json().then((data) => ({ ok: res.ok, data })))
                     .then(({ ok, data }) => {
@@ -494,7 +491,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Validate nickname
             if (!nickname) {
-                showError(document.getElementById('nickname'), 'Nickname is required.');
+                showError(document.getElementById('nickname'), 'Username is required.');
                 isValid = false;
             } else if (nickname.length < 4 || nickname.length > 64) {
                 showError(document.getElementById('nickname'), 'Field must be between 4 and 64 characters long.');
@@ -752,15 +749,13 @@ document.addEventListener('DOMContentLoaded', function() {
     if (forgotPassword) {
         forgotPassword.addEventListener('click', function(e) {
             e.preventDefault();
-            const email = document.getElementById('email').value.trim();
+            const username = document.getElementById('email').value.trim();
             
-            if (!email) {
-                showNotification('Please enter your email address first', 'error');
+            if (!username) {
+                showNotification('Please enter your username first', 'error');
                 document.getElementById('email').focus();
-            } else if (!isValidEmail(email)) {
-                showNotification('Please enter a valid email address', 'error');
             } else {
-                showNotification('Password reset link sent to your email!', 'success');
+                showNotification('Password recovery will be available soon.', 'info');
             }
         });
     }

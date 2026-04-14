@@ -120,7 +120,7 @@ def api_register():
     birthday = (data.get("birthday") or "").strip()
 
     if not nickname:
-        return jsonify({"success": False, "field": "nickname", "error": "Nickname is required."}), 400
+        return jsonify({"success": False, "field": "nickname", "error": "Username is required."}), 400
     if len(nickname) < 4 or len(nickname) > 64:
         return jsonify(
             {"success": False, "field": "nickname", "error": "Field must be between 4 and 64 characters long."}
@@ -230,12 +230,12 @@ def api_register_resend():
 @app.route("/api/login", methods=["POST"])
 def api_login():
     data = request.get_json(silent=True) or {}
-    email = (data.get("email") or "").strip()
+    username = (data.get("username") or data.get("email") or "").strip()
     password = data.get("password") or ""
-    if not email or not password:
-        return jsonify({"success": False, "error": "Email and password are required."}), 400
+    if not username or not password:
+        return jsonify({"success": False, "error": "Username and password are required."}), 400
 
-    if email.lower() == "admin" and password == "admin123":
+    if username.lower() == "admin" and password == "admin123":
         session["is_admin"] = True
         admin_user = {
             "id": 0,
@@ -251,7 +251,7 @@ def api_login():
         }
         return jsonify({"success": True, "user": admin_user}), 200
 
-    ok, result = db.verify_login(email, password)
+    ok, result = db.verify_login(username, password)
     if not ok:
         return jsonify({"success": False, "error": result}), 401
 
@@ -338,7 +338,7 @@ def api_check_availability():
                 "success": True,
                 "field": "nickname",
                 "available": not exists,
-                "message": None if not exists else "Nickname already exists.",
+                "message": None if not exists else "Username already exists.",
             }
         )
 

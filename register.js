@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     showSuccess(el);
                     return true;
                 }
-                showError(el, data.message || (fieldId === 'nickname' ? 'Nickname already exists.' : 'Email already exists.'));
+                showError(el, data.message || (fieldId === 'nickname' ? 'Username already exists.' : 'Email already exists.'));
                 return false;
             })
             .catch(() => true)
@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!field) return true;
         const value = field.value.trim();
         if (fieldId === 'nickname') {
-            if (!value) { resetAvailability('nickname'); showError(field, 'Nickname is required.'); return false; }
+            if (!value) { resetAvailability('nickname'); showError(field, 'Username is required.'); return false; }
             if (value.length < 4 || value.length > 64) { resetAvailability('nickname'); showError(field, 'Field must be between 4 and 64 characters long.'); return false; }
             scheduleAvailabilityCheck('nickname', value);
             return true;

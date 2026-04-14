@@ -174,6 +174,10 @@ def get_user_by_nickname(nickname: str):
         conn.close()
 
 
+def get_user_by_username(username: str):
+    return get_user_by_nickname(username)
+
+
 def create_user(
     nickname: str,
     email: str,
@@ -234,7 +238,7 @@ def create_user(
         err = str(e).lower()
         if any(s in err for s in ("unique", "duplicate", "already exists")):
             if "nickname" in err:
-                return False, "nickname", "Nickname already exists."
+                return False, "nickname", "Username already exists."
             if "email" in err:
                 return False, "signUpEmail", "Email already exists."
         return False, None, "Could not create account. Please try again."
@@ -417,7 +421,7 @@ def create_user_from_pending(pending: dict):
         conn.rollback()
         err = str(e).lower()
         if "nickname" in err:
-            return False, ("nickname", "Nickname already exists.")
+            return False, ("nickname", "Username already exists.")
         if "email" in err:
             return False, ("signUpEmail", "Email already exists.")
         return False, (None, "Could not create account. Please try again.")
@@ -478,12 +482,20 @@ def set_system_setting(key: str, value: str):
         conn.close()
 
 
-def verify_login(email: str, password: str):
+def verify_login(identifier: str, password: str):
     """Returns (True, user_dict) or (False, error_message)."""
-    user = get_user_by_email(email)
+    raw = (identifier or "").strip()
+    if not raw:
+        return False, "Invalid username or password."
+
+    user = None
+    if "@" in raw:
+        user = get_user_by_email(raw)
     if not user:
-        return False, "Invalid email or password."
+        user = get_user_by_username(raw)
+    if not user:
+        return False, "Invalid username or password."
     if not check_password_hash(user["password_hash"], password):
-        return False, "Invalid email or password."
+        return False, "Invalid username or password."
     out = {k: v for k, v in user.items() if k != "password_hash"}
     return True, out
