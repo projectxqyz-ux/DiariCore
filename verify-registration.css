@@ -236,6 +236,7 @@ body {
     gap: 8px;
     transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
     margin-top: 0;
+    margin-bottom: 0;
 }
 
 .btn.is-loading {
@@ -260,8 +261,8 @@ body {
 .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
 
 .meta {
-    margin-top: 2px;
-    padding-top: 6px;
+    margin-top: 0;
+    padding-top: 2px;
     border-top: 1px solid var(--border-color);
     text-align: center;
 }
