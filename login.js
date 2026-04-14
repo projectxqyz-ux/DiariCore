@@ -880,7 +880,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             if (!isValidEmail(identifier)) {
-                setResetAlert('Please enter a valid email address.');
+                setResetAlert('Please enter a valid email.');
                 return;
             }
             clearResetAlert();

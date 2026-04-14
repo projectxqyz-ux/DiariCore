@@ -308,11 +308,11 @@ def api_password_forgot():
     if not email:
         return jsonify({"success": False, "error": "Email address is required."}), 400
     if "@" not in email or "." not in email:
-        return jsonify({"success": False, "error": "Please enter a valid email address."}), 400
+        return jsonify({"success": False, "error": "Please enter a valid email."}), 400
 
     user = db.get_user_by_email(email)
     if not user:
-        return jsonify({"success": False, "error": "No account found for this email address."}), 404
+        return jsonify({"success": False, "error": "This email doesn’t appear to be associated with any account yet."}), 404
 
     reset_code = _generate_otp()
     expires_at = datetime.now(timezone.utc) + timedelta(minutes=10)
