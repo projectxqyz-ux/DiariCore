@@ -124,7 +124,7 @@
             </form>
 
             <form id="resetConfirmForm" class="reset-form" autocomplete="off" novalidate hidden>
-                <label class="reset-label reset-label-center">Enter Verification Code</label>
+                <label class="reset-label">Enter Verification Code</label>
                 <div class="reset-otp" id="resetOtpInputs">
                     <input class="reset-otp-digit" inputmode="numeric" maxlength="1" aria-label="Digit 1">
                     <input class="reset-otp-digit" inputmode="numeric" maxlength="1" aria-label="Digit 2">
@@ -136,8 +136,9 @@
 
                 <button type="submit" class="reset-btn" id="verifyResetCodeBtn">Verify Code</button>
                 <div class="reset-meta">
-                    <button type="button" class="reset-link-btn" id="resendResetCodeBtn">Resend Code</button>
-                    <span class="reset-timer" id="resetTimerLabel">Resend available in 0:57</span>
+                    <span class="reset-meta-text">Didn't receive the code?</span>
+                    <button type="button" class="reset-link-btn" id="resendResetCodeBtn">Resend OTP</button>
+                    <span class="reset-timer" id="resetTimerLabel">(1:00)</span>
                 </div>
                 <button type="button" class="reset-btn reset-btn-secondary" id="resetVerifyBackBtn">Back</button>
             </form>

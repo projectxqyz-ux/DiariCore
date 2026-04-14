@@ -870,7 +870,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const m = Math.floor(resetResendRemaining / 60);
             const s = resetResendRemaining % 60;
             if (resetTimerLabel) {
-                resetTimerLabel.textContent = `Resend available in ${m}:${String(s).padStart(2, '0')}`;
+                resetTimerLabel.textContent = `(${m}:${String(s).padStart(2, '0')})`;
             }
         };
         if (resendResetCodeBtn) resendResetCodeBtn.disabled = true;
@@ -880,7 +880,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (resetResendRemaining <= 0) {
                 clearInterval(resetResendInterval);
                 resetResendInterval = null;
-                if (resetTimerLabel) resetTimerLabel.textContent = 'You can resend the code now.';
+                if (resetTimerLabel) resetTimerLabel.textContent = '';
                 if (resendResetCodeBtn) resendResetCodeBtn.disabled = false;
                 return;
             }
@@ -910,7 +910,7 @@ document.addEventListener('DOMContentLoaded', function() {
             resetResendInterval = null;
         }
         if (resendResetCodeBtn) resendResetCodeBtn.disabled = false;
-        if (resetTimerLabel) resetTimerLabel.textContent = '';
+        if (resetTimerLabel) resetTimerLabel.textContent = '(1:00)';
     }
 
     function closeResetModal() {
@@ -985,9 +985,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     resetIdentifier = identifier;
                     if (resetRequestForm) resetRequestForm.hidden = true;
                     if (resetConfirmForm) resetConfirmForm.hidden = false;
-                    if (resetSubtitle) resetSubtitle.textContent = 'Enter your reset code to verify your request.';
+                    if (resetSubtitle) resetSubtitle.textContent = 'Thank you for verifying. Kindly check your email for the code.';
                     setResetAlert(data.message || 'Reset code sent.', 'success');
-                    startResetResendCooldown(57);
+                    startResetResendCooldown(60);
                     if (resetOtpDigits[0]) resetOtpDigits[0].focus();
                 })
                 .catch(() => setResetAlert('Could not reach the server. Please try again.'))
@@ -1020,7 +1020,7 @@ document.addEventListener('DOMContentLoaded', function() {
             clearResetAlert();
             if (resetPasswordForm) resetPasswordForm.hidden = true;
             if (resetConfirmForm) resetConfirmForm.hidden = false;
-            if (resetSubtitle) resetSubtitle.textContent = 'Enter your reset code to verify your request.';
+            if (resetSubtitle) resetSubtitle.textContent = 'Thank you for verifying. Kindly check your email for the code.';
             startResetResendCooldown(Math.max(resetResendRemaining, 20));
         });
     }
@@ -1054,6 +1054,8 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!resetIdentifier || resendResetCodeBtn.disabled) return;
             clearResetAlert();
             resendResetCodeBtn.disabled = true;
+            resendResetCodeBtn.classList.add('is-loading');
+            resendResetCodeBtn.innerHTML = '<span class="reset-btn-spinner" aria-hidden="true"></span><span>Resending...</span>';
             fetch('/api/password/forgot', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -1063,15 +1065,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(({ ok, data }) => {
                     if (!ok || !data.success) {
                         setResetAlert(data.error || 'Failed to resend reset code.');
+                        resendResetCodeBtn.classList.remove('is-loading');
+                        resendResetCodeBtn.textContent = 'Resend OTP';
                         resendResetCodeBtn.disabled = false;
                         return;
                     }
-                    setResetAlert('Reset code resent. Check your email.', 'success');
+                    setResetAlert('Verification code has been resent to your email.', 'success');
                     resetOtpInputs();
-                    startResetResendCooldown(57);
+                    startResetResendCooldown(60);
+                    resendResetCodeBtn.classList.remove('is-loading');
+                    resendResetCodeBtn.textContent = 'Resend OTP';
                 })
                 .catch(() => {
                     setResetAlert('Could not reach the server. Please try again.');
+                    resendResetCodeBtn.classList.remove('is-loading');
+                    resendResetCodeBtn.textContent = 'Resend OTP';
                     resendResetCodeBtn.disabled = false;
                 });
         });
