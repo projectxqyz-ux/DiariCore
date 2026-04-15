@@ -1,8 +1,11 @@
 // DiariCore Insights Page JavaScript - New Layout
-const INSIGHTS_ENTRIES = JSON.parse(localStorage.getItem('diariCoreEntries') || '[]').filter((e) => e && e.date);
-const HAS_INSIGHTS_DATA = INSIGHTS_ENTRIES.length > 0;
+let INSIGHTS_ENTRIES = [];
+let HAS_INSIGHTS_DATA = false;
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
+    await syncInsightsEntriesFromApi();
+    INSIGHTS_ENTRIES = JSON.parse(localStorage.getItem('diariCoreEntries') || '[]').filter((e) => e && e.date);
+    HAS_INSIGHTS_DATA = INSIGHTS_ENTRIES.length > 0;
     applyInsightsEmptyState();
     // Initialize Charts
     initializeWeeklyMoodChart();
@@ -17,6 +20,20 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize Mobile Trigger Functionality
     initializeMobileTriggers();
 });
+
+async function syncInsightsEntriesFromApi() {
+    const user = JSON.parse(localStorage.getItem('diariCoreUser') || 'null');
+    const userId = Number(user?.id || 0);
+    if (!userId) return;
+    try {
+        const response = await fetch(`/api/entries?userId=${encodeURIComponent(String(userId))}`);
+        const result = await response.json();
+        if (!response.ok || !result.success || !Array.isArray(result.entries)) return;
+        localStorage.setItem('diariCoreEntries', JSON.stringify(result.entries));
+    } catch (error) {
+        console.error('Failed to sync insights entries:', error);
+    }
+}
 
 function feelingToScore(feelingRaw) {
     const feeling = (feelingRaw || '').toLowerCase();

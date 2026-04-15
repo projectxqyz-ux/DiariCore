@@ -1,6 +1,7 @@
 // DiariCore Dashboard JavaScript
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
+    await syncEntriesFromApi();
     initializeDashboardFromUserData();
     
     // Add smooth scrolling for navigation
@@ -60,6 +61,20 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+async function syncEntriesFromApi() {
+    const user = JSON.parse(localStorage.getItem('diariCoreUser') || 'null');
+    const userId = Number(user?.id || 0);
+    if (!userId) return;
+    try {
+        const response = await fetch(`/api/entries?userId=${encodeURIComponent(String(userId))}`);
+        const result = await response.json();
+        if (!response.ok || !result.success || !Array.isArray(result.entries)) return;
+        localStorage.setItem('diariCoreEntries', JSON.stringify(result.entries));
+    } catch (error) {
+        console.error('Failed to sync dashboard entries:', error);
+    }
+}
 
 function initializeDashboardFromUserData() {
     const user = JSON.parse(localStorage.getItem('diariCoreUser') || 'null');

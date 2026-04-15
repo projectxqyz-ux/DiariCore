@@ -334,36 +334,61 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    function handleSaveEntry() {
+    async function handleSaveEntry() {
         const entryText = journalText.value.trim();
         if (!entryText) {
             alert('Please write something in your journal entry.');
             return;
         }
-        
-        // Create entry object
-        const entry = {
-            feeling: 'unspecified',
-            tags: Array.from(selectedTags),
-            text: entryText,
-            date: new Date().toISOString(),
-            characterCount: entryText.length
-        };
-        
-        // Save to localStorage (placeholder)
-        let entries = JSON.parse(localStorage.getItem('diariCoreEntries') || '[]');
-        entries.push(entry);
-        localStorage.setItem('diariCoreEntries', JSON.stringify(entries));
-        
-        console.log('Entry saved:', entry);
-        
-        // Show success message
-        showSuccessMessage();
-        
-        // Redirect to dashboard after 2 seconds
-        setTimeout(() => {
-            window.location.href = 'dashboard.html';
-        }, 2000);
+
+        const currentUser = JSON.parse(localStorage.getItem('diariCoreUser') || 'null');
+        const userId = Number(currentUser?.id || 0);
+
+        try {
+            const response = await fetch('/api/entries', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    userId,
+                    text: entryText,
+                    tags: Array.from(selectedTags)
+                })
+            });
+            const result = await response.json();
+            if (!response.ok || !result.success || !result.entry) {
+                throw new Error(result.error || 'Failed to save entry.');
+            }
+
+            const savedEntry = {
+                ...result.entry,
+                characterCount: entryText.length
+            };
+            const entries = JSON.parse(localStorage.getItem('diariCoreEntries') || '[]');
+            entries.push(savedEntry);
+            localStorage.setItem('diariCoreEntries', JSON.stringify(entries));
+            console.log('Entry saved with NLP:', savedEntry, 'engine:', result.analysisEngine);
+
+            showSuccessMessage();
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 2000);
+        } catch (error) {
+            console.error('Failed to save entry via API:', error);
+            const fallbackEntry = {
+                feeling: 'unspecified',
+                tags: Array.from(selectedTags),
+                text: entryText,
+                date: new Date().toISOString(),
+                characterCount: entryText.length
+            };
+            const entries = JSON.parse(localStorage.getItem('diariCoreEntries') || '[]');
+            entries.push(fallbackEntry);
+            localStorage.setItem('diariCoreEntries', JSON.stringify(entries));
+            showSuccessMessage();
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 2000);
+        }
     }
 
     // Save entry functionality (desktop + mobile save buttons)

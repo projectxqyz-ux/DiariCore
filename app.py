@@ -13,6 +13,7 @@ from flask import Flask, jsonify, request, send_from_directory, abort, session
 from werkzeug.security import check_password_hash
 
 import db
+import hf_nlp
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -136,6 +137,36 @@ def serialize_user(row):
         "createdAt": out.get("created_at"),
     }
     return mapped
+
+
+def serialize_entry(row):
+    if not row:
+        return None
+    tags = []
+    tags_raw = row.get("tags_json")
+    if tags_raw:
+        try:
+            parsed = json.loads(tags_raw)
+            if isinstance(parsed, list):
+                tags = parsed
+        except Exception:
+            tags = []
+    created_at = row.get("created_at")
+    date_value = created_at.isoformat() if isinstance(created_at, (datetime, date)) else str(created_at)
+    emotion_label = (row.get("emotion_label") or "neutral").lower()
+    return {
+        "id": row.get("id"),
+        "userId": row.get("user_id"),
+        "text": row.get("text_content") or "",
+        "tags": tags,
+        "date": date_value,
+        "sentimentLabel": (row.get("sentiment_label") or "neutral").lower(),
+        "sentimentScore": float(row.get("sentiment_score") or 0.5),
+        "emotionLabel": emotion_label,
+        "emotionScore": float(row.get("emotion_score") or 0.5),
+        # Keep existing UI compatibility
+        "feeling": emotion_label,
+    }
 
 
 @app.before_request
@@ -504,6 +535,52 @@ def api_check_availability():
             "message": None if not exists else "Email already exists.",
         }
     )
+
+
+@app.route("/api/entries", methods=["GET"])
+def api_entries_get():
+    user_id_raw = (request.args.get("userId") or "").strip()
+    if not user_id_raw.isdigit():
+        return jsonify({"success": False, "error": "Valid userId is required."}), 400
+    user_id = int(user_id_raw)
+    user = db.get_user_by_id(user_id) if hasattr(db, "get_user_by_id") else None
+    if not user:
+        return jsonify({"success": False, "error": "User not found."}), 404
+    rows = db.get_journal_entries_by_user(user_id)
+    return jsonify({"success": True, "entries": [serialize_entry(r) for r in rows]}), 200
+
+
+@app.route("/api/entries", methods=["POST"])
+def api_entries_post():
+    data = request.get_json(silent=True) or {}
+    user_id = data.get("userId")
+    text = (data.get("text") or "").strip()
+    tags = data.get("tags") or []
+
+    if not isinstance(user_id, int) or user_id <= 0:
+        return jsonify({"success": False, "error": "Valid userId is required."}), 400
+    if not text:
+        return jsonify({"success": False, "error": "Entry text is required."}), 400
+    if not isinstance(tags, list):
+        tags = []
+
+    user = db.get_user_by_id(user_id) if hasattr(db, "get_user_by_id") else None
+    if not user:
+        return jsonify({"success": False, "error": "User not found."}), 404
+
+    analysis = hf_nlp.analyze(text)
+    row = db.create_journal_entry(
+        user_id=user_id,
+        text_content=text,
+        tags_json=json.dumps(tags),
+        sentiment_label=analysis["sentimentLabel"],
+        sentiment_score=float(analysis["sentimentScore"]),
+        emotion_label=analysis["emotionLabel"],
+        emotion_score=float(analysis["emotionScore"]),
+    )
+    return jsonify(
+        {"success": True, "entry": serialize_entry(row), "analysisEngine": analysis.get("engine", "hf")},
+    ), 201
 
 
 @app.route("/")

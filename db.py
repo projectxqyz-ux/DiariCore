@@ -89,6 +89,21 @@ def init_db():
                 );
                 """
             )
+            cur.execute(
+                """
+                CREATE TABLE IF NOT EXISTS journal_entries (
+                    id SERIAL PRIMARY KEY,
+                    user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+                    text_content TEXT NOT NULL,
+                    tags_json TEXT,
+                    sentiment_label VARCHAR(32) NOT NULL,
+                    sentiment_score REAL NOT NULL,
+                    emotion_label VARCHAR(32) NOT NULL,
+                    emotion_score REAL NOT NULL,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                );
+                """
+            )
         else:
             cur.execute(
                 """
@@ -128,6 +143,22 @@ def init_db():
                     reset_code TEXT NOT NULL,
                     expires_at TEXT NOT NULL,
                     created_at TEXT DEFAULT CURRENT_TIMESTAMP
+                );
+                """
+            )
+            cur.execute(
+                """
+                CREATE TABLE IF NOT EXISTS journal_entries (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    user_id INTEGER NOT NULL,
+                    text_content TEXT NOT NULL,
+                    tags_json TEXT,
+                    sentiment_label TEXT NOT NULL,
+                    sentiment_score REAL NOT NULL,
+                    emotion_label TEXT NOT NULL,
+                    emotion_score REAL NOT NULL,
+                    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+                    FOREIGN KEY(user_id) REFERENCES users(id)
                 );
                 """
             )
@@ -196,6 +227,25 @@ def get_user_by_nickname(nickname: str):
 
 def get_user_by_username(username: str):
     return get_user_by_nickname(username)
+
+
+def get_user_by_id(user_id: int):
+    conn = get_conn()
+    cur = conn.cursor()
+    try:
+        if USE_POSTGRES:
+            cur.execute(
+                "SELECT id, nickname, email, password_hash, first_name, last_name, gender, birthday, created_at FROM users WHERE id = %s",
+                (user_id,),
+            )
+        else:
+            cur.execute(
+                "SELECT id, nickname, email, password_hash, first_name, last_name, gender, birthday, created_at FROM users WHERE id = ?",
+                (user_id,),
+            )
+        return row_to_dict(cur.fetchone())
+    finally:
+        conn.close()
 
 
 def create_user(
@@ -612,5 +662,84 @@ def update_user_password_by_email(email: str, password: str):
     except Exception:
         conn.rollback()
         return False
+    finally:
+        conn.close()
+
+
+def create_journal_entry(
+    *,
+    user_id: int,
+    text_content: str,
+    tags_json: str,
+    sentiment_label: str,
+    sentiment_score: float,
+    emotion_label: str,
+    emotion_score: float,
+):
+    conn = get_conn()
+    cur = conn.cursor()
+    try:
+        if USE_POSTGRES:
+            cur.execute(
+                """
+                INSERT INTO journal_entries
+                (user_id, text_content, tags_json, sentiment_label, sentiment_score, emotion_label, emotion_score)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
+                RETURNING id, user_id, text_content, tags_json, sentiment_label, sentiment_score, emotion_label, emotion_score, created_at
+                """,
+                (user_id, text_content, tags_json, sentiment_label, sentiment_score, emotion_label, emotion_score),
+            )
+            row = cur.fetchone()
+            conn.commit()
+            return row_to_dict(row)
+
+        cur.execute(
+            """
+            INSERT INTO journal_entries
+            (user_id, text_content, tags_json, sentiment_label, sentiment_score, emotion_label, emotion_score)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+            """,
+            (user_id, text_content, tags_json, sentiment_label, sentiment_score, emotion_label, emotion_score),
+        )
+        entry_id = cur.lastrowid
+        conn.commit()
+        cur.execute(
+            """
+            SELECT id, user_id, text_content, tags_json, sentiment_label, sentiment_score, emotion_label, emotion_score, created_at
+            FROM journal_entries
+            WHERE id = ?
+            """,
+            (entry_id,),
+        )
+        return row_to_dict(cur.fetchone())
+    finally:
+        conn.close()
+
+
+def get_journal_entries_by_user(user_id: int):
+    conn = get_conn()
+    cur = conn.cursor()
+    try:
+        if USE_POSTGRES:
+            cur.execute(
+                """
+                SELECT id, user_id, text_content, tags_json, sentiment_label, sentiment_score, emotion_label, emotion_score, created_at
+                FROM journal_entries
+                WHERE user_id = %s
+                ORDER BY created_at DESC
+                """,
+                (user_id,),
+            )
+        else:
+            cur.execute(
+                """
+                SELECT id, user_id, text_content, tags_json, sentiment_label, sentiment_score, emotion_label, emotion_score, created_at
+                FROM journal_entries
+                WHERE user_id = ?
+                ORDER BY datetime(created_at) DESC
+                """,
+                (user_id,),
+            )
+        return [row_to_dict(r) for r in cur.fetchall()]
     finally:
         conn.close()
