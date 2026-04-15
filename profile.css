@@ -1103,15 +1103,6 @@ input:checked + .toggle-slider:before {
 }
 
 @media (min-width: 769px) {
-    body.page-profile .main-content {
-        padding: 1.5rem 1.75rem;
-    }
-
-    body.page-profile .profile-content {
-        max-width: 1080px;
-        margin: 0 auto;
-    }
-
     body.page-profile .profile-content {
         display: flex;
         flex-direction: column;
