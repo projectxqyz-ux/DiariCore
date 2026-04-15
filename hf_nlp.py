@@ -24,6 +24,7 @@ SENTIMENT_MODEL = os.environ.get("HF_SENTIMENT_MODEL", "cardiffnlp/twitter-xlm-r
 EMOTION_MODEL = os.environ.get("HF_EMOTION_MODEL", "MilaNLProc/xlm-emo-t").strip()
 
 HF_BASE_URL = "https://api-inference.huggingface.co/models"
+HF_ROUTER_BASE_URL = "https://router.huggingface.co/hf-inference/models"
 
 
 def _hf_headers() -> Dict[str, str]:
@@ -122,8 +123,26 @@ def analyze(text: str) -> Dict[str, object]:
     started = time.time()
     timeout = httpx.Timeout(10.0, connect=5.0)
     with httpx.Client(timeout=timeout, headers=_hf_headers()) as client:
+        def _call_model(model_name: str):
+            """Try new HF router first, then legacy endpoint."""
+            urls = [f"{HF_ROUTER_BASE_URL}/{model_name}", f"{HF_BASE_URL}/{model_name}"]
+            last_response = None
+            for url in urls:
+                try:
+                    response = client.post(url, json={"inputs": clean[:2000]})
+                    last_response = response
+                    # 410 is common on legacy paths for some models; try alternate endpoint.
+                    if response.status_code == 410:
+                        continue
+                    return response
+                except Exception:
+                    continue
+            return last_response
+
         try:
-            sent_resp = client.post(f"{HF_BASE_URL}/{SENTIMENT_MODEL}", json={"inputs": clean[:2000]})
+            sent_resp = _call_model(SENTIMENT_MODEL)
+            if sent_resp is None:
+                return _fallback(clean)
             if sent_resp.status_code != 200:
                 try:
                     err = sent_resp.json()
@@ -141,7 +160,9 @@ def analyze(text: str) -> Dict[str, object]:
             if sent_label_raw is None:
                 return _fallback(clean)
 
-            emo_resp = client.post(f"{HF_BASE_URL}/{EMOTION_MODEL}", json={"inputs": clean[:2000]})
+            emo_resp = _call_model(EMOTION_MODEL)
+            if emo_resp is None:
+                return _fallback(clean)
             if emo_resp.status_code != 200:
                 try:
                     err = emo_resp.json()
