@@ -338,13 +338,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const saveEntryBtn = document.getElementById('saveEntryBtn');
     saveEntryBtn.addEventListener('click', function() {
         const entryText = journalText.value.trim();
-        const mobileNoFeelings = window.innerWidth <= 768;
-        
-        if (!mobileNoFeelings && !selectedFeeling) {
-            alert('Please select how you are feeling.');
-            return;
-        }
-        
         if (!entryText) {
             alert('Please write something in your journal entry.');
             return;
@@ -352,7 +345,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Create entry object
         const entry = {
-            feeling: selectedFeeling || (mobileNoFeelings ? 'unspecified' : ''),
+            feeling: 'unspecified',
             tags: Array.from(selectedTags),
             text: entryText,
             date: new Date().toISOString(),
@@ -378,7 +371,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Cancel functionality
     const cancelBtn = document.getElementById('cancelBtn');
     cancelBtn.addEventListener('click', function() {
-        if (journalText.value.trim() || selectedFeeling || selectedTags.size > 0) {
+        if (journalText.value.trim() || selectedTags.size > 0) {
             if (confirm('Are you sure you want to cancel? Your unsaved changes will be lost.')) {
                 window.location.href = 'dashboard.html';
             }
