@@ -1,12 +1,77 @@
 // DiariCore Profile Page JavaScript
 
 document.addEventListener('DOMContentLoaded', function() {
+    initializeProfileFromStorage();
     // Initialize profile components
     initializeProfileInteractions();
     initializePreferenceToggles();
     initializeStorageActions();
     initializeDangerZoneActions();
 });
+
+function initializeProfileFromStorage() {
+    const user = JSON.parse(localStorage.getItem('diariCoreUser') || 'null');
+    const entries = JSON.parse(localStorage.getItem('diariCoreEntries') || '[]');
+    const safeEntries = Array.isArray(entries) ? entries.filter((e) => e && e.date) : [];
+
+    const nameEl = document.querySelector('.profile-name');
+    const emailEl = document.querySelector('.profile-email');
+    const memberSinceEl = document.querySelector('.profile-member-since');
+    const statEls = document.querySelectorAll('.profile-stats .stat-number');
+
+    if (nameEl) {
+        const fullName = [user?.firstName, user?.lastName].filter(Boolean).join(' ').trim();
+        nameEl.textContent = fullName || user?.nickname || 'New User';
+    }
+    if (emailEl) emailEl.textContent = user?.email || 'No email available';
+    if (memberSinceEl) {
+        const parsed = user?.createdAt ? new Date(user.createdAt) : null;
+        const createdAt = parsed && !Number.isNaN(parsed.getTime()) ? parsed : new Date();
+        const monthYear = createdAt.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+        memberSinceEl.textContent = `Member since ${monthYear}`;
+    }
+
+    const entryCount = safeEntries.length;
+    const streak = calculateEntryStreak(safeEntries);
+    const consistency = calculateMonthlyConsistency(safeEntries);
+    if (statEls[0]) statEls[0].textContent = String(entryCount);
+    if (statEls[1]) statEls[1].textContent = String(streak);
+    if (statEls[2]) statEls[2].textContent = `${consistency}%`;
+}
+
+function calculateEntryStreak(entries) {
+    if (!entries.length) return 0;
+    const uniqueDays = Array.from(new Set(entries.map((e) => {
+        const d = new Date(e.date);
+        return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+    }))).sort((a, b) => new Date(b) - new Date(a));
+
+    let streak = 0;
+    const cursor = new Date();
+    cursor.setHours(0, 0, 0, 0);
+    for (let i = 0; i < uniqueDays.length; i += 1) {
+        const expected = new Date(cursor);
+        expected.setDate(cursor.getDate() - i);
+        const dayKey = `${expected.getFullYear()}-${expected.getMonth()}-${expected.getDate()}`;
+        if (uniqueDays[i] === dayKey) streak += 1;
+        else break;
+    }
+    return streak;
+}
+
+function calculateMonthlyConsistency(entries) {
+    if (!entries.length) return 0;
+    const now = new Date();
+    const thirtyDaysAgo = new Date(now);
+    thirtyDaysAgo.setDate(now.getDate() - 29);
+    thirtyDaysAgo.setHours(0, 0, 0, 0);
+    const uniqueRecentDays = new Set(entries.map((e) => {
+        const d = new Date(e.date);
+        if (d < thirtyDaysAgo || d > now) return null;
+        return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+    }).filter(Boolean));
+    return Math.round((uniqueRecentDays.size / 30) * 100);
+}
 
 // Initialize Profile Interactions
 function initializeProfileInteractions() {

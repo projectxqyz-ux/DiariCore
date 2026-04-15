@@ -1,6 +1,7 @@
 // DiariCore Suggestions Page JavaScript
 
 document.addEventListener('DOMContentLoaded', function() {
+    initializeEmotionalSupportFromData();
     // Initialize components
     initializeSuggestions();
     initializeQuickActions();
@@ -8,6 +9,25 @@ document.addEventListener('DOMContentLoaded', function() {
     animateProgressBars();
     initializeMobileCarousel();
 });
+
+function initializeEmotionalSupportFromData() {
+    const entries = JSON.parse(localStorage.getItem('diariCoreEntries') || '[]');
+    const supportText = document.querySelector('.emotional-support-section .support-text');
+    if (!supportText) return;
+
+    if (!Array.isArray(entries) || entries.length === 0) {
+        supportText.textContent = 'Start by writing your first journal entry. Your emotional support suggestions will become more personal as we learn from your reflections.';
+        return;
+    }
+
+    const latest = [...entries].filter((e) => e?.date).sort((a, b) => new Date(b.date) - new Date(a.date))[0];
+    const feeling = (latest?.feeling || '').toLowerCase();
+    if (['anxious', 'stressed', 'sad', 'angry'].includes(feeling)) {
+        supportText.textContent = 'You have been carrying a lot lately. Take one slow breath at a time, and remember that asking for support is a sign of strength.';
+        return;
+    }
+    supportText.textContent = 'You are making steady progress through your journaling. Keep listening to your emotions and giving yourself space to recharge.';
+}
 
 // Initialize Suggestions
 function initializeSuggestions() {

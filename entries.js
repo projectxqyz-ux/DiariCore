@@ -1,6 +1,7 @@
 // DiariCore Entries Page JavaScript
 
 document.addEventListener('DOMContentLoaded', function() {
+    initializeEntriesFromStorage();
     // Initialize components
     initializeFilterDropdown();
     initializeSearch();
@@ -8,6 +9,119 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeLoadMore();
     initializeEntriesResizeEmptyState();
 });
+
+function initializeEntriesFromStorage() {
+    const entries = JSON.parse(localStorage.getItem('diariCoreEntries') || '[]');
+    const main = document.querySelector('.entries-content');
+    const emptyState = document.getElementById('entriesEmptyState');
+    const firstSection = document.querySelector('.entries-section');
+    const aprilSection = document.querySelector('.april-section');
+    const loadMoreSection = document.querySelector('.load-more-section');
+    const firstGrid = firstSection ? firstSection.querySelector('.entries-grid') : null;
+    if (!main || !emptyState || !firstSection || !firstGrid) return;
+
+    const normalize = (arr) => Array.isArray(arr) ? arr : [];
+    const userEntries = normalize(entries)
+        .filter((e) => e && e.date)
+        .sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    if (userEntries.length === 0) {
+        firstSection.style.display = 'none';
+        if (aprilSection) aprilSection.style.display = 'none';
+        if (loadMoreSection) loadMoreSection.style.display = 'none';
+        main.classList.add('entries-content--empty-results');
+
+        const desktopTitle = emptyState.querySelector('.entries-empty-state__title--desktop');
+        const desktopHint = emptyState.querySelector('.entries-empty-state__hint--desktop');
+        const mobileTitle = emptyState.querySelector('.entries-empty-state__title--mobile');
+        const mobileHint = emptyState.querySelector('.entries-empty-state__hint--mobile');
+        if (desktopTitle) desktopTitle.textContent = 'No entries yet';
+        if (desktopHint) desktopHint.textContent = 'Your journal is still empty. Write your first entry to start tracking your journey.';
+        if (mobileTitle) mobileTitle.textContent = 'No entries yet';
+        if (mobileHint) mobileHint.textContent = 'Write your first entry to get started.';
+        return;
+    }
+
+    main.classList.remove('entries-content--empty-results');
+    firstSection.style.display = '';
+    if (aprilSection) aprilSection.style.display = 'none';
+    if (loadMoreSection) loadMoreSection.style.display = 'none';
+
+    const groups = {};
+    userEntries.forEach((entry) => {
+        const d = new Date(entry.date);
+        if (Number.isNaN(d.getTime())) return;
+        const key = `${d.getFullYear()}-${d.getMonth()}`;
+        if (!groups[key]) groups[key] = [];
+        groups[key].push(entry);
+    });
+
+    const sortedGroupKeys = Object.keys(groups).sort((a, b) => {
+        const [aY, aM] = a.split('-').map(Number);
+        const [bY, bM] = b.split('-').map(Number);
+        return new Date(bY, bM, 1) - new Date(aY, aM, 1);
+    });
+
+    firstGrid.innerHTML = '';
+    sortedGroupKeys.forEach((key) => {
+        const [year, month] = key.split('-').map(Number);
+        const monthLabel = new Date(year, month, 1).toLocaleString('en-US', { month: 'long' }).toUpperCase();
+
+        const monthHeader = document.createElement('div');
+        monthHeader.className = 'month-header';
+        monthHeader.innerHTML = `<i class="bi bi-calendar3"></i><span class="month-text">${monthLabel} ${year}</span>`;
+        firstGrid.appendChild(monthHeader);
+
+        groups[key].forEach((entry) => {
+            firstGrid.appendChild(createStoredEntryCard(entry));
+        });
+    });
+}
+
+function moodIconClass(feelingRaw) {
+    const feeling = (feelingRaw || '').toLowerCase();
+    if (feeling === 'happy' || feeling === 'excited') return 'bi bi-emoji-smile';
+    if (feeling === 'sad') return 'bi bi-emoji-frown';
+    if (feeling === 'angry') return 'bi bi-emoji-angry';
+    if (feeling === 'anxious' || feeling === 'stressed') return 'bi bi-lightning';
+    if (feeling === 'calm' || feeling === 'peaceful') return 'bi bi-sun';
+    return 'bi bi-emoji-neutral';
+}
+
+function createStoredEntryCard(entry) {
+    const article = document.createElement('article');
+    article.className = 'entry-card';
+    const date = new Date(entry.date);
+    const dateText = Number.isNaN(date.getTime())
+        ? 'Unknown date'
+        : date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+
+    const title = entry.text ? entry.text.trim().split('\n')[0].slice(0, 40) : 'Journal Entry';
+    const excerpt = entry.text || '';
+    const tags = Array.isArray(entry.tags) ? entry.tags : [];
+
+    article.innerHTML = `
+        <div class="entry-content-wrapper">
+            <div class="entry-header">
+                <div class="entry-meta">
+                    <span class="entry-date">${dateText}</span>
+                    <h3 class="entry-title">${title || 'Journal Entry'}</h3>
+                </div>
+                <div class="entry-mood">
+                    <i class="${moodIconClass(entry.feeling)}"></i>
+                    <span class="mood-label" style="display:none;">${(entry.feeling || 'unspecified').toLowerCase()}</span>
+                </div>
+            </div>
+            <div class="entry-content">
+                <p class="entry-excerpt">${excerpt || 'No details provided.'}</p>
+                <div class="entry-tags">
+                    ${(tags.length ? tags : ['Journal']).map((tag) => `<span class="tag">${tag}</span>`).join('')}
+                </div>
+            </div>
+        </div>
+    `;
+    return article;
+}
 
 let entriesResizeTimer;
 function getEntriesSearchQuery() {
