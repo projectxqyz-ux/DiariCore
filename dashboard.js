@@ -1,98 +1,7 @@
 // DiariCore Dashboard JavaScript
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize Weekly Chart
-    const weeklyCanvas = document.getElementById('weeklyChart');
-    if (weeklyCanvas && weeklyCanvas.getContext) {
-    const ctx = weeklyCanvas.getContext('2d');
-    
-    const gradient = ctx.createLinearGradient(0, 0, 0, 300);
-    gradient.addColorStop(0, 'rgba(111, 143, 127, 0.3)');
-    gradient.addColorStop(1, 'rgba(111, 143, 127, 0.01)');
-    
-    const weeklyChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-            datasets: [{
-                label: 'Mood Score',
-                data: [6.5, 7.2, 8.1, 7.8, 6.9, 7.4, 7.8],
-                borderColor: '#6F8F7F',
-                backgroundColor: gradient,
-                borderWidth: 3,
-                fill: true,
-                tension: 0.4,
-                pointBackgroundColor: '#6F8F7F',
-                pointBorderColor: '#ffffff',
-                pointBorderWidth: 2,
-                pointRadius: 6,
-                pointHoverRadius: 8,
-                pointHoverBackgroundColor: '#6F8F7F',
-                pointHoverBorderColor: '#ffffff',
-                pointHoverBorderWidth: 2
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    display: false
-                },
-                tooltip: {
-                    backgroundColor: 'rgba(44, 62, 80, 0.9)',
-                    titleColor: '#ffffff',
-                    bodyColor: '#ffffff',
-                    padding: 12,
-                    cornerRadius: 8,
-                    displayColors: false,
-                    callbacks: {
-                        label: function(context) {
-                            return 'Mood Score: ' + context.parsed.y + '/10';
-                        }
-                    }
-                }
-            },
-            scales: {
-                x: {
-                    grid: {
-                        display: false
-                    },
-                    ticks: {
-                        color: '#6B7C74',
-                        font: {
-                            size: 12,
-                            weight: '500'
-                        }
-                    }
-                },
-                y: {
-                    beginAtZero: true,
-                    max: 10,
-                    grid: {
-                        color: 'rgba(224, 230, 227, 0.3)',
-                        borderDash: [5, 5]
-                    },
-                    ticks: {
-                        color: '#6B7C74',
-                        font: {
-                            size: 12,
-                            weight: '500'
-                        },
-                        stepSize: 2,
-                        callback: function(value) {
-                            return value + '';
-                        }
-                    }
-                }
-            },
-            interaction: {
-                intersect: false,
-                mode: 'index'
-            }
-        }
-    });
-    }
+    initializeDashboardFromUserData();
     
     // Add smooth scrolling for navigation
     document.querySelectorAll('.nav-link').forEach(link => {
@@ -151,6 +60,261 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+function initializeDashboardFromUserData() {
+    const user = JSON.parse(localStorage.getItem('diariCoreUser') || 'null');
+    const entries = JSON.parse(localStorage.getItem('diariCoreEntries') || '[]');
+
+    updateGreeting(user);
+    updateDashboardCards(entries);
+    updateSmartInsightSection(entries);
+    renderWeeklyChart(entries);
+}
+
+function updateGreeting(user) {
+    const titleEl = document.querySelector('.main-title');
+    if (!titleEl) return;
+    const displayName = (user?.firstName || user?.nickname || 'there').trim();
+    const firstName = displayName.split(' ')[0];
+    titleEl.textContent = `Good Morning, ${firstName}`;
+}
+
+function feelingToScore(feelingRaw) {
+    const feeling = (feelingRaw || '').toLowerCase();
+    const scoreMap = {
+        happy: 9,
+        peaceful: 8.5,
+        calm: 8,
+        grateful: 8.6,
+        excited: 8.8,
+        content: 7.8,
+        neutral: 6.2,
+        unspecified: 6,
+        anxious: 4.2,
+        stressed: 3.8,
+        sad: 3.5,
+        angry: 2.8
+    };
+    return scoreMap[feeling] ?? 6;
+}
+
+function feelingToEmoji(feelingRaw) {
+    const feeling = (feelingRaw || '').toLowerCase();
+    const emojiMap = {
+        happy: '😊',
+        peaceful: '😌',
+        calm: '😌',
+        grateful: '🙏',
+        excited: '🤩',
+        content: '🙂',
+        neutral: '😐',
+        unspecified: '🙂',
+        anxious: '😰',
+        stressed: '😟',
+        sad: '😔',
+        angry: '😠'
+    };
+    return emojiMap[feeling] ?? '🙂';
+}
+
+function titleCase(value) {
+    const v = (value || '').trim();
+    if (!v) return '';
+    return v.charAt(0).toUpperCase() + v.slice(1).toLowerCase();
+}
+
+function isWithinLast7Days(dateObj) {
+    const now = new Date();
+    const sevenDaysAgo = new Date(now);
+    sevenDaysAgo.setDate(now.getDate() - 6);
+    sevenDaysAgo.setHours(0, 0, 0, 0);
+    return dateObj >= sevenDaysAgo && dateObj <= now;
+}
+
+function getLatestEntry(entries) {
+    if (!Array.isArray(entries) || entries.length === 0) return null;
+    return [...entries]
+        .filter((e) => e?.date)
+        .sort((a, b) => new Date(b.date) - new Date(a.date))[0] || null;
+}
+
+function updateDashboardCards(entries) {
+    const moodEmoji = document.querySelector('.stat-card-mood .mood-emoji');
+    const moodValue = document.querySelector('.stat-card-mood .stat-value');
+    const moodDescription = document.querySelector('.stat-card-mood .stat-description');
+    const avgValue = document.querySelector('.stat-card-average .stat-value');
+    const avgDescription = document.querySelector('.stat-card-average .stat-description');
+    const insightValue = document.querySelector('.stat-card-insight .insight-text');
+    const insightDescription = document.querySelector('.stat-card-insight .stat-description');
+
+    const latest = getLatestEntry(entries);
+    const weeklyEntries = (entries || []).filter((e) => e?.date && isWithinLast7Days(new Date(e.date)));
+    const weeklyScores = weeklyEntries.map((e) => feelingToScore(e.feeling));
+
+    if (!latest) {
+        if (moodEmoji) moodEmoji.textContent = '🙂';
+        if (moodValue) moodValue.textContent = 'No mood data yet';
+        if (moodDescription) moodDescription.textContent = 'Write your first entry to track your mood.';
+        if (avgValue) avgValue.textContent = '--/10';
+        if (avgDescription) avgDescription.textContent = 'No weekly entries yet.';
+        if (insightValue) insightValue.textContent = 'No insights yet. Start journaling to discover patterns.';
+        if (insightDescription) insightDescription.textContent = 'Based on your recent entries';
+        return;
+    }
+
+    const latestFeeling = latest.feeling || 'unspecified';
+    if (moodEmoji) moodEmoji.textContent = feelingToEmoji(latestFeeling);
+    if (moodValue) moodValue.textContent = titleCase(latestFeeling) || 'Recorded';
+    if (moodDescription) moodDescription.textContent = 'Based on your most recent entry.';
+
+    if (weeklyScores.length === 0) {
+        if (avgValue) avgValue.textContent = '--/10';
+        if (avgDescription) avgDescription.textContent = 'No weekly entries yet.';
+    } else {
+        const avg = weeklyScores.reduce((sum, score) => sum + score, 0) / weeklyScores.length;
+        if (avgValue) avgValue.textContent = `${avg.toFixed(1)}/10`;
+        if (avgDescription) avgDescription.textContent = `${weeklyScores.length} mood entr${weeklyScores.length === 1 ? 'y' : 'ies'} this week`;
+    }
+
+    if (insightValue) {
+        const score = feelingToScore(latestFeeling);
+        insightValue.textContent = score >= 7
+            ? 'You are showing a positive emotional trend. Keep it up.'
+            : 'Your recent mood looks lower than usual. Try a short reflective entry.';
+    }
+    if (insightDescription) insightDescription.textContent = 'Based on your recent entries';
+}
+
+function updateSmartInsightSection(entries) {
+    const hasEntries = Array.isArray(entries) && entries.length > 0;
+    const desktopInsightMessages = document.querySelectorAll('.smart-insights .insight-message');
+    const mobileInsightDescription = document.querySelector('.mobile-smart-insights .insight-description');
+
+    if (hasEntries) return;
+
+    desktopInsightMessages.forEach((el) => {
+        el.textContent = 'Not enough journal data yet. Write entries to unlock personalized insights.';
+    });
+    if (mobileInsightDescription) {
+        mobileInsightDescription.textContent = 'No insights yet. Write your first entry to begin tracking your patterns.';
+    }
+}
+
+function renderWeeklyChart(entries) {
+    const weeklyCanvas = document.getElementById('weeklyChart');
+    if (!weeklyCanvas || !weeklyCanvas.getContext) return;
+
+    const labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    const today = new Date();
+    const monday = new Date(today);
+    const day = monday.getDay();
+    const diff = day === 0 ? 6 : day - 1;
+    monday.setDate(today.getDate() - diff);
+    monday.setHours(0, 0, 0, 0);
+
+    const dayScores = new Array(7).fill(null).map(() => []);
+    (entries || []).forEach((entry) => {
+        if (!entry?.date) return;
+        const d = new Date(entry.date);
+        if (d < monday) return;
+        const idx = Math.floor((d - monday) / (1000 * 60 * 60 * 24));
+        if (idx < 0 || idx > 6) return;
+        dayScores[idx].push(feelingToScore(entry.feeling));
+    });
+
+    const chartData = dayScores.map((scores) => {
+        if (scores.length === 0) return null;
+        return scores.reduce((sum, s) => sum + s, 0) / scores.length;
+    });
+    const hasData = chartData.some((v) => v !== null);
+
+    const ctx = weeklyCanvas.getContext('2d');
+    const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+    gradient.addColorStop(0, 'rgba(111, 143, 127, 0.3)');
+    gradient.addColorStop(1, 'rgba(111, 143, 127, 0.01)');
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels,
+            datasets: [{
+                label: 'Mood Score',
+                data: hasData ? chartData : [null, null, null, null, null, null, null],
+                borderColor: '#6F8F7F',
+                backgroundColor: gradient,
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#6F8F7F',
+                pointBorderColor: '#ffffff',
+                pointBorderWidth: 2,
+                pointRadius: hasData ? 6 : 0,
+                pointHoverRadius: hasData ? 8 : 0,
+                pointHoverBackgroundColor: '#6F8F7F',
+                pointHoverBorderColor: '#ffffff',
+                pointHoverBorderWidth: 2,
+                spanGaps: false
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    enabled: hasData,
+                    backgroundColor: 'rgba(44, 62, 80, 0.9)',
+                    titleColor: '#ffffff',
+                    bodyColor: '#ffffff',
+                    padding: 12,
+                    cornerRadius: 8,
+                    displayColors: false,
+                    callbacks: {
+                        label: function(context) {
+                            return `Mood Score: ${context.parsed.y.toFixed(1)}/10`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        color: '#6B7C74',
+                        font: {
+                            size: 12,
+                            weight: '500'
+                        }
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    max: 10,
+                    grid: {
+                        color: 'rgba(224, 230, 227, 0.3)',
+                        borderDash: [5, 5]
+                    },
+                    ticks: {
+                        color: '#6B7C74',
+                        font: {
+                            size: 12,
+                            weight: '500'
+                        },
+                        stepSize: 2
+                    }
+                }
+            },
+            interaction: {
+                intersect: false,
+                mode: 'index'
+            }
+        }
+    });
+}
 
 // Mobile menu toggle (for responsive design)
 function toggleMobileMenu() {
