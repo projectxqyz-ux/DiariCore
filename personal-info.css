@@ -1,0 +1,184 @@
+/* DiariCore Personal Info Page */
+
+:root {
+    --pi-primary: #6f8f7f;
+    --pi-primary-dark: #5d7a6c;
+    --pi-bg: #f5f7f6;
+    --pi-card: #ffffff;
+    --pi-border: #dce5e0;
+    --pi-text: #2f3e36;
+    --pi-subtext: #6b7c74;
+    --sidebar-width: 280px;
+}
+
+body.page-personal-info {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--pi-bg);
+    color: var(--pi-text);
+}
+
+body.page-personal-info .main-content {
+    margin-left: var(--sidebar-width);
+    padding: 2rem;
+    min-height: 100vh;
+}
+
+.personal-info-content {
+    max-width: 980px;
+}
+
+.personal-info-header {
+    margin-bottom: 1.35rem;
+}
+
+.back-btn {
+    border: 1px solid var(--pi-border);
+    background: #fff;
+    color: var(--pi-text);
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.5rem 0.8rem;
+    margin-bottom: 0.85rem;
+    transition: all 0.2s ease;
+}
+
+.back-btn:hover {
+    background: #eef4f1;
+    border-color: #c9d8cf;
+}
+
+.main-title {
+    font-size: 1.95rem;
+    font-weight: 700;
+    margin: 0 0 0.3rem;
+}
+
+.subtitle {
+    color: var(--pi-subtext);
+    margin: 0;
+}
+
+.personal-info-card {
+    border: 1px solid var(--pi-border);
+    border-radius: 18px;
+    background: linear-gradient(180deg, #fff 0%, #fbfcfb 100%);
+    box-shadow: 0 12px 34px rgba(43, 64, 55, 0.08);
+    padding: 1.4rem 1.5rem 1.35rem;
+}
+
+.card-top {
+    display: flex;
+    gap: 0.9rem;
+    align-items: flex-start;
+    margin-bottom: 1.2rem;
+}
+
+.card-top__icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    background: rgba(111, 143, 127, 0.14);
+    color: var(--pi-primary-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+}
+
+.card-title {
+    margin: 0 0 0.2rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.card-description {
+    margin: 0;
+    color: var(--pi-subtext);
+    font-size: 0.93rem;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem 1.15rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.38rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #496155;
+}
+
+.form-control {
+    border-radius: 10px;
+    border: 1px solid #ccdad2;
+    min-height: 44px;
+    padding: 0.6rem 0.75rem;
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-control:focus {
+    border-color: var(--pi-primary);
+    box-shadow: 0 0 0 0.2rem rgba(111, 143, 127, 0.15);
+}
+
+.actions-row {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.7rem;
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e4ece7;
+}
+
+.btn-cancel,
+.btn-save {
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 0.6rem 1rem;
+}
+
+.btn-cancel {
+    border: 1px solid #cfdcd4;
+    background: #fff;
+    color: #42574d;
+}
+
+.btn-save {
+    border: 1px solid var(--pi-primary);
+    background: linear-gradient(145deg, #7ea091, #6f8f7f);
+    color: #fff;
+}
+
+.btn-save:hover {
+    background: linear-gradient(145deg, #739687, #638273);
+}
+
+@media (max-width: 900px) {
+    body.page-personal-info .main-content {
+        padding: 1.15rem 1rem 5rem;
+        margin-left: 0;
+    }
+
+    .personal-info-content {
+        max-width: 100%;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 0.85rem;
+    }
+
+    .personal-info-card {
+        padding: 1rem;
+        border-radius: 14px;
+    }
+}

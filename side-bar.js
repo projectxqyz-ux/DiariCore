@@ -290,7 +290,8 @@ class SidebarComponent {
         navItems.forEach(item => item.classList.remove('active'));
 
         // Set active class for current page in desktop sidebar
-        const activeItem = this.sidebarElement.querySelector(`[data-page="${this.currentPage}"]`);
+        const activePageKey = this.currentPage === 'personal-info' ? 'profile' : this.currentPage;
+        const activeItem = this.sidebarElement.querySelector(`[data-page="${activePageKey}"]`);
         if (activeItem) {
             activeItem.classList.add('active');
         }
