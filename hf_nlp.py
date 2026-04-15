@@ -124,16 +124,40 @@ def analyze(text: str) -> Dict[str, object]:
     with httpx.Client(timeout=timeout, headers=_hf_headers()) as client:
         try:
             sent_resp = client.post(f"{HF_BASE_URL}/{SENTIMENT_MODEL}", json={"inputs": clean[:2000]})
+            if sent_resp.status_code != 200:
+                try:
+                    err = sent_resp.json()
+                except Exception:
+                    err = {"error": "non-json error"}
+                print(f"[HF NLP] sentiment error status={sent_resp.status_code} body_keys={list(err)[:5]}")
+                return _fallback(clean)
             sent_json = sent_resp.json()
+            if isinstance(sent_json, dict) and ("error" in sent_json or "estimated_time" in sent_json):
+                print(f"[HF NLP] sentiment error body_keys={list(sent_json)[:5]}")
+                return _fallback(clean)
             sent_label_raw, sent_score = _pick_best_label(sent_json)
             sentiment_label = _normalize_sentiment(sent_label_raw or "")
             sentiment_score = float(sent_score or 0.5)
+            if sent_label_raw is None:
+                return _fallback(clean)
 
             emo_resp = client.post(f"{HF_BASE_URL}/{EMOTION_MODEL}", json={"inputs": clean[:2000]})
+            if emo_resp.status_code != 200:
+                try:
+                    err = emo_resp.json()
+                except Exception:
+                    err = {"error": "non-json error"}
+                print(f"[HF NLP] emotion error status={emo_resp.status_code} body_keys={list(err)[:5]}")
+                return _fallback(clean)
             emo_json = emo_resp.json()
+            if isinstance(emo_json, dict) and ("error" in emo_json or "estimated_time" in emo_json):
+                print(f"[HF NLP] emotion error body_keys={list(emo_json)[:5]}")
+                return _fallback(clean)
             emo_label_raw, emo_score = _pick_best_label(emo_json)
             emotion_label = _normalize_emotion(emo_label_raw or "")
             emotion_score = float(emo_score or 0.5)
+            if emo_label_raw is None:
+                return _fallback(clean)
 
             return {
                 "sentimentLabel": sentiment_label,
