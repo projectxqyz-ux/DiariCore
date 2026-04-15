@@ -113,6 +113,15 @@ function feelingToScore(feelingRaw) {
     return scoreMap[feeling] ?? 6;
 }
 
+function resolveEntryFeeling(entry) {
+    const feeling = (entry?.feeling || '').toLowerCase();
+    if (feeling && feeling !== 'unspecified') return feeling;
+    const sentiment = (entry?.sentimentLabel || '').toLowerCase();
+    if (sentiment === 'positive') return 'happy';
+    if (sentiment === 'negative') return 'stressed';
+    return 'neutral';
+}
+
 function feelingToEmoji(feelingRaw) {
     const feeling = (feelingRaw || '').toLowerCase();
     const emojiMap = {
@@ -164,7 +173,7 @@ function updateDashboardCards(entries) {
 
     const latest = getLatestEntry(entries);
     const weeklyEntries = (entries || []).filter((e) => e?.date && isWithinLast7Days(new Date(e.date)));
-    const weeklyScores = weeklyEntries.map((e) => feelingToScore(e.feeling));
+    const weeklyScores = weeklyEntries.map((e) => feelingToScore(resolveEntryFeeling(e)));
 
     if (!latest) {
         if (moodEmoji) moodEmoji.textContent = '🙂';
@@ -177,7 +186,7 @@ function updateDashboardCards(entries) {
         return;
     }
 
-    const latestFeeling = latest.feeling || 'unspecified';
+    const latestFeeling = resolveEntryFeeling(latest);
     if (moodEmoji) moodEmoji.textContent = feelingToEmoji(latestFeeling);
     if (moodValue) moodValue.textContent = titleCase(latestFeeling) || 'Recorded';
     if (moodDescription) moodDescription.textContent = 'Based on your most recent entry.';
@@ -234,7 +243,7 @@ function renderWeeklyChart(entries) {
         if (d < monday) return;
         const idx = Math.floor((d - monday) / (1000 * 60 * 60 * 24));
         if (idx < 0 || idx > 6) return;
-        dayScores[idx].push(feelingToScore(entry.feeling));
+        dayScores[idx].push(feelingToScore(resolveEntryFeeling(entry)));
     });
 
     const chartData = dayScores.map((scores) => {

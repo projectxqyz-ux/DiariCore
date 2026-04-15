@@ -103,6 +103,15 @@ function moodIconClass(feelingRaw) {
     return 'bi bi-emoji-neutral';
 }
 
+function resolveEntryFeeling(entry) {
+    const feeling = (entry?.feeling || '').toLowerCase();
+    if (feeling && feeling !== 'unspecified') return feeling;
+    const sentiment = (entry?.sentimentLabel || '').toLowerCase();
+    if (sentiment === 'positive') return 'happy';
+    if (sentiment === 'negative') return 'stressed';
+    return 'neutral';
+}
+
 function createStoredEntryCard(entry) {
     const article = document.createElement('article');
     article.className = 'entry-card';
@@ -115,6 +124,7 @@ function createStoredEntryCard(entry) {
     const excerpt = entry.text || '';
     const tags = Array.isArray(entry.tags) ? entry.tags : [];
 
+    const resolvedFeeling = resolveEntryFeeling(entry);
     article.innerHTML = `
         <div class="entry-content-wrapper">
             <div class="entry-header">
@@ -123,8 +133,8 @@ function createStoredEntryCard(entry) {
                     <h3 class="entry-title">${title || 'Journal Entry'}</h3>
                 </div>
                 <div class="entry-mood">
-                    <i class="${moodIconClass(entry.feeling)}"></i>
-                    <span class="mood-label" style="display:none;">${(entry.feeling || 'unspecified').toLowerCase()}</span>
+                    <i class="${moodIconClass(resolvedFeeling)}"></i>
+                    <span class="mood-label" style="display:none;">${resolvedFeeling}</span>
                 </div>
             </div>
             <div class="entry-content">

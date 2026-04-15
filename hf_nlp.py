@@ -46,17 +46,34 @@ def _normalize_sentiment(label: str) -> str:
 def _normalize_emotion(label: str) -> str:
     raw = (label or "").strip().lower()
     # Keep UI-compatible categories
-    mapping = {
-        "joy": "happy",
-        "happiness": "happy",
-        "love": "happy",
-        "sadness": "sad",
-        "anger": "angry",
-        "fear": "stressed",
-        "surprise": "excited",
-        "neutral": "neutral",
-    }
-    return mapping.get(raw, raw or "neutral")
+    if not raw:
+        return "neutral"
+    if any(k in raw for k in ("joy", "happiness", "love", "optimism", "trust")):
+        return "happy"
+    if any(k in raw for k in ("sad", "grief", "sorrow")):
+        return "sad"
+    if any(k in raw for k in ("anger", "angry", "rage", "annoy")):
+        return "angry"
+    if any(k in raw for k in ("fear", "anx", "stress", "worry", "nervous")):
+        return "stressed"
+    if any(k in raw for k in ("surprise", "excit", "anticipation")):
+        return "excited"
+    if any(k in raw for k in ("calm", "peace", "relax")):
+        return "calm"
+    if "neutral" in raw:
+        return "neutral"
+    return "neutral"
+
+
+def _resolve_final_emotion(sentiment_label: str, sentiment_score: float, emotion_label: str) -> str:
+    # Smooth mixed outputs so charts are less noisy when emotion model returns neutral.
+    if emotion_label != "neutral":
+        return emotion_label
+    if sentiment_label == "positive" and sentiment_score >= 0.62:
+        return "happy"
+    if sentiment_label == "negative" and sentiment_score >= 0.62:
+        return "stressed"
+    return "neutral"
 
 
 def _fallback(text: str) -> Dict[str, object]:
@@ -194,6 +211,7 @@ def analyze(text: str) -> Dict[str, object]:
             emotion_score = float(emo_score or 0.5)
             if emo_label_raw is None:
                 return _fallback(clean)
+            emotion_label = _resolve_final_emotion(sentiment_label, sentiment_score, emotion_label)
 
             return {
                 "sentimentLabel": sentiment_label,

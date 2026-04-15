@@ -44,6 +44,15 @@ function feelingToScore(feelingRaw) {
     return scoreMap[feeling] ?? 6;
 }
 
+function resolveEntryFeeling(entry) {
+    const feeling = (entry?.feeling || '').toLowerCase();
+    if (feeling && feeling !== 'unspecified') return feeling;
+    const sentiment = (entry?.sentimentLabel || '').toLowerCase();
+    if (sentiment === 'positive') return 'happy';
+    if (sentiment === 'negative') return 'stressed';
+    return 'neutral';
+}
+
 function weeklyScoresFromEntries() {
     const labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     if (!HAS_INSIGHTS_DATA) return { labels, data: [null, null, null, null, null, null, null] };
@@ -57,7 +66,7 @@ function weeklyScoresFromEntries() {
     INSIGHTS_ENTRIES.forEach((entry) => {
         const d = new Date(entry.date);
         const idx = Math.floor((d - monday) / (1000 * 60 * 60 * 24));
-        if (idx >= 0 && idx <= 6) dayScores[idx].push(feelingToScore(entry.feeling));
+        if (idx >= 0 && idx <= 6) dayScores[idx].push(feelingToScore(resolveEntryFeeling(entry)));
     });
     return {
         labels,
@@ -71,7 +80,7 @@ function emotionBreakdownData() {
     }
     const counts = { happy: 0, neutral: 0, sad: 0, anxious: 0, calm: 0, angry: 0, stressed: 0 };
     INSIGHTS_ENTRIES.forEach((entry) => {
-        const f = (entry.feeling || 'neutral').toLowerCase();
+        const f = resolveEntryFeeling(entry);
         if (Object.prototype.hasOwnProperty.call(counts, f)) counts[f] += 1;
         else counts.neutral += 1;
     });
