@@ -334,9 +334,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Save entry functionality
-    const saveEntryBtn = document.getElementById('saveEntryBtn');
-    saveEntryBtn.addEventListener('click', function() {
+    function handleSaveEntry() {
         const entryText = journalText.value.trim();
         if (!entryText) {
             alert('Please write something in your journal entry.');
@@ -366,6 +364,12 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => {
             window.location.href = 'dashboard.html';
         }, 2000);
+    }
+
+    // Save entry functionality (desktop + mobile save buttons)
+    const saveEntryButtons = document.querySelectorAll('#saveEntryBtn, .btn-save-entry');
+    saveEntryButtons.forEach((btn) => {
+        btn.addEventListener('click', handleSaveEntry);
     });
     
     // Cancel functionality
@@ -482,8 +486,11 @@ document.addEventListener('DOMContentLoaded', function() {
     loadDraft();
     
     // Clear draft on successful save
-    const originalSaveFunction = saveEntryBtn.onclick;
-    saveEntryBtn.addEventListener('click', function() {
-        localStorage.removeItem('diariCoreDraft');
+    saveEntryButtons.forEach((btn) => {
+        btn.addEventListener('click', function () {
+            if (journalText.value.trim()) {
+                localStorage.removeItem('diariCoreDraft');
+            }
+        });
     });
 });
