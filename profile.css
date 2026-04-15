@@ -1103,28 +1103,150 @@ input:checked + .toggle-slider:before {
 }
 
 @media (min-width: 769px) {
+    body.page-profile .main-content {
+        padding: 1.5rem 1.75rem;
+    }
+
+    body.page-profile .profile-content {
+        max-width: 1080px;
+        margin: 0 auto;
+    }
+
     body.page-profile .profile-content {
         display: flex;
         flex-direction: column;
+        gap: 1.25rem;
     }
     
     body.page-profile .header-section {
         order: 1;
+        margin-bottom: 0.5rem;
     }
     
     body.page-profile .profile-overview-section {
         order: 2;
+        margin-bottom: 0;
+    }
+
+    body.page-profile .profile-card {
+        padding: 1.25rem 1.5rem;
+        border-radius: 14px;
+    }
+
+    body.page-profile .profile-header {
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    body.page-profile .avatar-image {
+        width: 92px;
+        height: 92px;
+    }
+
+    body.page-profile .profile-name {
+        font-size: 1.85rem;
+        margin-bottom: 0.2rem;
+    }
+
+    body.page-profile .profile-email {
+        margin-bottom: 0.2rem;
+    }
+
+    body.page-profile .profile-stats-section {
+        padding-top: 1rem;
+    }
+
+    body.page-profile .profile-stats {
+        gap: 0.85rem;
+    }
+
+    body.page-profile .stat-item {
+        padding: 0.7rem 0.55rem;
+    }
+
+    body.page-profile .stat-number {
+        font-size: 1.65rem;
+        margin-bottom: 0.25rem;
+    }
+
+    body.page-profile .stat-label {
+        font-size: 0.68rem;
     }
     
     body.page-profile .profile-preferences-stack {
         order: 3;
         display: flex;
         flex-direction: column;
-        gap: 3rem;
+        gap: 1.1rem;
     }
     
     body.page-profile .account-settings-section {
         order: 4;
+        margin-bottom: 0;
+    }
+
+    body.page-profile .section-header {
+        margin-bottom: 0.9rem;
+    }
+
+    body.page-profile .section-title {
+        font-size: 1.3rem;
+        margin-bottom: 0.2rem;
+    }
+
+    body.page-profile .settings-grid {
+        gap: 0.9rem;
+    }
+
+    body.page-profile .setting-card {
+        padding: 1.25rem;
+        gap: 1rem;
+    }
+
+    body.page-profile .setting-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 1.25rem;
+    }
+
+    body.page-profile .setting-content h3 {
+        margin-bottom: 0.2rem;
+    }
+
+    body.page-profile .appearance-section,
+    body.page-profile .notifications-section,
+    body.page-profile .privacy-section,
+    body.page-profile .danger-zone-section {
+        margin-bottom: 0;
+    }
+
+    body.page-profile .appearance-options,
+    body.page-profile .notifications-options,
+    body.page-profile .privacy-options,
+    body.page-profile .danger-zone-card {
+        padding: 1.2rem 1.25rem;
+        border-radius: 14px;
+    }
+
+    body.page-profile .appearance-header,
+    body.page-profile .notifications-header,
+    body.page-profile .privacy-header,
+    body.page-profile .danger-zone-header {
+        margin-bottom: 1rem;
+    }
+
+    body.page-profile .appearance-item,
+    body.page-profile .notifications-item,
+    body.page-profile .privacy-item {
+        padding: 0.95rem 1rem;
+    }
+
+    body.page-profile .danger-zone-header {
+        padding-bottom: 0.7rem;
+    }
+
+    body.page-profile .danger-zone-title {
+        margin-bottom: 0.2rem;
     }
     
     body.page-profile .privacy-section {
