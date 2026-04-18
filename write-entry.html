@@ -133,12 +133,8 @@
                 <h2 class="section-title">Your Thoughts</h2>
                 <div class="journal-container">
                     <div class="journal-header">
-                        <div class="character-counter">
-                            <span id="charCount">0</span> characters
-                        </div>
-                        <button class="voice-input-btn" id="voiceInputBtn">
+                        <button class="voice-input-btn" id="voiceInputBtn" aria-label="Open voice entry" title="Voice entry">
                             <i class="bi bi-mic"></i>
-                            Voice Input
                         </button>
                     </div>
                     <textarea 
@@ -147,6 +143,9 @@
                         placeholder="Start writing..."
                         maxlength="5000"
                     ></textarea>
+                    <div class="journal-footer">
+                        <p class="journal-datetime" id="journalDateTime">Sunday, April 26, 2026 | 03:53 AM</p>
+                    </div>
                 </div>
             </div>
             

@@ -4,6 +4,24 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize variables
     let selectedFeeling = null;
     let selectedTags = new Set();
+
+    function updateJournalDateTime() {
+        const dateTimeEl = document.getElementById('journalDateTime');
+        if (!dateTimeEl) return;
+        const now = new Date();
+        const datePart = now.toLocaleDateString('en-US', {
+            weekday: 'long',
+            month: 'long',
+            day: 'numeric',
+            year: 'numeric',
+        });
+        const timePart = now.toLocaleTimeString('en-US', {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true,
+        });
+        dateTimeEl.textContent = `${datePart} | ${timePart}`;
+    }
     
     // Reset selected states on page load
     function resetSelections() {
@@ -306,23 +324,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 10);
     }
     
-    // Character counter
     const journalText = document.getElementById('journalText');
-    const charCount = document.getElementById('charCount');
-    
-    journalText.addEventListener('input', function() {
-        const count = this.value.length;
-        charCount.textContent = count;
-        
-        // Change color based on character count
-        if (count > 4500) {
-            charCount.style.color = 'var(--warning-color)';
-        } else if (count > 4000) {
-            charCount.style.color = 'var(--info-color)';
-        } else {
-            charCount.style.color = 'var(--text-muted)';
-        }
-    });
+    updateJournalDateTime();
+    setInterval(updateJournalDateTime, 30000);
     
     // Voice input button functionality
     const voiceInputBtn = document.getElementById('voiceInputBtn');
