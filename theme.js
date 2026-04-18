@@ -1,11 +1,92 @@
 (function () {
     const STORAGE_KEY = 'diariCoreTheme';
+    const PALETTE_KEY = 'diariCorePalette';
     const DARK_CLASS = 'theme-dark';
     const FAB_ID = 'diariThemeToggleFab';
+    const PALETTES = [
+        { id: 'theme-1', name: 'Soft Sage Green', primary: '#8CB9B8' },
+        { id: 'theme-2', name: 'Lavender Purple', primary: '#C4B5E5' },
+        { id: 'theme-3', name: 'Sky Blue', primary: '#A5C4D9' },
+        { id: 'theme-4', name: 'Warm Peach', primary: '#F5C4B8' },
+        { id: 'theme-5', name: 'Aqua Teal', primary: '#8FD4D4' },
+        { id: 'theme-6', name: 'Sand Beige', primary: '#D9C4B8' },
+        { id: 'theme-7', name: 'Rose Quartz', primary: '#E5B8C4' },
+        { id: 'theme-8', name: 'Mint Green', primary: '#B8E5D4' },
+        { id: 'theme-9', name: 'Mauve Pink', primary: '#D9B8C9' },
+        { id: 'theme-10', name: 'Sage Gray', primary: '#BAC4C4' },
+    ];
 
     function getSavedTheme() {
         const raw = (localStorage.getItem(STORAGE_KEY) || '').toLowerCase();
         return raw === 'dark' ? 'dark' : 'light';
+    }
+
+    function getPaletteById(id) {
+        return PALETTES.find((p) => p.id === id) || PALETTES[0];
+    }
+
+    function getSavedPaletteId() {
+        const raw = (localStorage.getItem(PALETTE_KEY) || '').toLowerCase();
+        return getPaletteById(raw).id;
+    }
+
+    function hexToRgb(hex) {
+        const safe = (hex || '').replace('#', '').trim();
+        if (safe.length !== 6) return { r: 140, g: 185, b: 184 };
+        return {
+            r: Number.parseInt(safe.slice(0, 2), 16),
+            g: Number.parseInt(safe.slice(2, 4), 16),
+            b: Number.parseInt(safe.slice(4, 6), 16),
+        };
+    }
+
+    function shade(hex, percent) {
+        const { r, g, b } = hexToRgb(hex);
+        const factor = Math.max(-1, Math.min(1, percent));
+        const apply = (v) => {
+            const next = factor >= 0 ? v + (255 - v) * factor : v * (1 + factor);
+            return Math.max(0, Math.min(255, Math.round(next)));
+        };
+        const rr = apply(r).toString(16).padStart(2, '0');
+        const gg = apply(g).toString(16).padStart(2, '0');
+        const bb = apply(b).toString(16).padStart(2, '0');
+        return `#${rr}${gg}${bb}`;
+    }
+
+    function applyPaletteById(paletteId) {
+        const palette = getPaletteById(paletteId);
+        const root = document.documentElement;
+        const primary = palette.primary;
+        const primaryHover = shade(primary, -0.12);
+        const primaryLight = shade(primary, 0.12);
+        const accent = shade(primary, 0.22);
+        const darkPrimary = shade(primary, 0.08);
+        const darkPrimaryHover = shade(primary, -0.05);
+        const darkPrimaryLight = shade(primary, 0.22);
+
+        root.style.setProperty('--primary-color', primary);
+        root.style.setProperty('--primary-hover', primaryHover);
+        root.style.setProperty('--primary-light', primaryLight);
+        root.style.setProperty('--accent-green', accent);
+        root.style.setProperty('--theme-dark-primary', darkPrimary);
+        root.style.setProperty('--theme-dark-primary-hover', darkPrimaryHover);
+        root.style.setProperty('--theme-dark-primary-light', darkPrimaryLight);
+
+        document.querySelectorAll('[data-theme-palette]').forEach((btn) => {
+            const isActive = btn.getAttribute('data-theme-palette') === palette.id;
+            btn.classList.toggle('is-active', isActive);
+            btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
+
+        window.dispatchEvent(
+            new CustomEvent('diari-palette-changed', {
+                detail: {
+                    paletteId: palette.id,
+                    paletteName: palette.name,
+                    primaryColor: palette.primary,
+                },
+            })
+        );
     }
 
     function applyTheme(theme) {
@@ -23,6 +104,12 @@
         syncFabState(nextTheme);
         syncToggleState();
         window.dispatchEvent(new CustomEvent('diari-theme-changed', { detail: { theme: nextTheme } }));
+    }
+
+    function setPalette(paletteId) {
+        const nextPalette = getPaletteById(paletteId);
+        localStorage.setItem(PALETTE_KEY, nextPalette.id);
+        applyPaletteById(nextPalette.id);
     }
 
     function syncToggleState() {
@@ -64,27 +151,56 @@
         syncFabState(getSavedTheme());
     }
 
+    function bindPaletteButtons() {
+        const paletteButtons = document.querySelectorAll('[data-theme-palette]');
+        if (!paletteButtons.length) return;
+
+        paletteButtons.forEach((btn) => {
+            if (btn.dataset.paletteBound === '1') return;
+            btn.dataset.paletteBound = '1';
+            btn.addEventListener('click', function () {
+                const paletteId = this.getAttribute('data-theme-palette');
+                if (!paletteId) return;
+                setPalette(paletteId);
+            });
+        });
+    }
+
     // Apply immediately to reduce theme flicker.
     applyTheme(getSavedTheme());
+    applyPaletteById(getSavedPaletteId());
 
     document.addEventListener('DOMContentLoaded', function () {
         applyTheme(getSavedTheme());
+        applyPaletteById(getSavedPaletteId());
         createThemeToggleFab();
+        bindPaletteButtons();
         syncToggleState();
     });
 
     window.addEventListener('storage', function (event) {
-        if (event.key !== STORAGE_KEY) return;
-        const nextTheme = getSavedTheme();
-        applyTheme(nextTheme);
-        syncFabState(nextTheme);
-        syncToggleState();
+        if (event.key === STORAGE_KEY) {
+            const nextTheme = getSavedTheme();
+            applyTheme(nextTheme);
+            syncFabState(nextTheme);
+            syncToggleState();
+            return;
+        }
+        if (event.key === PALETTE_KEY) {
+            applyPaletteById(getSavedPaletteId());
+        }
     });
 
     window.DiariTheme = {
         getTheme: getSavedTheme,
+        getPalette: getSavedPaletteId,
+        getPalettes: function () {
+            return PALETTES.slice();
+        },
         setTheme,
+        setPalette,
         applyTheme,
+        applyPaletteById,
         syncToggleState,
     };
 })();

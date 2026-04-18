@@ -256,6 +256,30 @@ function updateSmartInsightSection(entries) {
     }
 }
 
+function hexToRgba(hex, alpha) {
+    const safe = String(hex || '').trim().replace('#', '');
+    if (safe.length !== 6) return `rgba(111, 143, 127, ${alpha})`;
+    const r = Number.parseInt(safe.slice(0, 2), 16);
+    const g = Number.parseInt(safe.slice(2, 4), 16);
+    const b = Number.parseInt(safe.slice(4, 6), 16);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+
+function buildChartThemeFromCss() {
+    const styles = window.getComputedStyle(document.documentElement);
+    const primary = styles.getPropertyValue('--primary-color').trim() || '#6F8F7F';
+    const isDarkMode = document.documentElement.classList.contains('theme-dark');
+    return {
+        line: primary,
+        fillTop: hexToRgba(primary, isDarkMode ? 0.35 : 0.3),
+        fillBottom: hexToRgba(primary, isDarkMode ? 0.03 : 0.01),
+        pointBorder: isDarkMode ? '#141c20' : '#ffffff',
+        tooltipBg: isDarkMode ? 'rgba(16, 24, 29, 0.95)' : 'rgba(44, 62, 80, 0.9)',
+        tick: isDarkMode ? '#b7c7cd' : '#6B7C74',
+        grid: isDarkMode ? 'rgba(64, 82, 90, 0.6)' : 'rgba(224, 230, 227, 0.3)',
+    };
+}
+
 function renderWeeklyChart(entries) {
     const weeklyCanvas = document.getElementById('weeklyChart');
     if (!weeklyCanvas || !weeklyCanvas.getContext) return;
@@ -284,26 +308,7 @@ function renderWeeklyChart(entries) {
     });
     const hasData = chartData.some((v) => v !== null);
 
-    const isDarkMode = document.documentElement.classList.contains('theme-dark');
-    const chartTheme = isDarkMode
-        ? {
-            line: '#8fb8a5',
-            fillTop: 'rgba(143, 184, 165, 0.35)',
-            fillBottom: 'rgba(143, 184, 165, 0.03)',
-            pointBorder: '#141c20',
-            tooltipBg: 'rgba(16, 24, 29, 0.95)',
-            tick: '#b7c7cd',
-            grid: 'rgba(64, 82, 90, 0.6)'
-        }
-        : {
-            line: '#6F8F7F',
-            fillTop: 'rgba(111, 143, 127, 0.3)',
-            fillBottom: 'rgba(111, 143, 127, 0.01)',
-            pointBorder: '#ffffff',
-            tooltipBg: 'rgba(44, 62, 80, 0.9)',
-            tick: '#6B7C74',
-            grid: 'rgba(224, 230, 227, 0.3)'
-        };
+    const chartTheme = buildChartThemeFromCss();
 
     const ctx = weeklyCanvas.getContext('2d');
     const gradient = ctx.createLinearGradient(0, 0, 0, 300);

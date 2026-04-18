@@ -2,12 +2,23 @@
 let INSIGHTS_ENTRIES = [];
 let HAS_INSIGHTS_DATA = false;
 
+function hexToRgba(hex, alpha) {
+    const safe = String(hex || '').trim().replace('#', '');
+    if (safe.length !== 6) return `rgba(111, 143, 127, ${alpha})`;
+    const r = Number.parseInt(safe.slice(0, 2), 16);
+    const g = Number.parseInt(safe.slice(2, 4), 16);
+    const b = Number.parseInt(safe.slice(4, 6), 16);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+
 function getChartTheme() {
+    const styles = window.getComputedStyle(document.documentElement);
+    const primary = styles.getPropertyValue('--primary-color').trim() || '#6F8F7F';
     const isDarkMode = document.documentElement.classList.contains('theme-dark');
     if (isDarkMode) {
         return {
-            primary: '#8fb8a5',
-            primarySoft: 'rgba(143, 184, 165, 0.22)',
+            primary,
+            primarySoft: hexToRgba(primary, 0.22),
             tick: '#b7c7cd',
             grid: 'rgba(66, 84, 92, 0.55)',
             tooltipBg: 'rgba(16, 24, 29, 0.95)',
@@ -16,8 +27,8 @@ function getChartTheme() {
         };
     }
     return {
-        primary: '#6F8F7F',
-        primarySoft: 'rgba(111, 143, 127, 0.1)',
+        primary,
+        primarySoft: hexToRgba(primary, 0.1),
         tick: '#6B7C74',
         grid: '#E0E6E3',
         tooltipBg: 'rgba(47, 62, 54, 0.9)',
@@ -378,11 +389,11 @@ function initializeEmotionPieChart() {
         datasets: [{
             data: HAS_INSIGHTS_DATA ? [45, 20, 10, 15, 10] : [1],
             backgroundColor: [
-                HAS_INSIGHTS_DATA ? 'rgba(111, 143, 127, 0.9)' : chartTheme.pieFallback,
-                'rgba(111, 143, 127, 0.7)',
-                'rgba(111, 143, 127, 0.5)',
-                'rgba(111, 143, 127, 0.6)',
-                'rgba(111, 143, 127, 0.4)'
+                HAS_INSIGHTS_DATA ? hexToRgba(chartTheme.primary, 0.9) : chartTheme.pieFallback,
+                hexToRgba(chartTheme.primary, 0.7),
+                hexToRgba(chartTheme.primary, 0.5),
+                hexToRgba(chartTheme.primary, 0.6),
+                hexToRgba(chartTheme.primary, 0.4)
             ],
             borderColor: chartTheme.border,
             borderWidth: 2
@@ -439,7 +450,7 @@ function initializeEmotionPieChartMobile() {
         datasets: [{
             data: HAS_INSIGHTS_DATA ? breakdown.values : [1],
             backgroundColor: [
-                HAS_INSIGHTS_DATA ? '#7FBF9F' : chartTheme.pieFallback,
+                HAS_INSIGHTS_DATA ? hexToRgba(chartTheme.primary, 0.92) : chartTheme.pieFallback,
                 '#F4A261',
                 '#7FA7BF',
                 '#E76F51'
@@ -499,12 +510,12 @@ function initializeActivityImpactChart() {
             label: 'Mood Impact',
             data: HAS_INSIGHTS_DATA ? [85, 78, 45, 72, 68, 82] : [0, 0, 0, 0, 0, 0],
             backgroundColor: [
-                'rgba(111, 143, 127, 0.9)',
-                'rgba(111, 143, 127, 0.85)',
-                'rgba(111, 143, 127, 0.5)',
-                'rgba(111, 143, 127, 0.7)',
-                'rgba(111, 143, 127, 0.6)',
-                'rgba(111, 143, 127, 0.8)'
+                hexToRgba(chartTheme.primary, 0.9),
+                hexToRgba(chartTheme.primary, 0.85),
+                hexToRgba(chartTheme.primary, 0.5),
+                hexToRgba(chartTheme.primary, 0.7),
+                hexToRgba(chartTheme.primary, 0.6),
+                hexToRgba(chartTheme.primary, 0.8)
             ],
             borderColor: chartTheme.primary,
             borderWidth: 2,

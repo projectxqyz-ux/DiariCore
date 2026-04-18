@@ -1,10 +1,10 @@
 /* Global dark mode overrides (loaded after page-specific CSS) */
 
 :root.theme-dark {
-    --primary-color: #8fb8a5;
-    --primary-hover: #7aa691;
-    --primary-light: #a8d1bf;
-    --accent-green: #6f9e89;
+    --primary-color: var(--theme-dark-primary, #8fb8a5);
+    --primary-hover: var(--theme-dark-primary-hover, #7aa691);
+    --primary-light: var(--theme-dark-primary-light, #a8d1bf);
+    --accent-green: var(--theme-dark-primary, #6f9e89);
 
     --background-color: #11171a;
     --background-soft: #1a2327;
@@ -167,6 +167,15 @@ html.theme-dark .mobile-bottom-nav {
 html.theme-dark .mobile-bottom-nav-link,
 html.theme-dark .mobile-app-topbar__brand-name {
     color: var(--text-secondary) !important;
+}
+
+html.theme-dark .theme-palette-btn {
+    background: #1b262c !important;
+    border-color: #33424a !important;
+}
+
+html.theme-dark .theme-palette-btn__label {
+    color: #c8d7dd !important;
 }
 
 .theme-toggle-fab {
