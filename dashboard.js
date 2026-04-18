@@ -68,7 +68,8 @@ function initializeGreetingClock() {
     const minuteHand = document.getElementById('greetingClockMinute');
     const secondHand = document.getElementById('greetingClockSecond');
     const timeLabel = document.getElementById('greetingClockTime');
-    if (!hourHand || !minuteHand || !secondHand || !timeLabel) return;
+    const dateLabel = document.getElementById('greetingClockDate');
+    if (!hourHand || !minuteHand || !secondHand || !timeLabel || !dateLabel) return;
 
     function tick() {
         const now = new Date();
@@ -87,6 +88,11 @@ function initializeGreetingClock() {
             hour: '2-digit',
             minute: '2-digit',
             second: '2-digit'
+        });
+        dateLabel.textContent = now.toLocaleDateString('en-US', {
+            weekday: 'long',
+            month: 'short',
+            day: 'numeric'
         });
     }
 

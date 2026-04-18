@@ -288,10 +288,6 @@ body {
 
 .greeting-clock__time {
     margin: 0;
-    font-size: 0.82rem;
-    font-weight: 600;
-    color: #5f6e67;
-    letter-spacing: 0.03em;
     min-width: 0;
     max-width: 0;
     opacity: 0;
@@ -301,9 +297,27 @@ body {
     transition: max-width 0.22s ease, opacity 0.22s ease, margin-left 0.22s ease;
 }
 
+.greeting-clock__date,
+.greeting-clock__hour {
+    margin: 0;
+    color: #5f6e67;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+}
+
+.greeting-clock__date {
+    font-size: 0.68rem;
+    font-weight: 600;
+}
+
+.greeting-clock__hour {
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
 .greeting-clock:hover .greeting-clock__time,
 .greeting-clock:focus-within .greeting-clock__time {
-    max-width: 84px;
+    max-width: 165px;
     opacity: 1;
     margin-left: 0.45rem;
 }
@@ -710,8 +724,15 @@ body {
     }
 
     .greeting-clock__time {
-        min-width: 54px;
-        font-size: 0.74rem;
+        min-width: 0;
+    }
+
+    .greeting-clock__date {
+        font-size: 0.62rem;
+    }
+
+    .greeting-clock__hour {
+        font-size: 0.72rem;
     }
     
     .floating-streak {
