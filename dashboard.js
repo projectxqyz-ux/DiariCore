@@ -92,7 +92,8 @@ function initializeGreetingClock() {
         dateLabel.textContent = now.toLocaleDateString('en-US', {
             weekday: 'long',
             month: 'short',
-            day: 'numeric'
+            day: 'numeric',
+            year: 'numeric'
         });
     }
 
