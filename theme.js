@@ -4,16 +4,16 @@
     const DARK_CLASS = 'theme-dark';
     const FAB_ID = 'diariThemeToggleFab';
     const PALETTES = [
-        { id: 'theme-1', name: 'Soft Sage Green', primary: '#8CB9B8' },
-        { id: 'theme-2', name: 'Lavender Purple', primary: '#C4B5E5' },
-        { id: 'theme-3', name: 'Sky Blue', primary: '#A5C4D9' },
-        { id: 'theme-4', name: 'Warm Peach', primary: '#F5C4B8' },
-        { id: 'theme-5', name: 'Aqua Teal', primary: '#8FD4D4' },
-        { id: 'theme-6', name: 'Sand Beige', primary: '#D9C4B8' },
-        { id: 'theme-7', name: 'Rose Quartz', primary: '#E5B8C4' },
-        { id: 'theme-8', name: 'Mint Green', primary: '#B8E5D4' },
-        { id: 'theme-9', name: 'Mauve Pink', primary: '#D9B8C9' },
-        { id: 'theme-10', name: 'Sage Gray', primary: '#BAC4C4' },
+        { id: 'theme-1', name: 'Soft Sage Green', primary: '#6F8F7F' },
+        { id: 'theme-2', name: 'Lavender Purple', primary: '#8E7CB5' },
+        { id: 'theme-3', name: 'Sky Blue', primary: '#6F9BB8' },
+        { id: 'theme-4', name: 'Warm Peach', primary: '#D89A82' },
+        { id: 'theme-5', name: 'Aqua Teal', primary: '#4FAFB0' },
+        { id: 'theme-6', name: 'Sand Beige', primary: '#B5957E' },
+        { id: 'theme-7', name: 'Rose Quartz', primary: '#BC7E97' },
+        { id: 'theme-8', name: 'Mint Green', primary: '#6FAF9B' },
+        { id: 'theme-9', name: 'Mauve Pink', primary: '#A97B95' },
+        { id: 'theme-10', name: 'Sage Gray', primary: '#7F9393' },
     ];
 
     function getSavedTheme() {
