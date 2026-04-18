@@ -186,6 +186,29 @@ html.theme-dark .theme-palette-panel {
     color: #dce8ed !important;
 }
 
+html.theme-dark .logout-btn {
+    background: #1b262c !important;
+    border-color: var(--primary-color) !important;
+    color: var(--text-dark) !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.28) !important;
+}
+
+html.theme-dark .logout-btn:hover {
+    background: #243238 !important;
+    color: var(--text-dark) !important;
+}
+
+html.theme-dark .logout-btn i,
+html.theme-dark .logout-btn:hover i {
+    color: var(--primary-color) !important;
+}
+
+html.theme-dark .time-input::-webkit-calendar-picker-indicator {
+    filter: invert(90%) sepia(8%) saturate(220%) hue-rotate(168deg) brightness(108%) contrast(96%);
+    opacity: 0.95;
+    cursor: pointer;
+}
+
 .theme-toggle-fab {
     position: fixed;
     right: 1.15rem;
