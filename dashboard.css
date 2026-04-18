@@ -189,6 +189,8 @@ body {
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
+    /* Reserve room for the floating streak pill on the right */
+    padding-right: 120px;
 }
 
 .header-copy {
@@ -669,6 +671,7 @@ body {
 
     .header-row {
         align-items: flex-start;
+        padding-right: 0;
     }
 
     .greeting-clock {
