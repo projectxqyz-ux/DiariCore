@@ -21,6 +21,7 @@
         localStorage.setItem(STORAGE_KEY, nextTheme);
         applyTheme(nextTheme);
         syncFabState(nextTheme);
+        syncToggleState();
         window.dispatchEvent(new CustomEvent('diari-theme-changed', { detail: { theme: nextTheme } }));
     }
 
