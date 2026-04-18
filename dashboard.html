@@ -61,8 +61,25 @@
             
             <!-- Header Section -->
             <div class="header-section">
-                <h1 class="main-title">Good Morning, Alex</h1>
-                <p class="subtitle">How are you feeling today?</p>
+                <div class="header-row">
+                    <div class="header-copy">
+                        <h1 class="main-title">Good Morning, Alex</h1>
+                        <p class="subtitle">How are you feeling today?</p>
+                    </div>
+                    <div class="greeting-clock" aria-label="Current time">
+                        <div class="greeting-clock__dial" aria-hidden="true">
+                            <span class="greeting-clock__tick greeting-clock__tick--12"></span>
+                            <span class="greeting-clock__tick greeting-clock__tick--3"></span>
+                            <span class="greeting-clock__tick greeting-clock__tick--6"></span>
+                            <span class="greeting-clock__tick greeting-clock__tick--9"></span>
+                            <span class="greeting-clock__hand greeting-clock__hand--hour" id="greetingClockHour"></span>
+                            <span class="greeting-clock__hand greeting-clock__hand--minute" id="greetingClockMinute"></span>
+                            <span class="greeting-clock__hand greeting-clock__hand--second" id="greetingClockSecond"></span>
+                            <span class="greeting-clock__center"></span>
+                        </div>
+                        <p class="greeting-clock__time" id="greetingClockTime">--:--</p>
+                    </div>
+                </div>
             </div>
             
             <!-- Stats Cards (icon left / copy right — desktop & mobile) -->

@@ -3,6 +3,7 @@
 document.addEventListener('DOMContentLoaded', async function() {
     await syncEntriesFromApi();
     initializeDashboardFromUserData();
+    initializeGreetingClock();
     
     // Add smooth scrolling for navigation
     document.querySelectorAll('.nav-link').forEach(link => {
@@ -61,6 +62,37 @@ document.addEventListener('DOMContentLoaded', async function() {
         });
     });
 });
+
+function initializeGreetingClock() {
+    const hourHand = document.getElementById('greetingClockHour');
+    const minuteHand = document.getElementById('greetingClockMinute');
+    const secondHand = document.getElementById('greetingClockSecond');
+    const timeLabel = document.getElementById('greetingClockTime');
+    if (!hourHand || !minuteHand || !secondHand || !timeLabel) return;
+
+    function tick() {
+        const now = new Date();
+        const seconds = now.getSeconds();
+        const minutes = now.getMinutes();
+        const hours = now.getHours();
+
+        const secondAngle = seconds * 6;
+        const minuteAngle = (minutes + seconds / 60) * 6;
+        const hourAngle = ((hours % 12) + minutes / 60) * 30;
+
+        hourHand.style.transform = `rotate(${hourAngle}deg)`;
+        minuteHand.style.transform = `rotate(${minuteAngle}deg)`;
+        secondHand.style.transform = `rotate(${secondAngle}deg)`;
+        timeLabel.textContent = now.toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+        });
+    }
+
+    tick();
+    setInterval(tick, 1000);
+}
 
 async function syncEntriesFromApi() {
     const user = JSON.parse(localStorage.getItem('diariCoreUser') || 'null');
